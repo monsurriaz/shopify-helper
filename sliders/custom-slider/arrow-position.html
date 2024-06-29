@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Slider</title>
+  <style>
+    :root {
+      --grid-horizontal-spacing: 1rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .simple__slider-container {
+      display: flex;
+      align-items: center;
+    }
+    .related-product-loop.grid__wrapper.enable__scrolling-slider {
+      display: flex;
+      width: 100%;
+      gap: var(--grid-horizontal-spacing);
+      position: relative;
+      flex-wrap: nowrap;
+      overflow-y: hidden;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    }
+
+    .related-product-loop.grid__wrapper.enable__scrolling-slider::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+    }
+
+    .enable__scrolling-slider .product {
+      width: 25%;
+      width: calc(25% - var(--grid-horizontal-spacing)* 3 / 4);
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      height: 100px;
+      background-color: rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .simple--button {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      color: #000000;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 50px !important;
+      margin: 0px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .simple--button:disabled {
+      background-color: #d3d3d3;
+      cursor: none;
+      opacity: 0;
+    }
+    .simple--button .simple-button-icon {
+      width: 13px;
+    }
+    button.simple--button.slider-right {
+      right: 30px;
+    }
+    button.simple--button.slider-left {
+      left: 30px;
+    }
+
+    @media screen and (max-width: 768px) {
+    .related-product-loop.grid__wrapper.enable__scrolling-slider {
+      cursor: grab;
+    }
+    .enable__scrolling-slider .product {
+      width: calc(50% - var(--grid-horizontal-spacing) / 2); /* partial view, full view; anything is possible. */
+    }
+    .simple--button {
+      width: 30px;
+      height: 30px;
+    }
+    .simple--button .simple-button-icon {
+      width: 12px;
+    }
+    button.simple--button.slider-right {
+      right: 0px;
+    }
+    button.simple--button.slider-left {
+      left: 0px;
+    }
+  }
+  </style>
+</head>
+<body>
+  <section class="container">
+    <div class="simple__slider-container">
+      <button class="simple--button slider-left" disabled>
+        <svg 
+          class="simple-button-icon" 
+          viewBox="0 0 100 100"
+        ><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg>
+      </button>
+      <div class="related-product-loop grid__wrapper enable__scrolling-slider">
+        <div class="product">Product 1</div>
+        <div class="product">Product 2</div>
+        <div class="product">Product 3</div>
+        <div class="product">Product 4</div>
+        <div class="product">Product 5</div>
+        <div class="product">Product 6</div>
+        <div class="product">Product 7</div>
+        <div class="product">Product 8</div>
+        <div class="product">Product 9</div>
+        <div class="product">Product 10</div>
+      </div>
+      <button class="simple--button slider-right">
+        <svg 
+          class="simple-button-icon" 
+          viewBox="0 0 100 100"
+        ><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg>
+      </button>
+    </div>    
+  </section>
+
+  <script>
+    function simpleSliderInit() {
+      const slider = document.querySelector('.related-product-loop.grid__wrapper.enable__scrolling-slider');
+      const leftButton = document.querySelector('.slider-left');
+      const rightButton = document.querySelector('.slider-right');
+      const product = document.querySelector('.product');
+      
+      if (!slider || !leftButton || !rightButton || !product) {
+        setTimeout(simpleSliderInit, 100);
+        return;
+      }
+
+      const productWidth = product.offsetWidth;
+      const gap = parseInt(getComputedStyle(slider).gap);
+
+      const checkButtons = () => {
+        if (slider.scrollLeft <= 0) {
+          leftButton.disabled = true;
+        } else {
+          leftButton.disabled = false;
+        }
+
+        if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth) {
+          rightButton.disabled = true;
+        } else {
+          rightButton.disabled = false;
+        }
+      };
+
+      // Save scroll position in localStorage
+      const saveScrollPosition = () => {
+        localStorage.setItem('sliderScrollPosition', slider.scrollLeft);
+      };
+
+      // Restore scroll position from localStorage
+      const restoreScrollPosition = () => {
+        const savedScrollPosition = localStorage.getItem('sliderScrollPosition');
+        if (savedScrollPosition) {
+          slider.scrollLeft = parseInt(savedScrollPosition);
+        }
+      };
+
+      leftButton.addEventListener('click', () => {
+        slider.scrollBy({ left: -(productWidth + gap), behavior: 'smooth' });
+      });
+
+      rightButton.addEventListener('click', () => {
+        slider.scrollBy({ left: productWidth + gap, behavior: 'smooth' });
+      });
+
+      slider.addEventListener('scroll', checkButtons);
+      slider.addEventListener('scroll', saveScrollPosition);
+
+      // Restore scroll position on page load
+      restoreScrollPosition();
+      
+      // Initial check to set the state of buttons
+      checkButtons();
+    }
+
+    document.addEventListener('DOMContentLoaded', simpleSliderInit);
+  </script>
+</body>
+</html>
