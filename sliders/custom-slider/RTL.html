@@ -15,6 +15,7 @@
     .simple__slider-container {
       display: flex;
       align-items: center;
+      position: relative;
     }
     .related-product-loop.grid__wrapper.enable__scrolling-slider {
       display: flex;
@@ -36,7 +37,7 @@
 
     .enable__scrolling-slider .product {
       width: 25%;
-      width: calc(25% - var(--grid-horizontal-spacing)* 3 / 4);
+      width: calc(25% - var(--grid-horizontal-spacing) * 3 / 4);
       scroll-snap-align: start;
       flex-shrink: 0;
       height: 100px;
@@ -45,7 +46,6 @@
     }
 
     .simple--button {
-      position: absolute;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -76,30 +76,31 @@
     }
 
     @media screen and (max-width: 768px) {
-    .related-product-loop.grid__wrapper.enable__scrolling-slider {
-      cursor: grab;
+      .related-product-loop.grid__wrapper.enable__scrolling-slider {
+        cursor: grab;
+      }
+      .enable__scrolling-slider .product {
+        width: calc(50% - var(--grid-horizontal-spacing) / 2); /* partial view, full view; anything is possible. */
+      }
+      .simple--button {
+        width: 30px;
+        height: 30px;
+      }
+      .simple--button .simple-button-icon {
+        width: 12px;
+      }
+      button.simple--button.slider-right {
+        right: 0px;
+      }
+      button.simple--button.slider-left {
+        left: 0px;
+      }
     }
-    .enable__scrolling-slider .product {
-      width: calc(50% - var(--grid-horizontal-spacing) / 2); /* partial view full view, anything is possible. */
-    }
-    .simple--button {
-      width: 30px;
-      height: 30px;
-    }
-    .simple--button .simple-button-icon {
-      width: 12px;
-    }
-    button.simple--button.slider-right {
-      right: 0px;
-    }
-    button.simple--button.slider-left {
-      left: 0px;
-    }
-  }
   </style>
 </head>
 <body>
   <section class="container">
+    <button id="toggle-rtl" style="margin-bottom: 1rem;">Toggle RTL</button>
     <div class="simple__slider-container">
       <button class="simple--button slider-left" disabled>
         <svg 
@@ -107,7 +108,7 @@
           viewBox="0 0 100 100"
         ><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg>
       </button>
-      <div class="related-product-loop grid__wrapper enable__scrolling-slider">
+      <div class="related-product-loop grid__wrapper enable__scrolling-slider" dir="ltr">
         <div class="product">Product 1</div>
         <div class="product">Product 2</div>
         <div class="product">Product 3</div>
@@ -129,7 +130,7 @@
   </section>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    function simpleSliderInit() {
       const slider = document.querySelector('.related-product-loop.grid__wrapper.enable__scrolling-slider');
       const leftButton = document.querySelector('.slider-left');
       const rightButton = document.querySelector('.slider-right');
@@ -186,8 +187,23 @@
       
       // Initial check to set the state of buttons
       checkButtons();
-    });
+    }
 
+    // Toggle RTL
+    function toggleRTL() {
+      const slider = document.querySelector('.related-product-loop.grid__wrapper.enable__scrolling-slider');
+      const currentDir = slider.getAttribute('dir');
+      const newDir = currentDir === 'ltr' ? 'rtl' : 'ltr';
+      slider.setAttribute('dir', newDir);
+      localStorage.setItem('sliderDirection', newDir);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      simpleSliderInit();
+      const savedDirection = localStorage.getItem('sliderDirection') || 'ltr';
+      document.querySelector('.related-product-loop.grid__wrapper.enable__scrolling-slider').setAttribute('dir', savedDirection);
+      document.getElementById('toggle-rtl').addEventListener('click', toggleRTL);
+    });
   </script>
 </body>
 </html>
