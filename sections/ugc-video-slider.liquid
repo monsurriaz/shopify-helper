@@ -1,0 +1,340 @@
+{% comment %} 
+  Features:
+  - enabled slick slider
+  - custom play, pause feature
+
+  Can Enhance features
+  - toggle loop
+  - toggle autoplay
+{% endcomment %}
+
+{%- style -%}
+  .ssbd-video__slider--{{ section.id }} {
+    --arrow-bg-image: 'https://cdn.shopify.com/s/files/1/0606/8509/0968/files/arrow-right.png?v=1719958988';
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .ssbd-video__slider--{{ section.id }} .ssbd-section__header {
+    text-align: center;
+  }
+  .ssbd-video__slider--{{ section.id }} .ssbd-section__header--title {
+    margin-bottom: 2rem;
+  }
+  .ssbd-video__slider.slick-slider {
+    padding-bottom: 50px;
+  }
+  .ssbd-video__item {
+    position: relative;
+    padding-right: 10px;
+  }
+  .ssbd-video__item video {
+    border-radius: 25px;
+    /* aspect-ratio: 1; */
+    max-height: 500px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+  }
+  .ssbd-video__item .playButton,
+  .ssbd-video__item .pauseButton {
+    background: transparent;
+    border: none;
+    color: #fff;
+    left: 50%;
+    line-height: 1;
+    padding: 0;
+    position: absolute;
+    top: calc(50% - 30px);
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
+  }
+  .ssbd-video__item .pauseButton {
+    display: none;
+  }
+  .ssbd-video__item .playButton img,
+  .ssbd-video__item .pauseButton img {
+    display: block;
+    max-width: 70px;
+  }
+  .ssbd-video__slider .slick-prev {
+    top: unset;
+    left: calc(50% - 22px);
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+  .ssbd-video__slider .slick-next {
+    top: unset;
+    right: calc(50% - 45px);
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+  .ssbd-video__slider .slick-prev:before {
+    content: "";
+    background-image: url(https://cdn.shopify.com/s/files/1/0606/8509/0968/files/arrow-right.png?v=1719958988);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 15px;
+    display: inline-block;
+    transform: rotate(180deg);
+  }
+  .ssbd-video__slider .slick-next:before {
+    content: "";
+    background-image: url(https://cdn.shopify.com/s/files/1/0606/8509/0968/files/arrow-right.png?v=1719958988);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 15px;
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 749.98px) {
+    .ssbd-video__slider--{{ section.id }} .ssbd-video__slider {
+      padding-top: 1.5rem;
+    }
+    .ssbd-video__slider--{{ section.id }} .slick-list {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="ssbd-video__slider--{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="ssbd-section__header">
+        <h2 class="ssbd-section__header--title">{{ section.settings.title | escape }}</h2>
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="ssbd-video__slider">
+        {%- for block in section.blocks -%}
+          {% assign index = forloop.index %}
+          <div class="ssbd-video__item" data-video-id="{{index}}" {{ block.shopify_attributes }}>
+            {% if block.settings.video != blank %}
+              {{
+                block.settings.video
+                | video_tag:
+                  image_size: 'master',
+                  autoplay: false,
+                  loop: false,
+                  muted: true,
+                  controls: false,
+                  class: 'ssbd__video'
+              }}
+              <button
+                class="playButton"
+                data-video-id="{{index}}" 
+                type="button"
+                data-state="play"
+              >
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0606/8509/0968/files/play-white.svg?v=1720090534"
+                  width="70px"
+                  height="70px"
+                  title="Play"
+                  alt="Pause"
+                >
+              </button>
+              <button
+                class="pauseButton"
+                data-video-id="{{index}}" 
+                type="button"
+                data-state="pause"
+              >
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0606/8509/0968/files/pause-white.svg?v=1720090534"
+                  width="70px"
+                  height="70px"
+                  title="Pause"
+                  alt="Pause"
+                >
+              </button>
+            {% endif %}
+          </div>
+        {%- endfor -%}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  function videoInit() {
+    $(".ssbd-video__slider--{{ section.id }} .ssbd-video__slider").slick({
+      dots: false,
+      infinite: false,
+      arrows: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            arrows: false
+          }
+        },
+        {
+          breakpoint: 749,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            arrows: false
+          }
+        },
+        {
+          breakpoint: 589,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false
+          }
+        }
+      ]
+    });
+  }
+
+  function playToggle (video) {
+    var videoId = video.closest('.ssbd-video__item').getAttribute('data-video-id');
+    var playButton = document.querySelector('.playButton[data-video-id="' + videoId + '"]');
+    var pauseButton = document.querySelector('.pauseButton[data-video-id="' + videoId + '"]');
+
+    video.addEventListener("play", function() {
+      playButton.style.display = "none";
+      pauseButton.style.display = "none";
+    });
+
+    video.addEventListener("pause", function() {
+      playButton.style.display = "block";
+      pauseButton.style.display = "none";
+    });
+
+    video.addEventListener("ended", function() {
+      playButton.style.display = "block";
+      pauseButton.style.display = "none";
+    });
+
+    // Show pause button on hover only if the video is playing
+    video.closest('.ssbd-video__item').addEventListener("mouseenter", function() {
+      if (!video.paused) {
+        pauseButton.style.display = "block";
+      }
+    });
+
+    video.closest('.ssbd-video__item').addEventListener("mouseleave", function() {
+      pauseButton.style.display = "none";
+    });
+  }
+
+  function videoControls () {
+    var playButtons = document.querySelectorAll(".playButton");
+    var pauseButtons = document.querySelectorAll(".pauseButton");
+
+    playButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        var videoId = this.getAttribute("data-video-id");
+        var video = document.querySelector('.ssbd-video__item[data-video-id="' + videoId + '"] .ssbd__video');
+        video.play();
+      });
+    });
+
+    pauseButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        var videoId = this.getAttribute("data-video-id");
+        var video = document.querySelector('.ssbd-video__item[data-video-id="' + videoId + '"] .ssbd__video');
+        video.pause();
+      });
+    });
+
+    var videos = document.querySelectorAll(".ssbd__video");
+    videos.forEach(video => playToggle(video));
+  }
+
+  document.addEventListener("DOMContentLoaded", ()=> {
+    videoInit();
+    videoControls();
+  });
+
+  {% if request.design_mode %}
+    document.addEventListener('shopify:block:select', videoInit);
+    document.addEventListener('shopify:section:load', videoInit);
+    document.addEventListener('shopify:section:unload', videoInit);
+    document.addEventListener('shopify:section:select', videoInit);
+    document.addEventListener('shopify:section:deselect', videoInit);
+  {% endif %}
+</script>
+
+{% schema %}
+{
+  "name": "Video Slider",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.logo-list.settings.title.label"
+    },
+    {
+      "type": "select",
+      "id": "logo_width",
+      "options": [
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Original",
+          "value": "none"
+        }
+      ],
+      "label": "Logo Width",
+      "default": "none"
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.logo-list.settings.divider.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Slider",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header"]
+  }
+}
+{% endschema %}

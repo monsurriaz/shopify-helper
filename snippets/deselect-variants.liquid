@@ -1,0 +1,136 @@
+{% comment %} simple version {% endcomment %}
+{% if product.metafields.custom.enable_deselect_variants %}
+  <script>
+    let inputs, mainATCBtn;
+    let defaultTxt = "{{ 'products.product.add_to_cart' | t }}";
+
+    function findElements() {
+      inputs = document.querySelectorAll('.variant-input-wrap input[type="radio"]');
+      mainATCBtn = document.querySelector('button.btn.add-to-cart');
+
+      if(!inputs || !mainATCBtn) {
+        return setTimeout(findElements, 100);
+      }
+    }
+
+    function deselectVariants() {
+      findElements();
+
+      inputs.forEach(input => {
+        if (input.checked) {
+          input.removeAttribute('checked');
+          mainATCBtn.querySelector('[data-add-to-cart-text]').innerText = "Velg en størrelse";
+          mainATCBtn.setAttribute('disabled', 'true');
+        }
+      });
+
+      inputs.forEach(input => {
+        input.addEventListener('change', function() {
+          mainATCBtn.removeAttribute('disabled');
+        });
+      })
+    }
+    document.addEventListener('DOMContentLoaded', deselectVariants);
+  </script>
+{% endif %}
+
+
+
+{% comment %} Complex version {% endcomment %}
+ 
+{% if product.metafields.custom.disable_sticky_atc %}
+  {% style %}
+    [data-option-name='Color'] input[value='Choose color'] + label,
+    [data-option-name='Color'] input[value='Choose Color'] + label {
+      display: none;
+    }
+    .zrx-sticky-atc-main-button,
+    #product-atc-btn {
+      text-transform: uppercase;
+    }
+    .zrx-sticky-atc-main-button[disabled],
+    #product-atc-btn[disabled] {
+      cursor: auto;
+      background-color: rgb(211, 212, 213);
+      border-color: rgb(211, 212, 213);
+    }
+  {% endstyle %}
+
+  <script>
+    const mainInputs = document.querySelectorAll(
+      '.product-info .variant-picker__option [data-option-name="Color"] input[type="radio"]'
+    );
+    let stickyATC;
+    let quickAdd, quickInputs, quickATC;
+    const atcText = "Add to cart";
+
+    function toggleStickyATC() {
+      mainInputs.forEach((input) => {
+        if (input.checked) {
+          if (input.value == 'Choose color') {
+            input.removeAttribute('checked');
+            stickyATC.setAttribute('disabled', 'true');
+            stickyATC.innerHTML = 'please choose color';
+          } else {
+            stickyATC.removeAttribute('disabled');
+            stickyATC.innerHTML = atcText;
+          }
+        }
+      });
+    }
+
+    function toggleQuickATC() {
+      quickInputs.forEach((input) => {
+        if (input.checked) {
+          if (input.value == 'Choose color') {
+            input.removeAttribute('checked');
+            quickATC.setAttribute('disabled', 'true');
+            quickATC.querySelector('div').innerHTML = 'Please choose color';
+          } else {
+            quickATC.removeAttribute('disabled');
+          }
+        }
+      });
+    }
+
+    function findATC() {
+      quickAdd = document.querySelector('.horizontal-product__cta button[type="button"]');
+      stickyATC = document.querySelector('.zrx-sticky-atc-main-button');
+
+      if (!stickyATC) {
+        setTimeout(findATC, 100);
+        return;
+      }
+      toggleStickyATC();
+
+      if (quickAdd) {
+        quickAdd.addEventListener('click', function () {
+          function findQuickATC() {
+            quickInputs = document.querySelectorAll(
+              '.quick-buy-drawer__info [data-option-name="Color"] input[type="radio"]'
+            );
+            quickATC = document.querySelector('.quick-buy-drawer__info #product-atc-btn');
+
+            if (!quickInputs || !quickATC) {
+              setTimeout(findQuickATC, 100);
+              return;
+            }
+
+            toggleQuickATC();
+
+            quickInputs.forEach((input) => {
+              input.addEventListener('change', toggleQuickATC);
+            });
+          }
+          findQuickATC();
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', findATC);
+
+    mainInputs.forEach((input) => {
+      input.addEventListener('change', toggleStickyATC);
+    });
+  </script>
+{% endif %}
