@@ -2,7 +2,7 @@
 {% if product.metafields.custom.enable_deselect_variants %}
   <script>
     let inputs, mainATCBtn;
-    let defaultTxt = "{{ 'products.product.add_to_cart' | t }}";
+    let defaultTxt = "Add to cart";
 
     function findElements() {
       inputs = document.querySelectorAll('.variant-input-wrap input[type="radio"]');
