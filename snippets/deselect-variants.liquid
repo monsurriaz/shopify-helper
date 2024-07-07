@@ -1,4 +1,23 @@
-{% comment %} simple version {% endcomment %}
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+SIMPLE VARIANTS DESELECT
+----------------------------------------------------------------------------------------------------------------------
+
+This component is used to make all the variants deselect by default.
+
+********************************************
+Supported parameters
+********************************************
+
+* title: the title to use for the toggle button
+* icon: an optional icon attached to the title
+* content: the hidden content inside the accordion
+* open: if set to true the accordion is open by default
+* size: if set to "lg", the font is and spacing is bigger
+* class: any additional class
+* id: an optional ID for the accordion
+{%- endcomment -%}
+
 {% if product.metafields.custom.enable_deselect_variants %}
   <script>
     let inputs, mainATCBtn;

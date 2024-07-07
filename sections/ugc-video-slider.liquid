@@ -121,7 +121,7 @@
                   image_size: 'master',
                   autoplay: false,
                   loop: false,
-                  muted: true,
+                  muted: false,
                   controls: false,
                   class: 'ssbd__video'
               }}
@@ -198,35 +198,41 @@
     });
   }
 
-  function playToggle (video) {
+  function playToggle(video) {
     var videoId = video.closest('.ssbd-video__item').getAttribute('data-video-id');
     var playButton = document.querySelector('.playButton[data-video-id="' + videoId + '"]');
     var pauseButton = document.querySelector('.pauseButton[data-video-id="' + videoId + '"]');
 
     video.addEventListener("play", function() {
       playButton.style.display = "none";
-      pauseButton.style.display = "none";
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        pauseButton.style.display = "inline-block";
+      } else {
+        pauseButton.style.display = "none";
+      }
     });
 
     video.addEventListener("pause", function() {
-      playButton.style.display = "block";
+      playButton.style.display = "inline-block";
       pauseButton.style.display = "none";
     });
 
     video.addEventListener("ended", function() {
-      playButton.style.display = "block";
+      playButton.style.display = "inline-block";
       pauseButton.style.display = "none";
     });
 
-    // Show pause button on hover only if the video is playing
+    // Show pause button on hover only if the video is playing and on desktop
     video.closest('.ssbd-video__item').addEventListener("mouseenter", function() {
-      if (!video.paused) {
-        pauseButton.style.display = "block";
+      if (!video.paused && !window.matchMedia("(max-width: 768px)").matches) {
+        pauseButton.style.display = "inline-block";
       }
     });
 
     video.closest('.ssbd-video__item').addEventListener("mouseleave", function() {
-      pauseButton.style.display = "none";
+      if (!window.matchMedia("(max-width: 768px)").matches) {
+        pauseButton.style.display = "none";
+      }
     });
   }
 
