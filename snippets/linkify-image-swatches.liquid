@@ -1,0 +1,66 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+LINKIFY IMAGE SWATCHES
+----------------------------------------------------------------------------------------------------------------------
+
+This component is used to make linkable variants image swatches, also it's the resource of how to use metafields and its metaobjects data.
+
+********************************************
+Supported parameters
+********************************************
+
+* group_products: group_products is a product level metafield
+* size: if set to "lg", the font is and spacing is bigger
+* class: any additional class
+* id: an optional ID for the accordion
+{%- endcomment -%}
+
+{% assign group_products = product.metafields.custom.group_products %}
+{% if group_products != blank %}
+  {% assign select_color = '' %}
+  {% for group_product in group_products.value %}
+    {% assign group_product_item = all_products[group_product.handle] %}
+    {% if group_product_item == product %}
+      {% assign select_color = group_product_item.title | split: ' ' | last %}
+    {% endif %}
+  {% endfor %}
+  <div class="product-meta-selector product-meta-selector--metafield-color">
+    <fieldset
+      class="product-meta-option product-meta-option--metafield-color js product-form__item selector-wrapper"
+    >
+      <legend class="form__label product-form__label">
+        Select Color: <span class="product-form__selected-status selected-status--color">{{ select_color }}</span>
+      </legend>
+      <div class="single-option-selector--box single-option-selector--box-metafield-color">
+
+        {% for group_product in group_products.value %}
+          {% assign group_product_item = all_products[group_product.handle] %}
+          <a 
+            href="{{ group_product_item.url }}" 
+            class="single-option-selector__option-color-wrap{% if group_product_item == product %} select_color{% endif %}"
+            title="{{ group_product_item.title | split: ' ' | last }}"
+          >
+            <img src="{{ group_product_item.featured_image | img_url: 'small' }}" alt="{{ group_product_item.title }}">
+            <span class="sr-only hide">{{ group_product_item.title }}</span>
+          </a>
+        {% endfor %}
+        
+      </div>
+    </fieldset>
+  </div>
+  {% style %}
+    .product-form__buy-buttons {
+      margin-top: 0px;
+    }
+    {% if product.metafields.custom.default_color != blank %}
+      .ss-announcement-bar, 
+      .product-form__input input[type=radio]:checked+.single-option-selector__option-wrap label, 
+      .btn.product-form__cart-submit:after {
+        background-color: var(--product-theme-color) !important;
+      }
+      .header__icon, .estimate-delivery__time p {
+        color: var(--product-theme-color) !important;
+      }
+    {% endif %}
+  {% endstyle %}
+{% endif %}

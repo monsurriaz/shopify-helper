@@ -1,0 +1,46 @@
+{% assign videos = product.metafields.custom.video_gallery %}
+
+<div
+  class="enable__scrolling-slider"
+  id="slider-{{ section.id }}"
+>
+  {% for video_item in videos.value %}
+    <div class="video__slide-item">
+      <div class="video-item__wrapper">
+        {% if video_item.link_if_any != blank %}
+          <a href="{{ video_item.link_if_any }}">
+        {% endif %}
+
+        {% comment %} {{ video_item.video | metafield_tag }} {% endcomment %}
+
+        {% assign video_html = video_item.video | metafield_tag | json %}
+
+        {% assign clean_video_html = video_html | remove: '\u003c' | remove: '\u003e' | remove: '\"' %}
+        {% assign parts = clean_video_html | split: 'source src=' %}
+        {% assign url_part = parts[1] | split: ' ' %}
+        {% assign video_url = url_part[0] | remove: '\\/' | remove: '\\' | replace: '\\/', '/' | replace: '\/', '/' %}
+
+        {% assign poster_parts = clean_video_html | split: 'poster=' %}
+        {% assign poster_url_part = poster_parts[1] | split: ' ' %}
+        {% assign poster_url = poster_url_part[0]
+          | remove: '\\/'
+          | remove: '\\'
+          | replace: '\\/', '/'
+          | replace: '\/', '/'
+          | replace: '_small.', '_medium.'
+        %}
+
+        <video loop muted controls autoplay poster="{{ poster_url }}" class="ssbd__video" data-custom-attribute="value">
+          <source src="{{ video_url }}" type="video/mp4">
+          <img src="{{ poster_url }}" width="100%" height="100%" alt="Video poster image">
+          Your browser does not support the video tag.
+        </video>
+
+        {% if video_item.link_if_any != blank %}
+          </a>
+        {% endif %}
+        <p>{{ video_item.title }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
