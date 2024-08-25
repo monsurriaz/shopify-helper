@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Slider</title>
+    <style>
+      
+      /* Style 1: scrollToShow 1 */
+      /* add those code to grid class or parent class of single items */
+
+      .grid-parent {
+        display: flex;
+        gap: 16px;
+        position: relative;
+        flex-wrap: inherit;
+        overflow-y: hidden;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+      }
+
+      .single-item {
+        width: 75%; /* show one item full and quarter to another product */
+        scroll-snap-align: start;
+        flex-shrink: 0;
+      }
+
+      /* Style 2: Normal scrolling */
+
+      .grid-parent {
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        overflow-x: scroll;
+        width: 100%;
+        column-gap: 32px;
+        margin-left: 0;
+        margin-right: 0;
+        flex-wrap: nowrap;
+      }
+
+      .single-item {
+        width: 100%;
+        background-color: #fff;
+        flex-basis: 304px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: calc(25% - 32px) !important;
+      }
+    </style>
+  </head>
+  <body></body>
+</html>
