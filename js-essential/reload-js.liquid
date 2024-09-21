@@ -1,0 +1,21 @@
+<script>
+  // Method 1: Using liquid condition
+  {% if request.design_mode %}
+    document.addEventListener("shopify:section:load", function(event) {
+      function_call(); // call the function
+    });
+
+    document.addEventListener('DOMContentLoaded', simpleSliderInit);
+    document.addEventListener('shopify:section:select', simpleSliderInit);
+    document.addEventListener('shopify:section:load', simpleSliderInit);
+    document.addEventListener('shopify:section:unload', simpleSliderInit);
+    document.addEventListener('shopify:section:deselect', simpleSliderInit);
+    document.addEventListener('shopify:block:select', simpleSliderInit);
+  {% endif %}
+
+  // Method 2: Using JS condition
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', initSlider2); // here initSlider2 is a function
+    document.addEventListener('shopify:section:unload', initSlider2); // here initSlider2 is a function
+  }
+</script>

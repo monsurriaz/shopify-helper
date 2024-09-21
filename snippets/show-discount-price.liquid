@@ -1,0 +1,37 @@
+{% comment %}
+  Renders a list of product's price (regular, sale)
+
+  Accepts:
+  - product: {Object} Product Liquid object (optional)
+  - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
+  - show_badges: {Boolean} Renders 'Sale' and 'Sold Out' tags if the product matches the condition (optional)
+  - price_class: {String} Adds a price class to the price element (optional)
+  - show_compare_at_price: {Boolean} Renders the compare at price if the product matches the condition (optional)
+
+  Usage:
+  {% render 'price', product: product %}
+{% endcomment %}
+
+{% liquid
+  assign enable_discount = false
+  for collection in product.collections
+    if collection.metafields.custom.enable_discount == true
+      assign enable_discount = true
+      assign discount_percentage = collection.metafields.custom.percentage_amount
+    endif
+  endfor
+%}
+
+{% if enable_discount %}
+  {% assign discount_amount = price | times: discount_percentage | divided_by: 100 %}
+  <span class="visually-hidden visually-hidden--inline">Regular Price</span>
+  <span class="">
+    <s class="price-item price-item--regular price-item-old">
+      {{ price | money }}
+    </s>
+  </span>
+  <span class="price-item price-item--regular">
+    {{ price | minus: discount_amount | money }}
+  </span>
+{% endif %}
+

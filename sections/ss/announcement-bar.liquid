@@ -1,0 +1,148 @@
+<style>
+
+  .ss-annoucement-banner-wrapper {
+    padding: {{ section.settings.padding }}px 0;
+    background-color: {{ section.settings.background-color }};
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  .ss-anouncement-banner-paragraph {
+    color: {{ section.settings.text-color }};
+    margin:0;
+    padding:0;
+    line-height:1;
+    font-size:10px;
+    text-transform:uppercase;
+  }
+
+  .ss-announcement-banner-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .ss-anouncement-banner-stars {
+    color: {{ section.settings.text-color }};
+    font-size:8px;
+  }
+
+  @media (min-width: 500px){
+    .ss-announcement-banner-center {
+        padding: 0 10px;
+    }
+    
+    .ss-anouncement-banner-paragraph {
+      font-size:14px;
+    }
+    
+    .ss-anouncement-banner-stars {
+      font-size:8px;
+    }
+  }
+  
+  
+</style>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const productForm = document.querySelector('.header, .pageheader')
+
+        if (!productForm) {
+            return
+        }
+
+        const templateContent =  document.querySelector('#ss-announcement-banner-{{ section.id }}').content
+        
+        productForm.insertAdjacentElement('beforebegin', templateContent.firstElementChild)
+        
+    })
+</script>
+
+<template id="ss-announcement-banner-{{ section.id }}">
+  <div class="ss-annoucement-banner-wrapper">
+    <div style="padding:0 10px;">
+      <p class="ss-anouncement-banner-paragraph">{{ section.settings.benefit-1 }}</p>
+    </div>
+    <div class="ss-announcement-banner-center">
+      <p class="ss-anouncement-banner-paragraph">{{ section.settings.benefit-2 }}</p>
+    </div>
+    <div style="padding:0 10px;">
+      <p class="ss-anouncement-banner-paragraph">{{ section.settings.benefit-3 }}</p>
+    </div>
+  </div>
+</template>
+
+{% schema %}
+  {
+    "name": "SS - Announcement Bar",
+	"class": "section",
+	"tag": "section",
+    "settings": [
+        {
+            "type": "paragraph",
+            "content": "Att: Save settings to view updates"
+        },
+		{
+          "type": "header",
+          "content": "Colors"
+        },
+	    {
+		  "type": "color",
+		  "label": "Banner background color",
+		  "id": "background-color",
+		  "default": "#EAD5D9"
+		},
+        {
+		  "type": "color",
+		  "label": "Text color",
+		  "id": "text-color",
+		  "default": "#000000"
+		},
+        {
+          "type": "header",
+          "content": "Banner padding"
+        },
+        {
+          "type": "range",
+          "id": "padding",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding",
+          "default": 10
+        },
+        {
+          "type": "header",
+          "content": "Benefit texts"
+        },
+        {
+          "type": "text",
+		  "label": "Benefit 1",
+		  "id": "benefit-1",
+		  "default": "Free shipping"
+        },
+        {
+          "type": "text",
+		  "label": "Benefit 2",
+		  "id": "benefit-2",
+		  "default": "Trusted by 1000+"
+        },
+        {
+          "type": "text",
+		  "label": "Benefit 3",
+		  "id": "benefit-3",
+		  "default": "Easy returns"
+        }
+	],
+ 	"presets": [
+      {
+        "name": "SS - Announcement Bar"
+      }
+	]
+  }
+{% endschema %}

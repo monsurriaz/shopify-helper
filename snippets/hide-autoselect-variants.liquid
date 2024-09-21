@@ -1,0 +1,169 @@
+{% comment %}
+  Renders a list of hide unavailable varaint and autoselect valid combo
+  It will work for radio and select types of variants
+
+  Accepts:
+  - product: {Object} Product Liquid object (optional)
+
+  Usage:
+  {% render 'hide-autoselect-variants', product: product %}
+{% endcomment %}
+
+<script>
+  // Function to initialize variant select functionality
+  function initializeVariantSelects() {
+    const variantSelects = document.querySelector('variant-selects') || document.querySelector('variant-radios');
+    if (!variantSelects) return; // If element is not found, stop
+
+    const pickerType = (variantSelects.querySelectorAll('fieldset').length > 0) ? 'radios' : 'selects';
+    const fieldsets = (pickerType === 'radios') ? 
+      Array.from(variantSelects.querySelectorAll('fieldset')) : 
+      Array.from(variantSelects.querySelectorAll('.product-form__input--dropdown'));  // it can be changable based on theme
+
+    // there must be a script with product.variants | json on product page.
+    // <script type="application/json" id="product-json">
+    //   {{ product.variants | json }}
+    // </script>
+    const productJson = JSON.parse(document.querySelector('#product-json').textContent);
+
+    let selectedOptions = [];
+
+    variantSelects.addEventListener('change', rebuildOptions);
+    rebuildOptions();
+
+    // Function to check if a combination is valid
+    function validCombo(inputValue, optionLevel) {
+      // If there is only 1 level of variants
+      if (optionLevel === 0) {
+        for (let i = 0; i < productJson.length; i++) {
+          // Check if the current option is available in productJson
+          if (productJson[i].option1 === inputValue && productJson[i].available) {
+            return true; // Return true if the variant is valid
+          }
+        }
+      }
+      // If there are 2 variant levels
+      else if (optionLevel === 1) {
+        for (let i = 0; i < productJson.length; i++) {
+          if (productJson[i].option1 === selectedOptions[0] && productJson[i].option2 === inputValue) {
+            return true;
+          }
+        }
+      }
+      // If there are 3 variant levels
+      else {
+        for (let i = 0; i < productJson.length; i++) {
+          if (productJson[i].option1 === selectedOptions[0] && productJson[i].option2 === selectedOptions[1] && productJson[i].option3 === inputValue) {
+            return true;
+          }
+        }
+      }
+      return false; // Return false if no valid combo is found
+    }
+
+
+    // Rebuilds the options to enable/disable based on valid combinations
+    function rebuildOptions() {
+      // Update selectedOptions based on current selections
+      selectedOptions = fieldsets.map((fieldset) => {
+        return (pickerType === 'radios') ? 
+          Array.from(fieldset.querySelectorAll('input')).find((radio) => radio.checked).value : 
+          Array.from(fieldset.querySelectorAll('select'), (select) => select.value);
+      });
+
+      // Handle single-level variants
+      if (fieldsets.length === 1) {
+        const inputs = (pickerType === 'radios') ? fieldsets[0].querySelectorAll('input') : fieldsets[0].querySelectorAll('option');
+
+        inputs.forEach(input => {
+          input.disabled = validCombo(input.value, 0) ? false : true;
+          if (pickerType === 'radios') {
+            const label = fieldsets[0].querySelector(`label[for="${input.id}"]`);
+            // label.style.display = input.disabled ? "none" : "";
+            label.style.opacity = (input.disabled) ? 0.5 : 1;
+          } else {
+            input.hidden = input.disabled;  // disabled the options of variants type select
+          }
+        });
+        return; // Stop here, no need to proceed for further levels
+      }
+
+      // Disable or enable options based on valid combinations
+      for (let optionLevel = 1, n = fieldsets.length; optionLevel < n; optionLevel++) {
+        const inputs = (pickerType === 'radios') ? fieldsets[optionLevel].querySelectorAll('input') : fieldsets[optionLevel].querySelectorAll('option');
+
+        inputs.forEach(input => {
+          input.disabled = validCombo(input.value, optionLevel) ? false : true;
+          if (pickerType === 'radios') {
+            const label = fieldsets[optionLevel].querySelector(`label[for="${input.id}"]`);
+            // label.style.display = input.disabled ? "none" : "";
+            label.style.opacity = (input.disabled) ? 0.5 : 1;
+          } else {
+            input.hidden = input.disabled;
+          }
+        });
+      }
+
+      // Auto-select first available option if current is disabled
+      for (let optionLevel = 1, fieldsetsLength = fieldsets.length, change = false; optionLevel < fieldsetsLength && !change; optionLevel++) {
+        if (pickerType === 'radios') {
+          const checkedInput = fieldsets[optionLevel].querySelector('input:checked'); // Get checked input
+          if (checkedInput && checkedInput.disabled === true) {
+            const firstEnabledInput = fieldsets[optionLevel].querySelector('input:not(:disabled)');
+            if (firstEnabledInput) {
+              firstEnabledInput.checked = true;
+              change = true;
+              console.log(`Auto-selected option in radios at level ${optionLevel + 1}`);
+            }
+          }
+        } else {
+          const selectedOption = fieldsets[optionLevel].querySelector('option:checked'); // Get selected option
+          if (selectedOption && selectedOption.disabled === true) {
+            const firstEnabledOption = fieldsets[optionLevel].querySelector('option:not(:disabled)');
+            if (firstEnabledOption) {
+              firstEnabledOption.selected = true;
+              change = true;
+              console.log(`Auto-selected option in dropdown at level ${optionLevel + 1}`);
+            }
+          }
+        }
+
+        // Dispatch 'change' event to re-trigger the process if a change was made
+        if (change) {
+          variantSelects.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+    }
+  }
+
+  // Use MutationObserver to detect when the variant elements are re-rendered
+  const observer = new MutationObserver((mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList' && (mutation.addedNodes.length || mutation.removedNodes.length)) {
+        console.log("Detected DOM change, re-initializing variant selects...");
+        initializeVariantSelects(); // Reinitialize variant functionality when DOM changes
+      }
+    }
+  });
+
+  // Start observing the body or container that wraps the variant select elements
+  const targetNode = document.querySelector('body'); // Adjust this if necessary to observe a specific container
+  const config = { childList: true, subtree: true };
+
+  // Start observing
+  observer.observe(targetNode, config);
+
+  // Initialize on page load
+  initializeVariantSelects();
+</script>
+
+<style>
+  .product-form__input--pill input[type=radio]:disabled+label {
+    background-color: #ccc;
+    color: #666;
+    border-color: rgba(48,48,48, .1);
+    border-radius: 40px;
+    cursor: not-allowed;
+  }
+</style>
+

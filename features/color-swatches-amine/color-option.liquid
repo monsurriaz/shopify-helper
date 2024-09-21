@@ -14,6 +14,7 @@
     block: block
   %}
 {% endcomment %}
+
 {%- liquid
   assign variants_available_arr = product.variants | map: 'available'
   assign variants_option1_arr = product.variants | map: 'option1'
@@ -22,10 +23,10 @@
 
   assign product_form_id = 'product-form-' | append: section.id
 
-  assign swatchType = settings.swatchType
-  assign swatchStyle = settings.swatchStyle
-  assign swatchSize = settings.swatchSize
-  assign swatchColors = settings.swatchColors | newline_to_br | split: '<br />'
+  assign swatch_type = settings.swatch_type
+  assign swatch_style = settings.swatch_style
+  assign swatch_size = settings.swatch_size
+  assign swatch_colors = settings.swatch_colors | newline_to_br | split: '<br />'
 -%}
 
 <style>
@@ -46,8 +47,8 @@
   }
   .product-form__input input[type='radio'] + label.color-swatch{
     border:1px rgb(214,214,214) solid;
-    width: {{swatchSize}}px;
-    height: {{swatchSize}}px;
+    width: {{ swatch_size }}px;
+    height: {{ swatch_size }}px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -71,7 +72,7 @@
     width: 100%;
     height: 100%;
     z-index: 1;
-    {%- if settings.dark or swatchType == "variantImage" -%}
+    {%- if settings.dark or swatch_type == "variantImage" -%}
         border: none;
     {%- else -%}
       border: 3px rgb(255 255 255) solid;
@@ -90,8 +91,8 @@
   }
   .product-form__input input[type='radio'] + label.color-swatch.variant-swatch{
     background-color:white;
-    {%- if swatchStyle == "portrait" -%}
-    height: calc({{swatchSize}}px/ 0.66);
+    {%- if swatch_style == "portrait" -%}
+    height: calc({{ swatch_size }}px/ 0.66);
     {%- endif -%}
   }
 </style>
@@ -132,61 +133,66 @@
         class="disabled"
       {% endif %}
     >
-    {%- if swatchType == 'variantImage' -%}
+    {%- if swatch_type == 'variantImage' -%}
       <label
-        data-{{ option.name | downcase | replace: ' ', '-' }}="{{value}}"
+        data-{{ option.name | downcase | replace: ' ', '-' }}="{{ value }}"
         style="
           background-image:url(
             {%- liquid
-              assign optionIndex = option.position | minus: 1
+              assign option_index = option.position | minus: 1
               for variant in product.variants
-                  if variant.options[optionIndex] == value
-                    assign swatchSizePortrait = swatchSize | times: 2
-                    echo variant.image | image_url: width: swatchSizePortrait
+                  if variant.options[option_index] == value
+                    assign swatch_size_portrait = swatch_size | times: 2
+                    echo variant.image | image_url: width: swatch_size_portrait
                     break
                   endif
               endfor
           -%}
           );"
-        class="color-swatch variant-swatch {% case swatchStyle %}{% when "round" %}round{% when "square-round-corners" %}round-corners{% endcase %}"
+        class="color-swatch variant-swatch {% case swatch_style %}{% when "round" %}round{% when "square-round-corners" %}round-corners{% endcase %}"
         for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
       >
         <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-        <!-- Color options made by Amine Ammari -->
+        {% comment %} code incase of variant metafield {% endcomment %}
+        {% comment %} {% assign option_index = option.position | minus: 1 %}
+        {% for variant in product.variants %}
+          {% if variant.options[option_index] == value %}
+            {{ variant.metafields.custom.packages_text | metafield_tag }}
+          {% endif %}
+        {% endfor %} {% endcomment %}
       </label>
     {%- else -%}
       {%- liquid
-        for colorData in swatchColors
-          assign colorDataArr = colorData | split: ':'
-          assign ruleName = colorDataArr[0] | strip
-          if value == ruleName
-            assign colorCodes = colorDataArr[1] | strip | split: '#'
-            assign colorNumber = 0 | plus: colorCodes.size
+        for color_data in swatch_colors
+          assign color_data_arr = color_data | split: ':'
+          assign rule_name = color_data_arr[0] | strip
+          if value == rule_name
+            assign color_codes = color_data_arr[1] | strip | split: '#'
+            assign color_number = 0 | plus: color_codes.size
             break
           endif
         endfor
       -%}
-      <label
-        data-{{ option.name | downcase | replace: ' ', '-' }}="{{value}}"
+      <label data-{{ option.name | downcase | replace: ' ', '-' }}="{{ value }}"
         style="
-              {%- case colorNumber -%}
+          {%- case color_number -%}
           {%- when 2 -%}
-              background-color: #{{ colorCodes[1] }}
+              background-color: #{{ color_codes[1] }}
           {%- when 3 -%}
-              background: linear-gradient(135deg, #{{ colorCodes[1] }} 50%, #{{ colorCodes[2] }} 50%);
+              background: linear-gradient(135deg, #{{ color_codes[1] }} 50%, #{{ color_codes[2] }} 50%);
           {%- when 4 -%}
-              background: linear-gradient(to right,#{{ colorCodes[1] }} 33%,#{{ colorCodes[2] }} 33%,#{{ colorCodes[2] }} 66%, #{{ colorCodes[3] }} 66%);
+              background: linear-gradient(to right,#{{ color_codes[1] }} 33%,#{{ color_codes[2] }} 33%,#{{ color_codes[2] }} 66%, #{{ color_codes[3] }} 66%);
           {%- else -%}
-              background-image:url({{ colorCodes[0] | downcase | replace: ' ', '-' | file_img_url }})
+              background-image:url({{ color_codes[0] | downcase | replace: ' ', '-' | file_img_url }})
           {%- endcase -%}
           ;
         "
-        class="color-swatch {% case swatchStyle %}{% when "round" %}round{% when "square-round-corners" %}round-corners{% endcase %}"
+        class="color-swatch {% case swatch_style %}{% when "round" %}round{% when "square-round-corners" %}round-corners{% endcase %}"
         for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
       >
-        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+        <span class="visually-hidden">Sold Out</span>
       </label>
-      {%- assign colorCodes = '' -%}
+      {%- assign color_codes = '' -%}
     {%- endif -%}
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     <option
@@ -211,15 +217,14 @@
     })
   })
 </script>
+
 <!-- Color options made by Amine Ammari -->
-
-
 
 
 {% comment %} liquid for getting hexcode from settings {% endcomment %}
  
 {% liquid
-    assign swatch_colors = settings.swatchColors | newline_to_br | split: '<br />'
+    assign swatch_colors = settings.swatch_colors | newline_to_br | split: '<br />'
   assign has_clr = false
           
   for color_obj in swatch_colors 
