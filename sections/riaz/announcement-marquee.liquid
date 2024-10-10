@@ -1,0 +1,191 @@
+<style>
+  #announcement-marquee-banner-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    padding: {{ section.settings.padding }}px 0;
+    background-color: {{ section.settings.background_color }};
+    box-sizing: border-box;
+  }
+
+  .annoucement-marquee-wrapper {
+    display: flex;
+    white-space: nowrap;
+  }
+  .announcement-marquee {
+    display: inline-flex;
+    animation: scroll-left {{ section.settings.slider_speed | times: 1000 | round: 0 }}ms linear infinite;
+  }
+  .marquee-line {
+    display: inline-block;
+    margin-right: {{section.settings.space}}px;
+    white-space: nowrap; /* Prevent text from wrapping */
+  }
+
+  .marquee-line-paragraph {
+    color: {{ section.settings.text_color }};
+    font-size:{{section.settings.font_size_mobile}}px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  /* Keyframes for continuous scrolling */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @media (min-width: 500px){
+    .ss-anouncement-banner-paragraph {
+      font-size:{{section.settings.font_size}}px;
+    }
+  }
+</style>
+
+<div id="announcement-marquee-banner-{{ section.id }}">
+  <div class="annoucement-marquee-wrapper">
+    {% for i in (1..4) %}
+      <div class="announcement-marquee">
+        {% for block in section.blocks %}
+          <div class="marquee-line">
+            <p class="marquee-line-paragraph">{{block.settings.text}}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.marquee-line').forEach(line => {
+    const speed = line.offsetWidth / 100; // Adjust speed based on width
+    line.style.animationDuration = `${speed}s`;
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Announcement Bar(Marquee)",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Att: Save settings to view updates"
+      },
+		  {
+        "type": "header",
+        "content": "Colors"
+      },
+	    {
+        "type": "color",
+        "label": "Banner background color",
+        "id": "background_color",
+        "default": "#EAD5D9"
+		  },
+      {
+        "type": "color",
+        "label": "Text color",
+        "id": "text_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Banner padding"
+      },
+      {
+        "type": "range",
+        "id": "padding",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding",
+        "default": 10,
+        "info": "Announcement bar's height"
+      },
+      {
+        "type": "number",
+        "id": "font_size",
+        "label": "Font Size",
+        "default": 15
+      },
+      {
+        "type": "number",
+        "id": "font_size_mobile",
+        "label": "Font Size (Mobile)",
+        "default": 13
+      },
+      {
+        "type": "header",
+        "content": "Slides"
+      },
+      {
+        "type": "range",
+        "id": "slider_speed",
+        "min": 1,
+        "max": 40,
+        "step": 1,
+        "label": "Slider Speed",
+        "info": "⚡ <----------------> 🐌",
+        "default": 15
+      },
+      {
+        "type": "number",
+        "id": "space",
+        "label": "Space between lines",
+        "default": 10
+      }
+	  ],
+    "blocks": [
+      {
+        "type": "line",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "NEW AI UGC ADS AVAILABLE NOW!⚡️"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Announcement Bar(Marquee)",
+        "blocks": [
+          {
+            "type": "line",
+            "settings": {
+              "text": " NEW AI UGC ADS AVAILABLE NOW! ⚡️"
+            }
+          },
+          {
+            "type": "line",
+            "settings": {
+              "text": "Video Ad Packages ⚡️"
+            }
+          },
+          {
+            "type": "line",
+            "settings": {
+              "text": " Image Ad Packages ⚡️"
+            }
+          },
+          {
+            "type": "line",
+            "settings": {
+              "text": " UGC ADS AVAILABLE NOW! ⚡️"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

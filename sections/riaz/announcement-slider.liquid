@@ -1,0 +1,177 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+
+{%- liquid
+  
+-%}
+
+<style>
+  /* Base Styles */
+  .announcement-slider {
+    position: relative;
+    width: 100%;
+    height: 48px; /* Default height */
+    overflow: hidden;
+    display: flex;
+    align-items: center; /* Center content vertically */
+    background-color: #fff; /* Optional: set background color to avoid transparency issues */
+  }
+  .announcement-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%; /* Ensure slides fill the height of the container */
+    box-sizing: border-box;
+    padding: 0 10px; /* Add padding for better spacing */
+    font-size: 14px; /* Adjust text size for fit */
+    flex-shrink: 0; /* Prevent slides from shrinking */
+  }
+  .announcement-icon {
+    margin-right: 8px; /* Adjust margin between icon and text */
+    width: 20px; /* Set icon size */
+    height: 20px;
+    display: block; /* Ensure proper layout */
+  }
+  .announcement-text {
+    font-size: 14px; /* Adjust font size */
+    font-weight: bold; /* Make text bold */
+  }
+
+  /* Responsive Styles */
+  @media (min-width: 768px) {
+    .announcement-slide {
+      flex: 0 0 auto;
+      width: 33.33%; /* Three slides per view on larger screens */
+    }
+  }
+
+  @media (max-width: 767px) {
+    .announcement-slider {
+      height: 40px; /* Adjust height for phones */
+    }
+    .announcement-slide {
+      flex: 0 0 auto;
+      width: 100%; /* Full width on small screens */
+    }
+    .announcement-icon {
+      width: 16px; /* Adjust icon size for smaller screens */
+      height: 16px;
+    }
+    .announcement-text {
+      font-size: 12px; /* Adjust text size for smaller screens */
+    }
+  }
+</style>
+
+<div class="section-{{ section.id }} announcement-slider">
+  <div class="swiper announcement-slider-{{ section.id }}">
+    <div class="swiper-wrapper">
+      {%- for block in section.blocks -%}
+        <div class="swiper-slide announcement-slide">
+          <div class="announcement-icon">
+            <img src="https://cdn.shopify.com/s/files/1/0769/5935/1112/files/announcement-bar-checkmark.svg?v=1727464705" width="auto" height="auto" alt="Icon">
+          </div>
+          <div class="announcement-text">
+            {{ block.settings.text }}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+<script>
+  // Initialize Swiper
+  var swiper = new Swiper('.announcement-slider-{{ section.id }}', {
+    slidesPerView: 1, // Default to 1 slide per view
+    spaceBetween: 10,
+    loop: true,
+    autoplay: {
+      delay: 5000, // Auto-slide every 5 seconds
+      disableOnInteraction: false, // Continue autoplay after user interaction
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 3, // Show 3 slides per view on desktop
+      },
+    },
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Announcement Timer",
+    "class": "shopify-section--announcement-timer",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show section",
+        "default": true
+      },
+      {
+        "type": "url",
+        "id": "timer_url",
+        "label": "Timer Url"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Slider Text",
+            "default": "<p>Rijklare Bezorging Binnen 24 Uur</p>"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Announcement slider",
+        "blocks": [
+          {
+            "type": "item",
+            "settings": {
+              "text": "<p>Rijklare Bezorging Binnen 24 Uur</p>"
+            }
+          },
+          {
+            "type": "item",
+            "settings": {
+              "text": "<p>Betaal gespreid of achteraf</p>"
+            }
+          },
+          {
+            "type": "item",
+            "settings": {
+              "text": "<p>1500m² showroom voor advies of proefrit</p>"
+            }
+          },
+          {
+            "type": "item",
+            "settings": {
+              "text": "<p>1000+ Trustpilot reviews</p>"
+            }
+          },
+          {
+            "type": "item",
+            "settings": {
+              "text": "<p>1 jaar garantie</p>"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

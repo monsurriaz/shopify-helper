@@ -1,15 +1,14 @@
 <style>
-
   .ss-annoucement-banner-wrapper {
     padding: {{ section.settings.padding }}px 0;
-    background-color: {{ section.settings.background-color }};
+    background-color: {{ section.settings.background_color }};
     display:flex;
     justify-content: space-evenly;
     align-items: center;
   }
   
   .ss-anouncement-banner-paragraph {
-    color: {{ section.settings.text-color }};
+    color: {{ section.settings.text_color }};
     margin:0;
     padding:0;
     line-height:1;
@@ -26,13 +25,13 @@
   }
 
   .ss-anouncement-banner-stars {
-    color: {{ section.settings.text-color }};
+    color: {{ section.settings.text_color }};
     font-size:8px;
   }
 
   @media (min-width: 500px){
     .ss-announcement-banner-center {
-        padding: 0 10px;
+      padding: 0 10px;
     }
     
     .ss-anouncement-banner-paragraph {
@@ -43,8 +42,6 @@
       font-size:8px;
     }
   }
-  
-  
 </style>
 
 <script>
@@ -79,70 +76,70 @@
 {% schema %}
   {
     "name": "SS - Announcement Bar",
-	"class": "section",
-	"tag": "section",
+    "class": "section",
+    "tag": "section",
     "settings": [
-        {
-            "type": "paragraph",
-            "content": "Att: Save settings to view updates"
-        },
-		{
-          "type": "header",
-          "content": "Colors"
-        },
+      {
+        "type": "paragraph",
+        "content": "Att: Save settings to view updates"
+      },
+		  {
+        "type": "header",
+        "content": "Colors"
+      },
 	    {
-		  "type": "color",
-		  "label": "Banner background color",
-		  "id": "background-color",
-		  "default": "#EAD5D9"
-		},
-        {
-		  "type": "color",
-		  "label": "Text color",
-		  "id": "text-color",
-		  "default": "#000000"
-		},
-        {
-          "type": "header",
-          "content": "Banner padding"
-        },
-        {
-          "type": "range",
-          "id": "padding",
-          "min": 0,
-          "max": 30,
-          "step": 1,
-          "unit": "px",
-          "label": "Padding",
-          "default": 10
-        },
-        {
-          "type": "header",
-          "content": "Benefit texts"
-        },
-        {
-          "type": "text",
-		  "label": "Benefit 1",
-		  "id": "benefit-1",
-		  "default": "Free shipping"
-        },
-        {
-          "type": "text",
-		  "label": "Benefit 2",
-		  "id": "benefit-2",
-		  "default": "Trusted by 1000+"
-        },
-        {
-          "type": "text",
-		  "label": "Benefit 3",
-		  "id": "benefit-3",
-		  "default": "Easy returns"
-        }
-	],
- 	"presets": [
+        "type": "color",
+        "label": "Banner background color",
+        "id": "background_color",
+        "default": "#EAD5D9"
+		  },
+      {
+        "type": "color",
+        "label": "Text color",
+        "id": "text_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Banner padding"
+      },
+      {
+        "type": "range",
+        "id": "padding",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding",
+        "default": 10
+      },
+      {
+        "type": "header",
+        "content": "Benefit texts"
+      },
+      {
+        "type": "text",
+        "label": "Benefit 1",
+        "id": "benefit-1",
+        "default": "Free shipping"
+      },
+      {
+        "type": "text",
+        "label": "Benefit 2",
+        "id": "benefit-2",
+        "default": "Trusted by 1000+"
+      },
+      {
+        "type": "text",
+        "label": "Benefit 3",
+        "id": "benefit-3",
+        "default": "Easy returns"
+      }
+	  ],
+    "presets": [
       {
         "name": "SS - Announcement Bar"
       }
-	]
+    ]
   }
 {% endschema %}

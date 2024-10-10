@@ -34,6 +34,7 @@
     // Function to check if a combination is valid
     function validCombo(inputValue, optionLevel) {
       // If there is only 1 level of variants
+      // we can simply ignore it and add a condition using liquid option.available 
       if (optionLevel === 0) {
         for (let i = 0; i < productJson.length; i++) {
           // Check if the current option is available in productJson
@@ -72,6 +73,7 @@
       });
 
       // Handle single-level variants
+      // we can simply ignore it and add a condition using liquid option.available 
       if (fieldsets.length === 1) {
         const inputs = (pickerType === 'radios') ? fieldsets[0].querySelectorAll('input') : fieldsets[0].querySelectorAll('option');
 

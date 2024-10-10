@@ -1,0 +1,386 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .announcement-timer-{{ section.id }} {
+    {% unless section.settings.enable_static %}
+      /* background: linear-gradient(45deg, #3D348B, #3D348B, #9E388B, #DF4F79, #DF4F79); */
+      /* #001F3F (dark navy blue)
+      #003366 (deep ocean blue)
+      #004080 (royal blue)
+      #0059B3 (muted cobalt blue)
+      #0073E6 (rich blue) */
+      /* background: linear-gradient(45deg, #001F3F, #003366, #004080, #0059B3, #0073E6); */
+      /* #1B263B (dark storm blue)
+      #2C3E50 (deep blue-gray)
+      #34495E (stormy blue-gray)
+      #3E5F74 (muted slate blue)
+      #4C7087 (dark ocean blue-gray) */
+      background: linear-gradient(45deg, #001F3F, #2C3E50, #34495E, #3E5F74, #4C7087);
+      animation: primaryGradient 5s ease infinite;
+      background-size: 400% 400%;
+    {% else %}
+      background-color: {{ section.settings.static_bg_color }};
+    {% endunless %}
+  }
+{%- endstyle -%}
+
+<style>
+ .announcement-section-1 .announcement-wrapper {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 19.7px;
+    letter-spacing: -0.16px;
+    text-align: center;
+    padding: 10px 0;
+  }
+  .count-down {
+    padding: 10px 0px;
+  }
+  .count-down, .count-down-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  .count-down-text h3 {
+    color: white;
+    line-height: 130%;
+  }
+  .box-3 {
+    background-color: #fff;
+    border-radius: 2px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    min-height: 32px;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 3px;
+    font-size: 12px;
+    line-height: 20px;
+    display: flex;
+  }
+  .holiday-clock {
+    color: #2a2552;
+    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .clock-number-2 {
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .clock-label-2 {
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-size: 8px;
+    line-height: 1;
+  }
+  .text-block-countdown {
+    color: #fff;
+    padding-left: 2.5px;
+    padding-right: 2.5px;
+    font-weight: 800;
+  }
+  .count-down-text h3 {
+    font-size: 16px;
+  }
+  .announcement-section-1  .announcement-wrapper {
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    display: flex;
+  }
+  .announcement-section-1 .announcement-wrapper {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 19.7px;
+    letter-spacing: -0.16px;
+    text-align: center;
+    padding: 10px 0;
+  }
+  @keyframes primaryGradient{
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  @media(max-width:767px){
+    .count-down {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .count-down-text {
+      gap: 2px;
+      flex-direction: row;
+      align-items: center  !important;
+      gap: 8px;
+    }
+    .count-down {
+      gap: 5px;
+    }
+    .count-down .count-down-text {
+      flex-direction: column;
+      align-items: center !important;
+      gap: 5px;
+    }
+    .count-down {
+      gap: 10px;
+      justify-content: space-between;
+    }
+    .count-down-text h3 {
+      font-size: 12px;
+    }
+    .count-down {
+      gap: 5px;
+      justify-content: space-between;
+      flex-direction: row;
+    }
+    .count-down {
+      padding: 10px 5px;
+    }
+  }
+  @media(max-width:740px){
+    .announcement-section-1 .announcement-wrapper {
+      font-size: 16px;
+      padding: 8px 0;
+    }
+    .announcement-section-1 .announcement-wrapper {
+      font-size: 14px;
+      padding: 8px 0;
+      grid-column-gap: 30px;
+    }
+  }
+  @media screen and (max-width: 479px) {
+    .announcement-section-1 .announcement-wrapper {
+      font-size: 14px;
+      padding: 8px 0;
+      grid-column-gap: 20px;
+    }
+    span.clock-down_text {
+      text-align: right;
+      line-height: 1.3;
+      max-width: 230px;
+    }
+    .holiday-clock {
+      z-index: 1;
+      position: relative;
+      flex: auto;
+      justify-content: flex-start;
+    }
+    .box-3 {
+      width: 28px;
+      min-width: 28px;
+      height: 32px;
+      min-height: 28px;
+    }
+    .clock-number-2 {
+      font-size: 13px;
+    }
+    .clock-label-2 {
+      font-size: 7px;
+    }
+  }
+  @media(max-width:379px){
+    .announcement-section-1 .announcement-wrapper {
+      font-size: 11px;
+      padding: 8px 0;
+      grid-column-gap: 5px;
+    }
+    .text-block-countdown {
+      padding-left: 1.6px;
+      padding-right: 1.6px;
+    }
+    .box-3 {
+      width: 24px;
+      min-width: 24px;
+    }
+  }
+</style>
+
+<div
+  class="announcement-timer announcement-timer-{{ section.id }} section-{{ section.id }}-padding gradient">
+  <div class="page-width">
+    <div class="announcement-section-1">
+      <div class="announcement-wrapper">
+        <span class="clock-down_text">{{ section.settings.text }}</span>
+        <div id="js-clock" class="holiday-clock">
+          <div class="box-3">
+            <div id="js-clock-hours" class="clock-number-2">01</div>
+            <div class="clock-label-2">{{ section.settings.hours }}</div>
+          </div>
+          <div class="text-block-countdown">:</div>
+          <div class="box-3">
+            <div id="js-clock-minutes" class="clock-number-2">26</div>
+            <div class="clock-label-2">{{ section.settings.mins }}</div>
+          </div>
+          <div class="text-block-countdown">:</div>
+          <div class="box-3">
+            <div id="js-clock-seconds" class="clock-number-2">46</div>
+            <div class="clock-label-2">{{ section.settings.sec }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Product page countdown timer js start
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+  function getCookie(name) {
+    const matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+  if (getCookie('timer') > new Date().getTime()) {
+    var time = getCookie('timer');
+    var timer = setInterval(function () {
+      var left = time - new Date().getTime();
+      var hours = Math.floor(left / (1000 * 60 * 60));
+      var minutes = Math.floor((left % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((left % (1000 * 60)) / 1000);
+
+      hours = ('0' + hours).slice(-2);
+      minutes = ('0' + minutes).slice(-2);
+      seconds = ('0' + seconds).slice(-2);
+
+      document.querySelector('#js-clock-hours').innerHTML = hours;
+      document.querySelector('#js-clock-minutes').innerHTML = minutes;
+      document.querySelector('#js-clock-seconds').innerHTML = seconds;
+
+      if (left <= 1000) {
+        clearInterval(timer);
+        document.cookie = 'timer=""; path=/; domain=irellia.com; secure=true; expires=-1';
+        location.reload();
+      }
+    }, 0);
+  } else {
+    document.cookie = 'timer=' + (new Date().getTime() + 7981974) + '; path=/; domain=irellia.com; secure=true; expires=' + new Date(new Date().getTime() + 3600000 * 24).toUTCString();
+    var time = new Date().getTime() + 7981974;
+    var timer = setInterval(function () {
+      var left = time - new Date().getTime();
+      var hours = Math.floor(left / (1000 * 60 * 60));
+      var minutes = Math.floor((left % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((left % (1000 * 60)) / 1000);
+
+      hours = ('0' + hours).slice(-2);
+      minutes = ('0' + minutes).slice(-2);
+      seconds = ('0' + seconds).slice(-2);
+
+      document.querySelector('#js-clock-hours').innerHTML = hours;
+      document.querySelector('#js-clock-minutes').innerHTML = minutes;
+      document.querySelector('#js-clock-seconds').innerHTML = seconds;
+
+      if (left <= 1000) {
+        clearInterval(timer);
+        document.cookie = 'timer=""; path=/; domain=irellia.com; secure=true; expires=-1';
+        location.reload();
+      }
+    }, 0);
+  }
+  // Product page countdown timer js end
+</script>
+
+{% schema %}
+  {
+    "name": "Announcement Timer",
+    "class": "announcement-timer-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "VENTE DE LIQUIDATION : JUSQU'À 78% DE RÉDUCTION, FIN DANS"
+      },
+      {
+        "type": "text",
+        "id": "hours",
+        "label": "Hours Text",
+        "default": "Hrs"
+      },
+      {
+        "type": "text",
+        "id": "mins",
+        "label": "Mins Text",
+        "default": "Min"
+      },
+      {
+        "type": "text",
+        "id": "sec",
+        "label": "Sec Text",
+        "default": "Sec"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_static",
+        "label": "Enable Static Background color",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "static_bg_color",
+        "label": "Static Bg color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 16
+      }
+    ],
+    "presets": [
+      {
+        "name": "Announcement Timer",
+        "settings": {
+
+        }
+      }
+    ]
+  }
+{% endschema %}

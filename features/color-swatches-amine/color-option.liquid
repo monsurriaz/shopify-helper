@@ -154,12 +154,14 @@
       >
         <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
         {% comment %} code incase of variant metafield {% endcomment %}
-        {% comment %} {% assign option_index = option.position | minus: 1 %}
-        {% for variant in product.variants %}
-          {% if variant.options[option_index] == value %}
-            {{ variant.metafields.custom.packages_text | metafield_tag }}
-          {% endif %}
-        {% endfor %} {% endcomment %}
+        {% comment %} <div class="visually-hidden">
+          {% assign option_index = option.position | minus: 1 %}
+          {% for variant in product.variants %}
+            {% if variant.options[option_index] == value %}
+              {{ variant.metafields.custom.packages_text | metafield_tag }}
+            {% endif %}
+          {% endfor %}
+        </div> {% endcomment %}
       </label>
     {%- else -%}
       {%- liquid
