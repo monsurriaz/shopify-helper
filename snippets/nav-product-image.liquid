@@ -1,26 +1,26 @@
-{% if mega_nav_menu_item.type == 'product_link' %}
+{% if item.type == 'product_link' %}
   <style>
-      @media (max-width: 990px) {
-          .\#modal-popup .\#main-nav-dropdown {
-              padding-left: 12px !important;
-          }
+    @media (max-width: 990px) {
+      .\#modal-popup .\#main-nav-dropdown {
+        padding-left: 12px !important;
       }
+    }
   </style>
-  {% assign product_handle = mega_nav_menu_item.object.handle %}
+  {% assign product_handle = item.object.handle %}
   {% assign link_product = all_products[product_handle] %}
   <div class="#main-product-menu-wrapper">
-      <div class="#main-nav-product-image">
-          <img 
-              src="{{ link_product.featured_image | image_url: width: 150 }}"
-              alt="{{ link_product.title }}"
-              width="auto"
-              height="auto"
-          />
-      </div>
-      <div class="#main-nav-product-link">
-          {{ mega_nav_menu_item.title | escape }}
-      </div>
+    <div class="#main-nav-product-image">
+      <img 
+        src="{{ link_product.featured_image | image_url: width: 150 }}"
+        alt="{{ link_product.title }}"
+        width="auto"
+        height="auto"
+      />
+    </div>
+    <div class="#main-nav-product-link">
+      {{ item.title | escape }}
+    </div>
   </div>
 {% else %}
-  {{ mega_nav_menu_item.title | escape }}
+  {{ item.title | escape }}
 {% endif %}

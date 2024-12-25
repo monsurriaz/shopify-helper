@@ -1,0 +1,283 @@
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+{% style %}
+  .testimonials-{{ section.id }} {
+    background-color: #f9f9f9;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .testimonials-{{ section.id }} .mr-section__title {
+    margin-bottom: 50px;
+    text-align: center;
+  }
+  .testimonials-{{ section.id }} .mr-section__title h2 {
+    font-size: 27px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .testimonials-{{ section.id }} .mr-slideshow__wrapper *:focus-visible{
+    outline: none;
+    box-shadow: none;
+  }
+
+  #mr-testimonials-{{ section.id }} .mr-testimonial__slide {
+    padding: 40px 0 55px;
+    width: 33%;
+    box-sizing: border-box;
+  }
+  #mr-testimonials-{{ section.id }} .mr-testimonials__slider--text {
+    margin: 0;
+    padding: 30px;
+    color: #000000;
+    text-align: center;
+    transform: scale(.95);
+    transition: transform .5s ease, box-shadow .5s ease;
+    background-color: #ffffff;
+  }
+  #mr-testimonials-{{ section.id }} .mr-testimonial__slide.is-selected .mr-testimonials__slider--text {
+    box-shadow: 0 10px 25px #0000001a;
+    position: relative;
+    transform: scale(1.1);
+    z-index: 10;
+  }
+
+  #mr-testimonials-{{ section.id }} div.testimonial-stars {
+    font-size: 18px;
+    margin-bottom: 15px;
+    letter-spacing: 0.4rem;
+  }
+  #mr-testimonials-{{ section.id }} .mr-testimonial__content {
+    margin-bottom: 20px;
+  }
+  #mr-testimonials-{{ section.id }} .mr-testimonial__content p {
+    margin: 0;
+    font-size: 19px;
+  }
+
+  #mr-testimonials-{{ section.id }} .mr-testimonial__meta {
+    margin-top: 30px;
+  }
+  #mr-testimonials-{{ section.id }} .mr-testimonial__image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  #mr-testimonials-{{ section.id }} .mr-testimonial__image img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 100%;
+  }
+  #mr-testimonials-{{ section.id }} h3.mr-testimonial__author {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0px;
+  }
+  #mr-testimonials-{{ section.id }} p.mr-testimonial__location {
+    font-size: 16px;
+    margin: 6px 0 0;
+  }
+
+  .mr-testimonials__slider .flickity-page-dots {
+    bottom: 0px;
+  }
+  .mr-testimonials__slider .flickity-page-dots .dot {
+    background: transparent;
+    border: 2px solid;
+    border-color: currentColor;
+    border-radius: 100%;
+    cursor: pointer;
+    display: inline-block;
+    height: 9px;
+    margin: 0 5px;
+    width: 9px;
+    opacity: 1;
+  }
+  .mr-testimonials__slider .flickity-page-dots .dot.is-selected {
+    background-color: currentColor;
+  }
+
+  @media screen and (max-width: 749px) {
+    .testimonials-{{ section.id }} .mr-section__title {
+      margin-bottom: 30px;
+    }
+    .testimonials-{{ section.id }} .mr-section__title h2 {
+      font-size: 23px;
+    }
+    #mr-testimonials-{{ section.id }} .mr-testimonial__slide {
+      width: 100%;
+    }
+    #mr-testimonials-{{ section.id }} .mr-testimonials__slider--text {
+      transform: scale(.85);
+      margin: 0 30px 0px;
+      padding: 30px 20px;
+    }
+    #mr-testimonials-{{ section.id }} .mr-testimonial__slide.is-selected .mr-testimonials__slider--text {
+      transform: scale(1);
+    }
+    #mr-testimonials-{{ section.id }} div.testimonial-stars {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    #mr-testimonials-{{ section.id }} .mr-testimonial__content p {
+      font-size: 17px;
+    }
+    #mr-testimonials-{{ section.id }} .mr-testimonial__image img {
+      width: 65px;
+      height: 65px;
+    }
+    #mr-testimonials-{{ section.id }} h3.mr-testimonial__author {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    #mr-testimonials-{{ section.id }} p.mr-testimonial__location {
+      font-size: 15px;
+      margin: 5px 0 0;
+    }
+  }
+{% endstyle %}
+
+<div class="mr-testimonials testimonials-{{ section.id }}">
+  <div class="page-width">
+    <div class="mr-section__title">
+      <h2>Don't take your word for it</h2>
+    </div>
+  </div>
+  <div class="mr-slideshow__wrapper">
+    <div class="mr-testimonials__slider" id="mr-testimonials-{{ section.id }}" data-count="{{ section.blocks.size }}">
+      {% for block in section.blocks %}
+        <div class="mr-testimonial__slide">
+          <div class="mr-testimonials__slider--text">
+            <span class="testimonial-stars">★★★★★</span>
+            <div class="mr-testimonial__content">
+              <p>{{ block.settings.testimonials }}</p>
+            </div>
+            <div class="mr-testimonial__meta">
+              <div class="mr-testimonial__image">
+                <img src="{{ block.settings.image | image_url: width: 120 }}" alt="{{ block.settings.image.alt }}">
+              </div>
+              <h3 class="mr-testimonial__author">
+                {{ block.settings.author_name }}
+              </h3>
+              <p class="mr-testimonial__location">
+                {{ block.settings.author_location }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<script>
+  var elem = document.querySelector('#mr-testimonials-{{ section.id }}');
+
+  var flkty = new Flickity( '#mr-testimonials-{{ section.id }}', {
+    cellAlign: 'center',
+    wrapAround: true,
+    pageDots: true,
+    prevNextButtons: false
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Testimonials",
+    "class": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 36
+      }
+    ],
+    "blocks": [
+      {
+        "type": "testimonial",
+        "name": "Testimonial",
+        "settings": [
+          {
+            "type": "text",
+            "id": "stars",
+            "label": "Stars",
+            "default": "★★★★★"
+          },
+          {
+            "type": "textarea",
+            "id": "testimonials",
+            "label": "Testimonials",
+            "default": "Couldn't be happier with the service I received from this company."
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Author's Image"
+          },
+          {
+            "type": "text",
+            "id": "author_name",
+            "label": "Author"
+          },
+          {
+            "type": "textarea",
+            "id": "author_location",
+            "label": "Author's Location"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonials",
+        "settings": {},
+        "blocks": [
+          {
+            "type": "testimonial",
+            "settings": {
+              
+            }
+          },
+          {
+            "type": "testimonial",
+            "settings": {
+              
+            }
+          },
+          {
+            "type": "testimonial",
+            "settings": {
+              
+            }
+          },
+          {
+            "type": "testimonial",
+            "settings": {
+              
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

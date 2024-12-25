@@ -1,0 +1,519 @@
+{% comment %} 
+  it's a snippet of video slider under ATC button. we can easily make it independent section by adding schema.
+
+  Requirements:
+  - there is a popup slider feature. this popup html code should put anywhere but inside body tag.
+{% endcomment %}
+
+<style>
+  .p5 {
+    font-size: 24px;
+    line-height: 1.7;
+  }
+  .product-video-section-container {
+    overflow: hidden;
+    margin: 0.5rem 0;
+  }
+  .product-video-section-wrapper.swiper-wrapper {
+    width: 100%;
+    max-width: 100vw;
+    display: flex;
+    transition-property: transform;
+    box-sizing: content-box;
+  }
+  .product-video-section-container .product-video-section-item {
+    cursor: pointer;
+    padding: 0;
+    border-radius: 8px;
+    border: 3px solid #304a4b;
+    width: 18%;
+    overflow: hidden;
+    margin-bottom: 0px;
+    box-sizing: border-box;
+  }
+  .product-video-section-container .product-video-section-item:first-child {
+    /* background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to right, #304a4b, #79a4a5); */
+    border: 3px solid #008000;
+  }
+  .product-video-section-container .product-video-section-item img,
+  .product-video-section-container .product-video-section-item video {
+    padding: 2px;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  .product-video-section-container .product-video-section-item p {
+    margin: 0;
+    text-align: center;
+  }
+  .product-video-section-popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+    margin: 0;
+    background-color: #000c;
+  }
+  .product-video-section-popup-inner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 390px;
+  }
+  .product-video-section-popup-inner-container video {
+    max-height: 680px;
+  }
+  .product-video-container {
+    position: relative;
+  }
+  .product-video-container a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 32px;
+    padding: 10px;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    background-color: #00000080;
+    z-index: 9999;
+    border-radius: 50%;
+  }
+  .video-progress {
+    width: calc(100% - 70px);
+    margin: 10px 10px 0;
+    height: 5px;
+    padding: 0;
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    display: flex;
+    border-radius: 8px;
+  }
+  .video-progress-segment {
+    flex: 1;
+    margin: 0 2px;
+    background-color: #6666;
+    height: 100%;
+    position: relative;
+    border-radius: 8px;
+  }
+  .video-progress-segment-filled {
+    background-color: #fff;
+    border-radius: 8px;
+    height: 100%;
+    width: 0%;
+  }
+  .video-progress-segment-filled.smooth {
+    transition: width 1s linear;
+  }
+  .no-scroll {
+    overflow: hidden;
+  }
+  .spinner-container {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+  }
+  .spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (max-width: 767px) {
+    .product-video-section-popup-inner-container {
+      top: 49%;
+    }
+    .product-video-section-popup-inner-container video {
+      max-height: 95vh;
+      max-width: 95vw;
+      border-radius: 8px;
+      width: auto;
+    }
+  }
+
+</style>
+
+<div class="ssbd-video__slider--{{ section.id }}">
+  <div class="page-width">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    {{ 'product-video.css' | asset_url | stylesheet_tag }}
+    <div class="product-info__product-videos" {{ block.shopify_attributes }}>
+      <p class="p5">{{ block.settings.text }}</p>
+      <div class="product-video-section-container swiper-container">
+        <div class="product-video-section-wrapper swiper-wrapper">
+          {% if block.settings.video1 != blank %}                
+            <div 
+              class="product-video-section-item swiper-slide"
+              data-video-url="{{ block.settings.video1.sources[1].url }}"  
+            >
+              {{ block.settings.video1 
+                | video_tag:
+                  image_size: 'master',
+                  autoplay: true,
+                  loop: true,
+                  muted: true,
+                  controls: false,
+                  class: 'thumbnail-video'
+              }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.video2 != blank %}                
+            <div 
+              class="product-video-section-item swiper-slide"
+              data-video-url="{{ block.settings.video2.sources[1].url }}"  
+            >
+              {{ block.settings.video2 
+                | video_tag:
+                  image_size: 'medium',
+                  autoplay: false,
+                  loop: false,
+                  muted: true,
+                  controls: false
+              }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.video3 != blank %}                
+            <div 
+              class="product-video-section-item swiper-slide"
+              data-video-url="{{ block.settings.video3.sources[1].url }}"  
+            >
+              {{ block.settings.video3 
+                | video_tag:
+                  image_size: 'medium',
+                  autoplay: false,
+                  loop: false,
+                  muted: true,
+                  controls: false
+              }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.video4 != blank %}                
+            <div 
+              class="product-video-section-item swiper-slide"
+              data-video-url="{{ block.settings.video4.sources[1].url }}"  
+            >
+              {{ block.settings.video4 
+                | video_tag:
+                  image_size: 'medium',
+                  autoplay: false,
+                  loop: false,
+                  muted: true,
+                  controls: false
+              }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.video5 != blank %}
+            <div 
+              class="product-video-section-item swiper-slide"
+              data-video-url="{{ block.settings.video5.sources[1].url }}"  
+            >
+              {{ block.settings.video5 
+                | video_tag:
+                  image_size: 'medium',
+                  autoplay: false,
+                  loop: false,
+                  muted: true,
+                  controls: false
+              }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.video6 != blank %}
+            <div 
+              class="product-video-section-item swiper-slide"
+              data-video-url="{{ block.settings.video6.sources[1].url }}"  
+            >
+              {{ block.settings.video6 
+                | video_tag:
+                  image_size: 'medium',
+                  autoplay: false,
+                  loop: false,
+                  muted: true,
+                  controls: false
+              }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% comment %} Swiper initialize {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper('.product-video-section-container.swiper-container', {
+    loop: false,
+    breakpoints: {
+      320: { slidesPerView: 3.8, spaceBetween: 8 },
+      480: { slidesPerView: 4, spaceBetween: 10 },
+      640: { slidesPerView: 5, spaceBetween: 12 }
+    },
+    freeMode: true,
+    freeModeFluid: true,
+    parallax: true,
+  });
+</script>
+
+{% comment %} product video popup {% endcomment %}
+<div class="product-video-section-popup-container">
+  <div class="product-video-section-popup-inner-container">
+    <div class="product-video-container">
+      <div class="video-progress"></div>
+      <a href="#!" style="display: flex;">
+        <svg width="100%" height="100%" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+      </a>
+      <div class="spinner-container">
+        <div class="spinner"></div>
+      </div>
+      <video autoplay="" playsinline="" loading="lazy">
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const productVideoSectionItems = document.querySelectorAll('.product-video-section-item');
+      const videoPlayerContainer = document.querySelector('.product-video-container');
+      const productVideoSectionPopupContainer = document.querySelector('.product-video-section-popup-container');
+      const productVideoSectionPopupInnerContainer = document.querySelector('.product-video-section-popup-inner-container');
+      const productVideoSectionPopupVideo = document.querySelector('.product-video-section-popup-inner-container video');
+      const productVideoSectionPopupVideoSource = productVideoSectionPopupVideo.querySelector('source');
+      const closeButton = document.querySelector('.product-video-section-popup-inner-container a');
+      const progressBarContainer = document.querySelector('.video-progress');
+      const spinnerContainer = document.querySelector('.spinner-container');
+      const thumbnailVideo = document.querySelector('.thumbnail-video');
+
+      let currentVideoIndex = 0;
+      const videos = Array.from(productVideoSectionItems).map(item => item.getAttribute('data-video-url'));
+
+      function createProgressSegments() {
+        progressBarContainer.innerHTML = '';
+        videos.forEach(() => {
+          const segment = document.createElement('div');
+          segment.className = 'video-progress-segment';
+          const filled = document.createElement('div');
+          filled.className = 'video-progress-segment-filled';
+          segment.appendChild(filled);
+          progressBarContainer.appendChild(segment);
+        });
+      }
+
+      function showSpinner() {
+        spinnerContainer.style.display = 'block';
+        progressBarContainer.style.display = 'none';
+        closeButton.style.display = 'none';
+      }
+
+      function hideSpinner() {
+        spinnerContainer.style.display = 'none';
+        progressBarContainer.style.display = 'flex';
+        closeButton.style.display = 'flex';
+      }
+
+      function playNextVideo() {
+        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+        loadVideo(videos[currentVideoIndex]);
+        updateProgressBarInstant();
+      }
+
+      function playPreviousVideo() {
+        currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+        loadVideo(videos[currentVideoIndex]);
+        updateProgressBarInstant();
+      }
+
+      function replayVideo() {
+        productVideoSectionPopupVideo.currentTime = 0;
+        productVideoSectionPopupVideo.play();
+      }
+
+      function loadVideo(videoUrl) {
+        showSpinner();
+        productVideoSectionPopupVideoSource.src = videoUrl;
+        productVideoSectionPopupVideo.load();
+        productVideoSectionPopupVideo.play();
+      }
+
+      function openVideoPopup(index) {
+        currentVideoIndex = index;
+        const videoUrl = videos[currentVideoIndex];
+        productVideoSectionPopupVideoSource.src = videoUrl;
+        productVideoSectionPopupVideo.load();
+        productVideoSectionPopupContainer.style.display = 'block';
+        document.body.classList.add('no-scroll');
+        productVideoSectionPopupVideo.play();
+        updateProgressBar();
+        showSpinner();
+        if (thumbnailVideo) {
+          thumbnailVideo.pause();
+        }
+      }
+
+      function closeVideoPopup() {
+        productVideoSectionPopupContainer.style.display = 'none';
+        productVideoSectionPopupVideo.pause();
+        productVideoSectionPopupVideoSource.src = '';
+        productVideoSectionPopupVideo.load();
+        document.body.classList.remove('no-scroll');
+        progressBarContainer.querySelectorAll('.video-progress-segment-filled').forEach(segment => {
+          segment.style.width = '0%';
+        });
+        if (thumbnailVideo) {
+          thumbnailVideo.play();
+        }
+      }
+
+      function updateProgressBar() {
+        const segments = progressBarContainer.querySelectorAll('.video-progress-segment-filled');
+        segments.forEach((segment, index) => {
+          if (index < currentVideoIndex) {
+            segment.style.width = '100%';
+            segment.classList.remove('smooth');
+          } else if (index === currentVideoIndex) {
+            const progress = (productVideoSectionPopupVideo.currentTime / productVideoSectionPopupVideo.duration) * 100;
+            segment.style.width = progress + '%';
+            segment.classList.add('smooth');
+          } else {
+            segment.style.width = '0%';
+            segment.classList.remove('smooth');
+          }
+        });
+      }
+
+      function updateProgressBarInstant() {
+        const segments = progressBarContainer.querySelectorAll('.video-progress-segment-filled');
+        segments.forEach((segment, index) => {
+          if (index < currentVideoIndex) {
+            segment.style.width = '100%';
+            segment.classList.remove('smooth');
+          } else if (index === currentVideoIndex) {
+            segment.style.width = '0%';
+            segment.classList.remove('smooth');
+          } else {
+            segment.style.width = '0%';
+            segment.classList.remove('smooth');
+          }
+        });
+      }
+
+      // swipe event listener
+      let touchstartX = 0
+      let touchendX = 0
+          
+      function checkDirection() {
+        if (touchendX < touchstartX) {
+          playNextVideo();
+        }
+        if (touchendX > touchstartX) {
+          playPreviousVideo();
+        }
+      }
+
+      videoPlayerContainer.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX
+      })
+
+      videoPlayerContainer.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX
+        checkDirection()
+      })
+
+      productVideoSectionItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+          openVideoPopup(index);
+        });
+      });
+
+      closeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeVideoPopup();
+      });
+
+      productVideoSectionPopupContainer.addEventListener('click', (e) => {
+        if (e.target === productVideoSectionPopupContainer) {
+          closeVideoPopup();
+        }
+      });
+
+      productVideoSectionPopupVideo.addEventListener('timeupdate', () => {
+        if (productVideoSectionPopupVideo.duration) {
+          updateProgressBar();
+        }
+      });
+
+      productVideoSectionPopupVideo.addEventListener('ended', () => {
+        playNextVideo();
+      });
+
+      productVideoSectionPopupVideo.addEventListener('click', (e) => {
+        const rect = productVideoSectionPopupVideo.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const videoWidth = rect.width;
+
+        if (x < videoWidth * 0.33) {
+          if (productVideoSectionPopupVideo.currentTime <= 5) {
+            playPreviousVideo();
+          } else {
+            replayVideo();
+          }
+        } else if (x < videoWidth * 0.66) {
+          if (productVideoSectionPopupVideo.paused) {
+            productVideoSectionPopupVideo.play();
+          } else {
+            productVideoSectionPopupVideo.pause();
+          }
+        } else {
+          playNextVideo();
+        }
+      });
+
+      productVideoSectionPopupVideo.addEventListener('loadeddata', () => {
+        hideSpinner();
+      });
+
+      createProgressSegments();
+    });
+  </script>
+</div>
+
+{% schema %}
+  {
+    "name": "UGC Video Slider",
+    "class": "ugc-video__slider",
+    "settings": [
+
+    ]
+  }
+{% endschema %}

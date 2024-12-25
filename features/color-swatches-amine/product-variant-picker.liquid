@@ -1,23 +1,48 @@
-<fieldset class="js product-form__input">
-  {%- liquid
-    assign option_names = settings.option_name | split: ','
-    assign use_color = false
-    for option_color in option_names
-      if option_color == option.name
-        assign use_color = true
-        break
-      endif
-    endfor
-  -%}
-  {%- if use_color -%}
-    <legend class="form__label ">
-      {{ option.name }}:<span id="selected-{{ option.name | downcase | replace: ' ', '-' }}">
-        {{ option.selected_value -}}
-      </span>
-    </legend>
-    {% render 'color-option', product: product, option: option, block: block %}
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+
+{%- unless product.has_only_default_variant -%}
+  {%- if section.settings.style == 'button' -%}
+
+    <div class="variant-radios">
+      {% for option in product.options_with_values %}
+        <fieldset class="js product-form__input">
+          {%- liquid
+            assign option_names = settings.option_name | split: ','
+            assign use_color = false
+            for option_color in option_names
+              if option_color == option.name
+                assign use_color = true
+                break
+              endif
+            endfor
+          -%}
+          {%- if use_color -%}
+            <legend class="form__label ">
+              {{ option.name }}:<span id="selected-{{ option.name | downcase | replace: ' ', '-' }}">
+                {{ option.selected_value -}}
+              </span>
+            </legend>
+            {% render 'color-option', product: product, option: option, block: block %}
+          {%- else -%}
+            <legend class="form__label">{{ option.name }}</legend>
+            {% render 'product-variant-options', product: product, option: option, block: block %}
+          {%- endif -%}
+        </fieldset>
+      {% endfor %}
+    </div>
+
   {%- else -%}
-    <legend class="form__label">{{ option.name }}</legend>
-    {% render 'product-variant-options', product: product, option: option, block: block %}
+    <div class="variant-selects">
+      /* Select ar code */
+    </div>
   {%- endif -%}
-</fieldset>
+{%- endunless -%}

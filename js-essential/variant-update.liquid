@@ -1,0 +1,56 @@
+<script>
+  // add price to atc button
+  function addPrice() {
+    let span = document.querySelector('#atc_price');
+    if (!span) {
+      span = document.createElement('span');
+      span.setAttribute("id", "atc_price");
+    }
+    const variantPrice = document.querySelector('.bundle-element.selected .bundle-element__price').getAttribute('data-price');
+    const addonPrice = document.querySelector('.addon_item.selected .one-year__garanti-subtitle').getAttribute('data-addon-price');
+    span.innerText = parseInt(variantPrice) + parseInt(addonPrice) + ' Kr';
+    document.querySelector('.buy-buttons button[type="submit"] div').appendChild(span);
+  }
+
+  // switching selected addon
+  function switchAddon(item) {
+    item.addEventListener("click", () => {
+      document.querySelector('.addon_item.selected').classList.remove("selected");
+      item.classList.add("selected");
+      addPrice();
+    });
+  }
+
+  // update addon quantity
+  function updateAddonQuantity(element) {
+    element.addEventListener('click', () => {
+      document.querySelector('.bundle-element.selected').classList.remove("selected");
+      element.classList.add("selected");
+      const bundleCheckedLabel = element.querySelector(".bundle-element__body");
+      const upsellQtyInput = document.querySelector(".addon-product__cta input[name='quantity']");
+      upsellQtyInput.value = parseInt(bundleCheckedLabel.getAttribute("data-qty"), 10);
+      setTimeout(addPrice, 100);
+    });
+  }
+
+  // addon to cart
+  function addonToCart(buyBtn) {
+    buyBtn.addEventListener('click', function () {
+      const addonATC = document.querySelector('.two-year__garanti.selected button[type="submit"]');
+      setTimeout(() => {
+        if (addonATC) addonATC.click();
+      }, 1000);
+    })
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const addonItems = document.querySelectorAll(".product-info__addon-inner .addon_item");
+    addonItems.forEach(switchAddon);
+
+    const bundleElements = document.querySelectorAll('.bundle-elements .bundle-element');
+    bundleElements.forEach(updateAddonQuantity);
+
+    const buyBtn = document.querySelector('.buy-buttons button[type="submit"]');
+    addonToCart(buyBtn);
+  });
+</script>

@@ -1,0 +1,223 @@
+<style>
+  div#variant_wrapper {
+    display: none;
+  }
+  .product-option__option {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+    border: 0;
+    padding: 0;
+    margin-top: 20px;
+    margin-inline: 0;
+    margin-bottom: 20px;
+  }
+  legend.product-option__option-title {
+    display: none;
+  }
+  .product-option__option > * {
+    flex-basis: 20%;
+    flex-grow: 1;
+    margin: 0;
+    max-width: 100%;
+    min-width: 80px;
+  }
+  .product-option__option > * {
+    max-width: 50%;
+  }
+  .input-pill {
+    display: inline-block;
+    padding: 0;
+    position: relative;
+  }
+  .input-pill input {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    margin: 0;
+  }
+  .input-pill label {
+    border: 1px solid #6e6e6e;
+    border-radius: 4px;
+    color: #1d2e30;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+    min-height: 32px;
+    position: relative;
+  }
+  .input-pill label.has-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 100%;
+    padding: 9px 0 0;
+    background-color: #fff;
+  }
+  .input-pill input:hover~label {
+    -webkit-appearance: none;
+    border-color: #9adbe8;
+    box-shadow: 0 0 0 2px #9adbe8;
+  }
+  .input-pill input:active~label,
+  .input-pill input:checked~label {
+    border-color: #1d2e30;
+    border-width: 2px;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08), 0 8px 25px rgba(0, 0, 0, 0.12), 0 5px 3px rgba(0, 0, 0, 0.03), 0 2px 2px rgba(0, 0, 0, 0.02);
+    color: #1d2e30;
+  }
+  .input-pill label img {
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin: auto;
+    mix-blend-mode: multiply;
+  }
+  .input-pill label .option-wrapper {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    width: 100%;
+  }
+  .input-pill label .option-wrapper .option-badge {
+    left: 50%;
+    max-width: unset;
+    position: absolute;
+    top: -12px;
+    transform: translateX(-50%);
+    width: calc(100% - 16px);
+    background-color: #bdd6be;
+    border-radius: 4px;
+    color: #355f42;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px;
+    right: -12px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+  .input-pill label .option-wrapper .option-wrapper-subtitle {
+    font-weight: 400;
+    font-size: 12px;
+  }
+  .input-pill label .option-wrapper__price {
+    align-items: baseline;
+    background-color: #f1efed;
+    border-radius: 0 0 4px 4px;
+    font-size: 15px;
+    gap: 9px;
+    justify-content: space-between;
+    line-height: 1.35;
+    margin-top: 6px;
+    padding: 6px 12px;
+  }
+  .js-price,
+  .igPrice {
+    color: #c63838 !important;
+  }
+  .input-pill label .option-wrapper__price .price-compare {
+    font-size: 12px;
+    line-height: 1.35;
+    color: #000;
+  }
+  @media screen and (min-width: 768px) {
+    .input-pill label .option-wrapper .option-badge {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .input-pill label .option-wrapper .option-wrapper-subtitle {
+      font-size: 14px;
+    }
+    .input-pill label .option-wrapper__price {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+</style>
+
+<div class="product-options">
+  {% for option in product.options_with_values %}
+    <fieldset class="product-option__option product-option__{{- option.name | replace: ' ', '-' -}}">
+      <legend class="product-option__option-title">{{ option.name }}</legend>
+      {% for value in option.values %}
+        <div class="input-pill">
+          <input 
+            type="radio" 
+            name="variant_qty" 
+            data-id="{{- value -}}" 
+            id="qty-{{ option.position }}-{{ value }}" 
+            {% if option.selected_value == value %}
+              checked
+            {% endif %}
+          >
+          <label for="qty-{{ option.position }}-{{ value }}" class="has-img">
+            {% assign option_index = option.position | minus: 1 %}
+            {% for variant in product.variants %}
+              {% if variant.options[option_index] == value %}
+                <img 
+                  src="{{ variant.image | image_url: width: variant.image.width }}"
+                  width="72" height="72" data-image-load="lazy" alt="{{ variant.image.alt }}" class="media-image loaded"
+                >
+                <div class="option-wrapper" aria-hidden="true">
+                  {% if value == '2 Bottles' %}
+                    <span class="option-badge">Most Popular</span>
+                  {% endif %}
+                  {{ value }} <br>
+                  {% if value == '1 Bottle' %}
+                    <span class="option-wrapper-subtitle">30-Day Supply</span>
+                  {% elsif value == '2 Bottles' %}
+                    <span class="option-wrapper-subtitle">60-Day Supply</span>
+                  {% elsif value == '3 Bottles' %}
+                    <span class="option-wrapper-subtitle">90-Day Supply</span>
+                  {% endif %}
+
+                  <div class="option-wrapper__price">
+                    <span class="sr-only">
+                      Current Price:
+                    </span>
+                    <span class="igPrice">
+                      {{ variant.price | money }}
+                    </span>
+                    <s class="price-compare">
+                      <span class="sr-only">
+                        Original Price:
+                      </span>
+                      {{ variant.compare_at_price | money }}
+                    </s>
+                  </div>
+                </div>
+                {% break %}
+              {% endif %}
+            {% endfor %}
+          </label>
+        </div>
+      {% endfor %}
+    </fieldset>
+  {% endfor %}
+</div>
+
+<script>
+  // select quantity
+  document.addEventListener('click', function (e) {
+    // Check if the clicked element is a radio input inside `.variants-bundle__bars`
+    if (e.target.matches('.product-option__option input[type="radio"]')) {
+
+      // Match the real variant to the selected
+      var dataIdValue = e.target.getAttribute('data-id');
+      let matched = document.querySelector(`#variant_wrapper input[value="${dataIdValue}"]`);
+      matched.click();
+    }
+  });
+</script>

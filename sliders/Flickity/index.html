@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Flickity Carousel</title>
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <style>
+    .carousel--wrapper {
+      padding: 0 10px;
+    }
+    .carousel-cell {
+      padding: 5px;
+      box-sizing: border-box;
+    }
+    .inner {
+      height: 200px;
+      background: #4a90e2;
+      color: white;
+      text-align: center;
+      line-height: 200px;
+      font-size: 24px;
+      border-radius: 10px;
+    }
+
+    /* Default: 2 cells in mobile */
+    .carousel-cell {
+      width: 50%;
+    }
+
+    /* 3 cells in laptops */
+    @media (min-width: 768px) {
+      .carousel-cell {
+        width: 33.33%;
+      }
+    }
+
+    /* 4 cells in desktops */
+    @media (min-width: 1024px) {
+      .carousel-cell {
+        width: 25%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel--wrapper">
+    <div class="main-carousel">
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+    </div>
+    <div class="main-carousel">
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+      <div class="carousel-cell">
+        <div class="inner"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+  <script>
+    var elems = document.querySelectorAll('.main-carousel');
+    elems.forEach(elem => {
+      imagesLoaded(elem, function() {
+        var flkty = new Flickity(elem, {
+          cellAlign: 'left',
+          contain: true,
+          freeScroll: true,
+          wrapAround: true,
+          rightToLeft: false,
+          pageDots: false
+        });
+
+        // Call resize method after initialization
+        flkty.resize();
+      });
+    });
+  </script>
+</body>
+</html>

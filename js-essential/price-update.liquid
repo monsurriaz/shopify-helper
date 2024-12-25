@@ -1,0 +1,26 @@
+<script>
+  var priceElement = document.querySelector('.selectors').getAttribute('data-price');
+  var saveElement = document.querySelector('#single_save_amount');
+  var customPrice = document.querySelector('.custom_price');
+  var currentPriceWrapper = customPrice.querySelector('.current_price');
+  var comparePriceWrapper = customPrice.querySelector('.compare_price');
+
+  let comparePrice = priceElement ? parseFloat(priceElement.replace(/[^0-9.]/g, '')) : null;
+
+  function formatPrice(price) {
+    return '$' + parseFloat(price).toFixed(2);
+  }
+
+  function calculateDollarSavings(originalPrice, discountedPrice) {
+    const savings = originalPrice - discountedPrice;
+    return 'Save $' + savings.toFixed(2); // Format as Save $XX
+  }
+
+  function setPrices(qty, amount) {
+    comparePriceWrapper.textContent = formatPrice(comparePrice * qty);
+    currentPriceWrapper.textContent = formatPrice(comparePrice * qty - amount);
+    saveElement.textContent = formatPrice(amount);
+  }
+
+  setTimeout(setPrices(2, 25), 100);
+</script>

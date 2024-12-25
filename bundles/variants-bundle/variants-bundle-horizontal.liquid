@@ -1,0 +1,365 @@
+<style>
+  div#variant_wrapper {
+    display: none;
+  }
+  .kaching-bundles .variants-bundle__bar-container * {
+    letter-spacing: normal;
+    text-transform: initial;
+  }
+  .variants-bundle {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px;
+    line-height: 1.4;
+    text-align: start;
+  }
+
+  .variants-bundle-title {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .variants-bundle-title:before,
+  .variants-bundle-title:after {
+    content: "";
+    flex-grow: 1;
+    height: 2px;
+    background-color: rgba(19, 93, 75, 0.3);
+  }
+
+  .variants-bundle__bars {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .variants-bundle__bar {
+    display: flex;
+    flex: 1;
+    margin: 5px 0;
+  }
+
+  .variants-bundle__bar>input[type=radio] {
+    display: none;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: initial;
+    position: relative;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 100%;
+    margin: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-most-popular {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-most-popular.variants-bundle__bar-most-popular--simple {
+    top: -8px;
+    right: 10px;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-most-popular__content {
+    margin: 0 8px;
+    padding: 6px 8px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    background-color: #135d4b;
+  }
+  .variants-bundle__bar .variants-bundle__bar-most-popular__content:before, 
+  .variants-bundle__bar .variants-bundle__bar-most-popular__content:after {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    content: "";
+    border-bottom-width: 8px;
+    border-bottom-style: solid;
+    filter: brightness(.7);
+    border-bottom-color: #135d4b;
+  }
+  .variants-bundle__bar .variants-bundle__bar-most-popular__content:before {
+    left: 0;
+    border-left: 8px solid transparent;
+  }
+  .variants-bundle__bar .variants-bundle__bar-most-popular__content:after {
+    right: 0;
+    border-right: 8px solid transparent;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-wrapper {
+    padding: 10px 20px;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-main {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-height: 55px;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-radio {
+    display: flex;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #fff;
+    box-sizing: border-box;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .3);
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-content {
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-left {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-firs-tline {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-title {
+    display: inline-block;
+    word-break: break-word;
+    font-size: 19px;
+    font-weight: bold;
+    font-style: normal;
+    color: #000;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    padding: 4px 8px;
+    word-break: break-word;
+    background-color: #135d4bbf;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 10px;
+    text-transform: uppercase;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-subtitle {
+    word-break: break-word;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+  }
+
+  .variants-bundle__bar-subtitle span {
+    color: #135D4B;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-pricing {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-price {
+    font-size: 19px;
+    font-weight: bold;
+    color: #000000;
+  }
+
+  .variants-bundle__bar .variants-bundle__bar-fullprice {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: line-through;
+  }
+
+  .variants-bundle__bars .bundle-bar__selected .variants-bundle__bar-container {
+    cursor: default;
+    background-color: rgba(255, 251, 241);
+    box-shadow: inset 0 0 0 2px #135d4b;
+  }
+
+  .variants-bundle__bars .bundle-bar__selected .variants-bundle__bar-radio {
+    background: #135d4b;
+    box-shadow: 0 0 0 2px #135d4b;
+  }
+  .variants-bundle__bars .variants-bundle__bar-container--most-popular--simple .variants-bundle__bar-main {
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+</style>
+
+<div class="variants-bundle">
+  <div class="variants-bundle-title">
+    CHOOSE YOUR PACK
+  </div>
+  <div class="variants-bundle__bars">
+    <div class="variants-bundle__bar bundle-bar__selected">
+      <input type="radio" id="qty_1" name="variant_qty" data-id="1 Bottle">
+      <label for="qty_1" class="variants-bundle__bar-container">
+        <div class="variants-bundle__bar-wrapper">
+          <div class="variants-bundle__bar-main">
+            <div class="variants-bundle__bar-radio"></div>
+            <div class="variants-bundle__bar-content">
+              <div class="variants-bundle__bar-left">
+                <div class="variants-bundle__bar-firs-tline">
+                  <span class="variants-bundle__bar-title">
+                    30-Day Supply
+                  </span>
+                  <div class="variants-bundle__bar-label">
+                    Save $10
+                  </div>
+                </div>
+                <div class="variants-bundle__bar-subtitle">
+                  <i>1 Bottle</i>
+                </div>
+              </div>
+              <div class="variants-bundle__bar-pricing">
+                <div class="variants-bundle__bar-price">
+                  $39.95
+                </div>
+                <div class="variants-bundle__bar-fullprice">
+                  $49.95
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </label>
+    </div>
+
+    <div class="variants-bundle__bar">
+      <input type="radio" id="qty_2" name="variant_qty" data-id="2 Bottles">
+      <label for="qty_2" class="variants-bundle__bar-container variants-bundle__bar-container--most-popular variants-bundle__bar-container--most-popular--simple">
+        <div class="variants-bundle__bar-most-popular variants-bundle__bar-most-popular--simple">
+          <div class="variants-bundle__bar-most-popular__content">MOST POPULAR</div>
+        </div>
+        <div class="variants-bundle__bar-wrapper">
+          <div class="variants-bundle__bar-main">
+            <div class="variants-bundle__bar-radio"></div>
+            <div class="variants-bundle__bar-content">
+              <div class="variants-bundle__bar-left">
+                <div class="variants-bundle__bar-firs-tline">
+                  <span class="variants-bundle__bar-title">
+                    60-Day Supply
+                  </span>
+                  <div class="variants-bundle__bar-label">
+                    Save $34
+                  </div>
+                </div>
+                <div class="variants-bundle__bar-subtitle">
+                  <i>2 Bottles</i><br>
+                  Includes <span>Free</span> Shipping
+                </div>
+              </div>
+              <div class="variants-bundle__bar-pricing">
+                <div class="variants-bundle__bar-price">
+                  $64.95
+                </div>
+                <div class="variants-bundle__bar-fullprice">
+                  $99.90
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </label>
+    </div>
+
+    <div class="variants-bundle__bar">
+      <input type="radio" id="qty_3" name="variant_qty" data-id="3 Bottles">
+      <label for="qty_3" class="variants-bundle__bar-container variants-bundle__bar-container--most-popular variants-bundle__bar-container--most-popular--simple">
+        <div class="variants-bundle__bar-most-popular variants-bundle__bar-most-popular--simple">
+          <div class="variants-bundle__bar-most-popular__content">BEST DEAL</div>
+        </div>
+        <div class="variants-bundle__bar-wrapper">
+          <div class="variants-bundle__bar-main">
+            <div class="variants-bundle__bar-radio"></div>
+            <div class="variants-bundle__bar-content">
+              <div class="variants-bundle__bar-left">
+                <div class="variants-bundle__bar-firs-tline">
+                  <span class="variants-bundle__bar-title">
+                    90-Day Supply
+                  </span>
+                  <div class="variants-bundle__bar-label">
+                    Save $69
+                  </div>
+                </div>
+                <div class="variants-bundle__bar-subtitle">
+                  <i>3 Bottles</i><br>
+                  Includes <span>Free</span> Shipping
+                </div>
+              </div>
+              <div class="variants-bundle__bar-pricing">
+                <div class="variants-bundle__bar-price">
+                  $79.95
+                </div>
+                <div class="variants-bundle__bar-fullprice">
+                  $149.85
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  // select quantity
+  document.addEventListener('click', function (e) {
+    // Check if the clicked element is a radio input inside `.variants-bundle__bars`
+    if (e.target.matches('.variants-bundle__bars input[type="radio"]')) {
+      // Remove the selected class from all `.variants-bundle__bar.bundle-bar__selected`
+      document
+        .querySelector('.variants-bundle__bar.bundle-bar__selected')
+        .classList.remove('bundle-bar__selected');
+      
+      // Match the real variant to the selected
+      var dataIdValue = e.target.getAttribute('data-id');
+      let matched = document.querySelector(`#variant_wrapper input[value="${dataIdValue}"]`);
+      matched.click();
+
+      // Add the selected class to the closest `.variants-bundle__bar` of the clicked radio
+      var parentBar = e.target.closest('.variants-bundle__bar');
+      if (parentBar) {
+        parentBar.classList.add('bundle-bar__selected');
+      }
+    }
+  });
+</script>

@@ -1,0 +1,676 @@
+{% comment %} {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script> {% endcomment %}
+
+<style>
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    left: -9999px;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    transition: left 0s 0.2s, opacity 0.2s;
+  }
+
+  .cart-drawer--active {
+    left: 0;
+    opacity: 1;
+    transition: left 0s, opacity 0.2s;
+  }
+
+  .cart-drawer-box {
+    width: 480px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    flex: 1;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    transition: 0.2s opacity, 0.2s transform;
+    opacity: 0;
+    transform: translateX(40px);
+  }
+
+  .cart-drawer--active .cart-drawer-box {
+    transform: none;
+    opacity: 1;
+  }
+
+  .cart-drawer-box:not(.is-empty) .cart-drawer--empty {
+    display: none !important;
+  }
+
+  .cart-drawer-box.is-empty .cart-drawer-header,
+  .cart-drawer-box.is-empty .cart-drawer-inner, 
+  .cart-drawer-box.is-empty .cart-drawer-footer {
+    display: none !important;
+  }
+
+  .cart-drawer-box.is-empty .drawer__inner {
+    display: grid;
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: 0;
+  }
+
+  .cart-drawer-box.is-empty .cart-drawer--empty {
+    height: 100%;
+    padding: 0 1.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .cart-drawer__empty-content .cart-drawer-header-right-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  .cart-drawer__empty-content {
+    text-align: center;
+  }
+  .cart-drawer__empty-content a {
+    display: inline-block;
+    background-color: #4387e6;
+    padding: 12px 25px;
+    color: #ffffff;
+    border-radius: 3px;
+  }
+  .cart-drawer__empty-content a:hover {
+    background-color: #2a60ad;
+    color: #fff;
+  }
+  h2.cart__empty-text {
+    font-weight: 600;
+    font-size: 25px;
+    margin-bottom: 22px;
+  }
+
+  .cart-drawer-header {
+    display: flex;
+    flex-direction: column;
+    padding-top: 24px;
+    border-bottom: 0px solid #e7e7e7;
+  }
+
+  .cart-drawer-header .cart-drawer-header-top {
+    display: flex;
+    align-items: center;
+    padding-inline: 24px;
+    margin-bottom: 10px;
+  }
+
+  .cart-drawer-header h2 {
+    color: #212529;
+    flex: 1;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+
+  .cart-drawer-header-right {
+    color: #a1a1a1;
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .cart-drawer-header-right-items {
+    display: block;
+    font-weight: 500;
+  }
+  .cart-drawer-header-right-close {
+    color: #a1a1a1;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+  }
+  .cart-drawer-header-right-close:hover {
+    color: #212529;
+  }
+  button.cart-drawer-header-right-close svg {
+    width: 12px;
+  }
+  .cart-drawer-header-bottom {
+    padding-inline: 24px;
+    padding-block: 15px;
+    background-color: #4387e6;
+    color: #fff;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 19px;
+  }
+  .cart-drawer-header-order-timer {
+    text-align: center;
+  }
+  #cdh-order-timer, #standard_delivery, #vip_delivery {
+    font-weight: 600;
+  }
+  ul.cart-drawer-header-delivery {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  ul.cart-drawer-header-delivery li {
+    display: flex;
+    gap: 8px;
+  }
+  ul.cart-drawer-header-delivery li span a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  ul.cart-drawer-header-delivery li span a:hover {
+    color: #f8f8f8;
+  }
+  .cart-drawer-inner {
+    display: flex;
+    flex: 1;
+  }
+  .cart-drawer-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer-items {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .cart-drawer-item {
+    display: flex;
+    border-bottom: 1px solid #e7e7e7;
+    /* border-radius: 12px; */
+    /* background: white; */
+    overflow: hidden;
+    gap: 24px;
+    padding-bottom: 20px;
+  }
+
+  .cart-drawer-item + .cart-drawer-item {
+    margin-top: 20px;
+  }
+
+  .cart-drawer-item:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .cart-drawer-item-image {
+    width: 100px;
+    display: flex;
+  }
+
+  .cart-drawer-item-image img {
+    width: 100px;
+  }
+
+  .cart-drawer-item-main {
+    flex: 1;
+  }
+
+  .cart-drawer-item-main-flex {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cart-drawer-item-main-flex-left {
+    flex: 1;
+  }
+
+  .cart-drawer-item-main-flex-left h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .cart-drawer-item-main-flex-left h3 a {
+    color: #212529;
+  }
+
+  .cart-drawer-item-main-flex-left span {
+    color: #a1a1a1;
+    font-size: 13px;
+    font-weight: 300;
+    margin-top: 4px;
+    display: block;
+  }
+  a.cart-drawer-item-remove {
+    border-bottom: 1px solid;
+    line-height: 1;
+  }
+  .cart-drawer-item-main-flex-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .cart-drawer-item-main-flex-right span {
+    font-weight: 500;
+    color: #212529;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .cart-drawer-quantity-selector {
+    display: inline-flex;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+
+  .cart-drawer-quantity-selector button {
+    width: 28px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .cart-drawer-quantity-selector input {
+    width: 28px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 24px;
+    border-left: 1px solid #e7e7e7;
+    border-right: 1px solid #e7e7e7;
+  }
+
+  .cart-drawer-quantty-selector {
+    width: fit-content;
+    text-align: right;
+  }
+  input.cart-drawer-quantity-update {
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    padding: 0;
+    text-align: center;
+  }
+
+  .cart-drawer-footer {
+    padding: 24px;
+    margin-top: auto;
+    border-top: 1px solid #e7e7e7;
+  }
+
+  .cart-drawer-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .cart-drawer-footer-row:last-of-type {
+    margin-bottom: 16px;
+  }
+
+  .cart-drawer-footer-row h3 {
+    font-weight: 400;
+    color: #000000;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .cart-drawer-footer-row span {
+    font-weight: 500;
+    color: #212529;
+    font-size: 14px;
+  }
+
+  .cart-drawer-button {
+    display: block;
+    width: 100%;
+    font-weight: 500;
+    background-color: #4387e6;
+    color: #fff;
+    line-height: 46px;
+    font-size: 16px;
+    border-radius: 50px;
+    border: 0;
+    text-transform: uppercase;
+  }
+  .cart-drawer-vip {
+    text-align: center;
+    margin-top: 7px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-drawer-box {
+      min-width: 320px;
+      max-width: 100%;
+    }
+    .cart-drawer-header-bottom {
+      font-size: 16px;
+    }
+    /* ul.cart-drawer-header-delivery li span {
+      width: 35%;
+    } */
+    .cart-drawer-item-image {
+      width: 80px;
+    }
+    .cart-drawer-item-image img {
+      width: 80px;
+      height: 80px;
+    }
+    .cart-drawer-item {
+      gap: 20px;
+    }
+    .cart-drawer-item-main-flex {
+      align-items: flex-start;
+      gap: 15px;
+    }
+    .cart-drawer-item__remove {
+      font-size: 14px;
+    }
+    input.cart-drawer-quantity-update {
+      width: 50px;
+      height: 40px;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .cart-drawer-box {
+      width: 580px;
+    }
+  }
+
+</style>
+
+<div class="cart-drawer">
+  <div class="cart-drawer--overlay"></div>
+  <div class="cart-drawer-box{% if cart == empty %} is-empty{% endif %}">
+    {% if cart == empty %}
+      <div class="cart-drawer--empty">
+        <div class="cart-drawer__empty-content">
+          <h2 class="cart__empty-text">Your cart is empty</h2>
+          <button 
+            class="cart-drawer-header-right-close" 
+            type="button"
+          >
+            {% render 'icon-close' %}
+          </button>
+          <a href="{{ routes.all_products_collection_url }}" class="button">
+            Continue Shopping
+          </a>
+        </div>
+      </div>
+    {% endif %}
+
+    <header class="cart-drawer-header">
+      <div class="cart-drawer-header-top">
+        <h2>Your cart</h2>
+        <div class="cart-drawer-header-right">
+          <span class="cart-drawer-header-right-items">{{ cart.item_count }} items</span>
+  
+          <button class="cart-drawer-header-right-close" type="button">
+            {% render 'icon-close' %}
+          </button>
+        </div>
+      </div>
+      <div class="cart-drawer-header-bottom">
+        <div class="cart-drawer-header-order-timer">
+          Order in <span id="cdh-order-timer">6:39</span> to get delivery by:
+        </div>
+        <ul class="cart-drawer-header-delivery">
+          <li>
+            <span>Standard:</span>
+            <div id="standard_delivery">10/07</div>
+          </li>
+          <li>
+            <span><a href="/pages/vip-sign-up-3">VIP Members:</a></span>
+            <div id="standard_delivery">10/03</div>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="cart-drawer-inner">
+      <div class="cart-drawer-items">
+        {% form 'cart', cart, class: 'cart-drawer-form' %}
+          {% for item in cart.items %}
+            <div class="cart-drawer-item" data-line-item-key="{{ item.key }}">
+              {% if item.image  %}
+                <div class="cart-drawer-item-image">
+                  <img src="{{ item.image | image_url: width: 150 }}" alt="{{ item.title }}" width="auto" height="auto">
+                </div>
+              {% endif %}
+              <div class="cart-drawer-item-main">
+                <div class="cart-drawer-item-main-flex">
+                  <div class="cart-drawer-item-main-flex-left">
+                    <h3>
+                      <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    </h3>
+                    <span>{{ item.variant.title }}</span>
+                    <p class="cart-drawer-item__remove">
+                      <a 
+                        href="/cart/change?line={{ forloop.index }}&amp;quantity=0" 
+                        class="cart-drawer-item-remove"
+                        aria-label="{{ 'cart.label.remove' | t: product: item.title }}"
+                      >
+                        {{ 'cart.general.remove' | t }}
+                      </a>
+                    </p>
+                  </div>
+                  <div class="cart-drawer-item-main-flex-right">
+                    <span>{{ item.final_line_price | money }}</span>
+                    <div class="cart-drawer-quantty-selector">
+                      <input 
+                        type="number"
+                        class="cart-drawer-quantity-update"
+                        value="{{ item.quantity }}"
+                        min="0" 
+                        pattern="[0-9]*"
+                      >
+                    </div>
+                    {% comment %} <div class="cart-drawer-quantity-selector">
+                      <button class="cart-drawer-quantity-selector-minus cart-drawer-quantity" type="button">
+                        {% render 'icon-minus' %}
+                      </button>
+                      <input type="text" readonly value="{{ item.quantity }}">
+                      <button class="cart-drawer-quantity-selector-plus cart-drawer-quantity" type="button">
+                        {% render 'icon-plus' %}
+                      </button>
+                    </div> {% endcomment %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endform %}
+      </div>
+    </div>
+      
+    <footer class="cart-drawer-footer">
+      {% form 'cart', cart, class: 'cart-drawer-form' %}
+        {% if cart.total_discounts > 0 %}
+          <div class="cart-drawer-footer-row">
+            <h3>Discounts</h3>
+            <span>{{ cart.total_discounts | money }}</span>
+          </div>
+        {% endif %}
+        <div class="cart-drawer-footer-row">
+          <h3>Subtotal</h3>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+        <button type="submit" name="checkout" class="cart-drawer-button">
+          Checkout
+          {% comment %} {% include 'icon-arrow-right' %} {% endcomment %}
+        </button>
+        <div class="cart-drawer-vip">
+          <a href="/pages/vip-sign-up-3">
+            <span>VIP members save 75% off at checkout</span>
+          </a>
+        </div>
+      {% endform %}
+    </footer>
+  </div>
+</div>
+
+<script>
+  function openCartDrawer() {
+    document.querySelector("body").style.overflow = "hidden";
+    document.querySelector(".cart-drawer").classList.add("cart-drawer--active");
+  }
+
+  function closeCartDrawer() {
+    document.querySelector("body").style.overflow = '';
+    document
+      .querySelector(".cart-drawer")
+      .classList.remove("cart-drawer--active");
+  }
+
+  function updateCartItemCounts(count) {
+    document.querySelectorAll("[data-cart-count]").forEach((el) => {
+      el.textContent = count;
+    });
+  }
+
+  function countDownTimer()
+  {
+    // Load saved time or start from 9:00
+    let [minutes, seconds] = JSON.parse(localStorage.getItem('countdown')) || [9, 0];
+
+    // Function to update the timer
+    function updateTimer() {
+      if (minutes === 0 && seconds === 0) {
+        minutes = 9;
+        seconds = 0;
+      } else if (seconds === 0) {
+        minutes--;
+        seconds = 59;
+      } else {
+        seconds--;
+      }
+
+      // Save state to localStorage
+      localStorage.setItem('countdown', JSON.stringify([minutes, seconds]));
+      
+      // Update display
+      document.getElementById('cdh-order-timer').textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    }
+
+    // Start the countdown 
+    setInterval(updateTimer, 1000);
+  }
+
+  async function updateCartDrawer() {
+    const res = await fetch("/?section_id=cart-drawer");
+    const text = await res.text();
+    const html = document.createElement("div");
+    html.innerHTML = text;
+
+    const newBox = html.querySelector(".cart-drawer").innerHTML;
+
+    document.querySelector(".cart-drawer").innerHTML = newBox;
+
+    addCartDrawerListeners();
+  }
+
+  function addCartDrawerListeners() {
+    // Update quantities
+      document
+      .querySelectorAll(".cart-drawer-quantity-update")
+      .forEach((input) => {
+        input.addEventListener("change", async () => {
+          // Get line item key
+          const rootItem =
+            input.closest('.cart-drawer-item');
+          const key = rootItem.getAttribute("data-line-item-key");
+
+          // Get new quantity
+          const newQuantity = input.value;
+
+          // Ajax update\
+          const res = await fetch("/cart/update.js", {
+            method: "post",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ updates: { [key]: newQuantity } }),
+          });
+          const cart = await res.json();
+
+          updateCartItemCounts(cart.item_count);
+
+          // Update cart
+          updateCartDrawer();
+        });
+      });
+
+    // remove items
+    document.querySelectorAll(".cart-drawer-item-remove")
+      .forEach(remove =>{
+        remove.addEventListener('click', async (e)=> {
+          e.preventDefault();
+
+          const item = remove.closest(".cart-drawer-item");
+          const key = item.getAttribute("data-line-item-key");
+
+          // Ajax update
+          const res = await fetch("/cart/update.js", {
+            method: "post",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ updates: { [key]: 0 } }),
+          });
+
+          const cart = await res.json();
+          
+          // count update
+          updateCartItemCounts(cart.item_count);
+
+          // Update cart
+          updateCartDrawer();
+        })
+      })
+
+    document.querySelector(".cart-drawer-box").addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    document
+      .querySelectorAll(".cart-drawer-header-right-close, .cart-drawer")
+      .forEach((el) => {
+        el.addEventListener("click", () => {
+          closeCartDrawer();
+        });
+      });
+  }
+
+  addCartDrawerListeners();
+
+  const items = document.querySelectorAll(".cart-drawer-item");
+  if(items.length > 0)
+    countDownTimer();
+
+  document.querySelectorAll('a[href="/cart"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCartDrawer();
+    });
+  });
+
+</script>
+
+{% schema %}
+{
+  "name": "Cart drawer"
+}
+{% endschema %}

@@ -73,7 +73,7 @@
     height: 100%;
     z-index: 1;
     {%- if settings.dark or swatch_type == "variantImage" -%}
-        border: none;
+      border: none;
     {%- else -%}
       border: 3px rgb(255 255 255) solid;
     {%- endif -%}
@@ -134,20 +134,19 @@
       {% endif %}
     >
     {%- if swatch_type == 'variantImage' -%}
-      <label
-        data-{{ option.name | downcase | replace: ' ', '-' }}="{{ value }}"
+      <label data-{{ option.name | downcase | replace: ' ', '-' }}="{{ value }}"
         style="
           background-image:url(
             {%- liquid
               assign option_index = option.position | minus: 1
               for variant in product.variants
-                  if variant.options[option_index] == value
-                    assign swatch_size_portrait = swatch_size | times: 2
-                    echo variant.image | image_url: width: swatch_size_portrait
-                    break
-                  endif
+                if variant.options[option_index] == value
+                  assign swatch_size_portrait = swatch_size | times: 2
+                  echo variant.image | image_url: width: swatch_size_portrait
+                  break
+                endif
               endfor
-          -%}
+            -%}
           );"
         class="color-swatch variant-swatch {% case swatch_style %}{% when "round" %}round{% when "square-round-corners" %}round-corners{% endcase %}"
         for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
@@ -219,8 +218,6 @@
     })
   })
 </script>
-
-<!-- Color options made by Amine Ammari -->
 
 
 {% comment %} liquid for getting hexcode from settings {% endcomment %}

@@ -1,0 +1,610 @@
+<style>
+  .rc-container.rc_container {
+    display: none;
+  }
+
+  div#variant_wrapper {
+    display: none;
+  }
+
+  .pricing-options {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .pricing-options h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .bundle-first-line {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+  }
+
+  .bundle-first-line__title {
+    display: inline-block;
+    word-break: break-word;
+    font-size: 19px;
+    font-family: Poppins;
+    font-weight: bold;
+    color: #000000;
+    letter-spacing: 0px;
+  }
+
+  .variants-bundles__option {
+    border: 2px solid #e0e0e0;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .variants-bundles__option input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #135d4b;
+    border-radius: 50%;
+    margin-right: 10px;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 0;
+  }
+
+  .variants-bundles__option input[type="radio"]:checked {
+    background-color: #135d4b;
+    box-shadow: inset 0 0 0 4px white;
+  }
+
+  .variants-bundles__option label {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .variants-bundles__option label:before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: "";
+    z-index: 1;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+  }
+
+  .variants-bundles__option .subtitle {
+    color: #000000;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  .variants-bundles__option .shipping {
+    font-weight: normal;
+    font-family: Poppins;
+    color: #000000;
+    font-size: 14px;
+  }
+
+  .variants-bundles__option .shipping b {
+    color: #135d4b;
+  }
+
+  .variants-bundles__option .price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+  }
+
+  .variants-bundles__option .save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    padding: 4px 8px;
+    word-break: break-word;
+    background-color: #135d4bbf;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    border-radius: 12px;
+  }
+
+  .variants-bundles__option .current-prcie {
+    font-weight: bold;
+    color: #000000;
+    font-family: 'Poppins';
+  }
+
+  .variants-bundles__option .compare-prcie {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 14px;
+  }
+
+  .variants-bundles__option:has(input:checked) {
+    border-color: #135d4b;
+    border-width: 2px;
+    background-color: #FFFBF1;
+  }
+
+  .most-popular::before {
+    content: "MOST POPULAR";
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background-color: #81C784;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .best-value {
+    content: "BEST VALUE";
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background-color: #135d4b;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .best-value::before,
+  .best-value::after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    bottom: 0;
+    width: 100%;
+    background: #135d4b;
+    /* Shadow color to give the appearance of depth */
+    z-index: -1;
+  }
+
+  .badge::before {
+    left: -5px;
+    transform: skewX(-15deg);
+  }
+
+  .badge::after {
+    right: -5px;
+    transform: skewX(15deg);
+  }
+
+  .auto-refill {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px dashed #212427;
+    border-radius: 10px;
+    background-color: #f1fdf0;
+  }
+
+  .auto-refill input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #135d4b;
+    border-radius: 4px;
+    margin-right: 15px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .auto-refill input[type="checkbox"]:checked {
+    background-color: #135d4b;
+    position: relative;
+  }
+
+  .auto-refill input[type="checkbox"]:checked::after {
+    content: '✓';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .auto-refill label {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    padding-left: 15px;
+  }
+
+  .auto-refill .note {
+    color: #888;
+    font-size: 14px;
+  }
+
+  .total-price-display {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .total-price-display .original-price {
+    margin-right: 10px;
+    text-decoration: line-through;
+    font-size: 20px;
+    color: rgba(46, 42, 57, .8);
+    font-family: Montserrat;
+    font-weight: 400;
+  }
+
+  .total-price-display .discounted-price {
+    color: #e04c0e;
+    font-weight: 700;
+    font-size: 24px;
+    font-family: Montserrat;
+  }
+
+  .variants-bundles__block-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: var(--block-block-title-color, #000);
+    font-size: var(--block-title-font-size, 14px);
+    font-weight: var(--block-title-font-weight, bold);
+    font-style: var(--block-title-font-style);
+  }
+
+  .variants-bundles__block-title:before,
+  .variants-bundles__block-title:after {
+    content: "";
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--bar-border-color, rgba(0, 0, 0, .3));
+  }
+
+  .savings-percentage {
+    padding: 4px 10px;
+    font-weight: 700;
+    font-size: 13px;
+    background: #135d4b;
+    color: #ffffff;
+    border-radius: 50px;
+    margin: 0px;
+    text-decoration: none;
+  }
+
+  .total-price-display1 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .you-save-section {
+    padding: 0px 15px;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: white;
+  }
+
+  .you-save-price {
+    font-size: 16px;
+  }
+
+  @media(max-width: 993px) {
+    .variants-bundles__option {
+      padding: 15px 12px;
+    }
+
+    .variants-bundles__option .save {
+      border-radius: 10px;
+    }
+
+    .bundle-first-line__title {
+      font-size: 16px;
+    }
+
+    .total-price-display1 {
+      align-items: center;
+      justify-content: space-around !important;
+      flex-wrap: wrap;
+      column-gap: 30px;
+    }
+
+    .you-save-section {
+      padding: 15px !important;
+    }
+
+    .you-save-section p {
+      margin-top: 0px !important;
+    }
+
+    #original-total-price1,
+    #discounted-total-price1 {
+      margin-bottom: 5px !important;
+    }
+  }
+</style>
+
+<select style="display: none;">
+  {% for selling_plan_group in product.selling_plan_groups %}
+    {% for selling_plan in selling_plan_group.selling_plans %}
+      <option data-id="{{ selling_plan.price_adjustments[0].value }}" value="{{ selling_plan.id }}">{{ selling_plan.name }}</option>
+    {% endfor %}
+  {% endfor %}
+</select>
+
+<div class="pricing-options">
+  <div class="total-price-display">
+    <span id="original_total_price" class="original-price"></span>
+    <span id="discounted-total-price" class="total-price__display discounted-price"></span>
+    <span id="savings-percentage" class="savings-percentage"></span> <!-- New element for savings percentage -->
+  </div>
+  <div class="variants-bundles__block-title">CHOOSE YOUR PACK</div>
+
+  <div class="variants-bundles__bars">
+    <div class="variants-bundles__option">
+      <input
+        type="radio"
+        id="monthly"
+        name="subscription"
+        value="{{ product.variants[0].title }}"
+        data-selling-plan="8572633343"
+        data-quantity="1"
+        data-discount="10"
+      >
+      <label for="monthly">
+        <div class="bundle-first-line">
+          <span class="bundle-first-line__title">{{ product.variants[0].title }}</span>
+          <span class="save">Save 50%</span>
+        </div>
+        <span class="subtitle">2 Bottles in Total</span>
+      </label>
+      <div class="price-info">
+        <span class="current-prcie">{{ product.variants[0].price | money }}</span>
+        <span class="compare-prcie">{{ product.variants[0].compare_at_price | money }}</span>
+      </div>
+    </div>
+
+    <div class="variants-bundles__option">
+      <input
+        type="radio"
+        id="quarterly"
+        name="subscription"
+        value="{{ product.variants[1].title }}"
+        data-selling-plan="8572666111"
+        data-quantity="1"
+        data-discount="10"
+        checked
+      >
+      <div class="badge best-value">MOST POPULAR</div>
+      <label for="quarterly">
+        <div class="bundle-first-line">
+          <span class="bundle-first-line__title">{{ product.variants[1].title }}</span>
+          <span class="save">Save 50%</span>
+        </div>
+        <span class="subtitle">4 Bottles in Total</span>
+        <span class="shipping">Includes <b>FREE</b> Shipping</span>
+      </label>
+      <div class="price-info">
+        <span class="current-prcie">{{ product.variants[1].price | money }}</span>
+        <span class="compare-prcie">{{ product.variants[1].compare_at_price | money }}</span>
+      </div>
+    </div>
+
+    <div class="variants-bundles__option">
+      <div class="badge best-value">BEST DEAL</div>
+      <input
+        type="radio"
+        id="biannual"
+        name="subscription"
+        value="{{ product.variants[2].title }}"
+        data-selling-plan="8572698879"
+        data-quantity="1"
+        data-discount="10"
+      >
+      <label for="biannual">
+        <div class="bundle-first-line">
+          <span class="bundle-first-line__title">{{ product.variants[2].title }}</span>
+          <span class="save">Save 50%</span>
+        </div>
+        <span class="subtitle">6 Bottles in Total</span>
+        <span class="shipping">Includes <b>FREE</b> Shipping</span>
+      </label>
+      <div class="price-info">
+        <span class="current-prcie">{{ product.variants[2].price | money }}</span>
+        <span class="compare-prcie">{{ product.variants[2].compare_at_price | money }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="auto-refill">
+    <input type="checkbox" id="auto_refill" name="auto-refill" checked>
+    <label for="auto_refill">
+      Save More with Automatic Refills!
+      <span class="note">Zero commitment, Cancel Anytime</span>
+    </label>
+  </div>
+
+  <div class="you-save-section">
+    <div class="total-price-display1">
+      <p id="original-total-price1" class="original-price you-save-price"></p>
+      <p id="discounted-total-price1" class="original-price you-save-price"></p>
+      <p id="savings-percentage1" class="savings-percentage"></p> <!-- New element for savings percentage -->
+    </div>
+  </div>
+</div>
+
+<!-- Hidden inputs for selling_plan and quantity -->
+<input type="hidden" name="selling_plan" id="selling_plan_input">
+<input type="hidden" name="quantity" id="quantity_input" value="1">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const subscriptionOptions = document.querySelectorAll('input[name="subscription"]');
+    const autoRefillCheckbox = document.getElementById('auto_refill');
+    const sellingPlanInput = document.getElementById('selling_plan_input');
+    const quantityInput = document.getElementById('quantity_input');
+    const originalTotalPriceDisplay = document.getElementById('original_total_price');
+    const discountedTotalPriceDisplay = document.getElementById('discounted-total-price');
+    const savingsPercentageDisplay = document.getElementById('savings-percentage');
+
+    // Save Section
+    const originalTotalPriceDisplay1 = document.getElementById('original-total-price1');
+    const discountedTotalPriceDisplay1 = document.getElementById('discounted-total-price1');
+    const savingsPercentageDisplay1 = document.getElementById('savings-percentage1');
+
+    function formatPrice(price) {
+      return '$' + parseFloat(price).toFixed(2);
+    }
+
+    function calculatePercentageSaved(originalPrice, discountedPrice) {
+      if (!originalPrice || !discountedPrice) return '';
+      const savings = (originalPrice - discountedPrice) / originalPrice * 100;
+      return 'SAVE ' + Math.floor(savings) + '%'; // Round down and remove decimals
+    }
+
+    function calculateDollarSavings(originalPrice, discountedPrice) {
+      const savings = originalPrice - discountedPrice;
+      return 'Save $' + savings.toFixed(2); // Format as Save $XX
+    }
+
+    function updatePricesForAllOptions() {
+      subscriptionOptions.forEach(option => {
+        const priceInfo = option.closest('.variants-bundles__option').querySelector('.price-info');
+        const currentPriceElement = priceInfo.querySelector('.current-prcie');
+        const comparePriceElement = priceInfo.querySelector('.compare-prcie');
+        const saveElement = option.closest('.variants-bundles__option').querySelector('.save'); // Select the .save element
+
+        let currentPrice = parseFloat(currentPriceElement.textContent.replace(/[^0-9.]/g, ''));
+        let comparePrice = comparePriceElement ? parseFloat(comparePriceElement.textContent.replace(/[^0-9.]/g, '')) : null;
+        let discountPercentage = parseFloat(option.dataset.discount.replace(/[^0-9.]/g, ''));
+
+        // Store the original current price if not already stored 
+        if (!option.dataset.originalPrice) {
+          option.dataset.originalPrice = currentPrice;
+        }
+
+        if (autoRefillCheckbox.checked) {
+          if (discountPercentage) {
+            // Apply 50% discount to the compare price if available
+            currentPrice = parseFloat(option.dataset.originalPrice) * (1 - (discountPercentage / 100));
+          } else if (comparePrice) {
+            // Apply 50% discount to the compare price if available
+            currentPrice = comparePrice * 0.50;
+          } else {
+            // If no compare price exists, apply the discount to the current price
+            currentPrice = currentPrice * 0.05;
+          }
+        } else {
+          // Use the original price of the option when unchecked
+          currentPrice = parseFloat(option.dataset.originalPrice);
+        }
+
+        // Update the price in the option list
+        currentPriceElement.textContent = formatPrice(currentPrice);
+
+        // Calculate and update the dollar savings
+        if (comparePrice) {
+          const dollarSavings = calculateDollarSavings(comparePrice, currentPrice);
+          saveElement.textContent = dollarSavings; // Update the .save element with the dollar savings
+        } else {
+          saveElement.textContent = ''; // Clear the .save element if no compare price exists
+        }
+      });
+    }
+
+    function updateTotalPrice() {
+      const selectedOption = document.querySelector('input[name="subscription"]:checked');
+      const priceInfo = selectedOption.closest('.variants-bundles__option').querySelector('.price-info');
+      const currentPrice = parseFloat(priceInfo.querySelector('.current-prcie').textContent.replace(/[^0-9.]/g, ''));
+      const comparePriceElement = priceInfo.querySelector('.compare-prcie');
+      const comparePrice = comparePriceElement ? parseFloat(comparePriceElement.textContent.replace(/[^0-9.]/g, '')) : null;
+
+      // Update the total price display
+      if (comparePrice) {
+        originalTotalPriceDisplay.textContent = formatPrice(comparePrice);
+        discountedTotalPriceDisplay.textContent = formatPrice(currentPrice);
+
+        // Calculate and display the percentage saved
+        const savingsPercentage = calculatePercentageSaved(comparePrice, currentPrice);
+        savingsPercentageDisplay.textContent = savingsPercentage;
+
+        // Update the new elements with dollar savings
+        originalTotalPriceDisplay1.textContent = `Value: ${formatPrice(comparePrice)}`;
+        discountedTotalPriceDisplay1.textContent = `You pay: ${formatPrice(currentPrice)}`;
+        const dollarSavings = calculateDollarSavings(comparePrice, currentPrice);
+        savingsPercentageDisplay1.textContent = dollarSavings; // Update savingsPercentageDisplay1 with the dollar savings
+      } else {
+        originalTotalPriceDisplay.textContent = '';
+        discountedTotalPriceDisplay.textContent = formatPrice(currentPrice);
+        savingsPercentageDisplay.textContent = ''; // No savings percentage if no compare price
+
+        // Clear the new elements if no compare price
+        originalTotalPriceDisplay1.textContent = '';
+        discountedTotalPriceDisplay1.textContent = `You pay: ${formatPrice(currentPrice)}`;
+        savingsPercentageDisplay1.textContent = '';
+      }
+    }
+
+    function updateInputs() {
+      const selectedOption = document.querySelector('input[name="subscription"]:checked');
+      const sellingPlan = selectedOption.dataset.sellingPlan;
+      const quantity = selectedOption.dataset.quantity;
+
+      quantityInput.value = quantity;
+
+      if (autoRefillCheckbox.checked) {
+        sellingPlanInput.value = sellingPlan;
+      } else {
+        sellingPlanInput.removeAttribute('value');
+      }
+
+      // Update the prices for all options
+      updatePricesForAllOptions();
+      // Update the total price display
+      updateTotalPrice();
+    }
+
+    subscriptionOptions.forEach(option => {
+      option.addEventListener('change', (e) => {
+        const selectedOption = document.querySelector('input[name="subscription"]:checked');
+        document.querySelector(`#variant_wrapper input[value="${selectedOption.value}"]`).click();
+
+        updateInputs();
+      });
+    });
+
+    autoRefillCheckbox.addEventListener('change', updateInputs);
+
+    // Initial update
+    updateInputs();
+  });
+</script>

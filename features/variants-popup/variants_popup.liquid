@@ -1,0 +1,68 @@
+<script>
+  function openPopup() {
+    let popupWrapper = document.querySelector(".variants__popup-wrapper");
+    let popupInner = document.querySelector("#variants__popup-inner");
+    let chooseBtn = document.querySelectorAll('.choose_btn');
+
+    chooseBtn.forEach(btn => {
+      btn.addEventListener('click', () => {
+        let select = btn.previousElementSibling;
+        let variantsContent = btn.nextElementSibling;
+
+        if (variantsContent) {
+          let variantsContentClone = variantsContent.cloneNode(true);
+
+          popupInner.innerHTML = '';
+          popupInner.appendChild(variantsContentClone);
+
+          // Show the popup
+          popupWrapper.classList.add('popup_active');
+
+          popupInner.querySelectorAll('.form-swatch').forEach(label => {
+            label.addEventListener('click', () => {
+              let valueName = label.getAttribute('data-title');
+              let labelGroup = label.closest('.form-inline-group');
+              labelGroup.querySelectorAll('.form-swatch').forEach(lbl => {
+                lbl.classList.remove('active');
+              })
+              label.classList.add('active');
+
+              // build variants
+              let variant = '';
+              let activeLabels = label.closest('.choose-option-variants').querySelectorAll('.form-swatch.active');
+              activeLabels.forEach((label, index) => {
+                variant += label.getAttribute('data-title');
+                if(index != activeLabels.length - 1) {
+                  variant += ' / '
+                }
+              });
+
+              // match variants
+              select.querySelectorAll('option').forEach(option => {
+                if(option.dataset.title == variant)
+                {
+                  popupInner.querySelector('.quickViewATCBtn input[name="id"]').value = option.value;
+                }
+              });
+
+              // hide popup
+              popupInner.querySelector('.feature_atc_btn').addEventListener('click', ()=> {
+                popupWrapper.classList.remove('popup_active');
+              });
+            })
+          })
+        }
+      });
+    });
+
+    // Hide popup
+    function hidePopup() {
+      popupWrapper.classList.remove('popup_active');
+      popupInner.innerHTML = '';
+    }
+
+    document.querySelector('.variants__popup-overlay').addEventListener('click', hidePopup);
+  }
+
+  document.addEventListener('DOMContentLoaded', openPopup);
+</script>
