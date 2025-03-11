@@ -1,0 +1,10 @@
+{% comment %} 
+  How to get poster image from video 
+{% endcomment %}
+{%- assign poster_image = section.settings.poster | default: section.settings.video.preview_image -%}
+{%- if poster_image != blank -%}
+  {{- poster_image | image_url: width: poster_image.width | image_tag: sizes: '100vw', widths: '200,300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200' -}}
+{%- else -%}
+  {{- 'lifestyle-1' | placeholder_svg_tag: 'h-full w-full placeholder' | replace: '<svg', '<svg preserveAspectRatio="xMinYMin slice"' -}}
+{%- endif -%}
+

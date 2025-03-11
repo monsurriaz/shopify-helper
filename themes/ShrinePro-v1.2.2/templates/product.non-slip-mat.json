@@ -1,0 +1,1285 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.7,
+            "star_color": "#c5ff89",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "Rated 4.7\/5 by 23,719+ Happy Customers",
+            "size": 12,
+            "alignment": "flex-start",
+            "scroll_id": "",
+            "margin_top": 0,
+            "margin_bottom": 9
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "layout": "price_second",
+            "price_color": "accent-1",
+            "compare_price_color": "text",
+            "displayed_badge": "sale",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 9,
+            "margin_bottom": 15
+          }
+        },
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
+          "type": "variant_picker",
+          "disabled": true,
+          "settings": {
+            "picker_types": "pills, dropdown, dropdown",
+            "custom_labels": "[name] - [selected]",
+            "skip_unavailable": false,
+            "swatches_size": "medium",
+            "swatches_custom_colors": "custom",
+            "swatches_custom_colors_list": "#000000, #6D388B, #0000FF, #FFCC00",
+            "full_width_dropdowns": false,
+            "breaks_style": "normal",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_display_selected_indicator": true,
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_color_scheme": "accent-1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_badge_style": "1",
+            "breaks_badge_color": "accent-1",
+            "breaks_displayed_images": "variant_images",
+            "breaks_custom_images": "",
+            "breaks_image_width": 70,
+            "breaks_space_images": true,
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefit_color": "accent-1",
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_qVDNeT": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "The perfect companion for your LemmeCook™ cutting board. This non-slip mat fits all board sizes and provides a clean and stable surface for cutting.",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#121212",
+            "icon_1": "",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#F3F3F3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#B7B7B7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_w6ARyB": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Fits All Board Sizes",
+            "text_2": "Non-Slip Surface and Base",
+            "text_3": "Dishwasher Safe",
+            "icon_scale": 120,
+            "icon_color": "#121212",
+            "icon_1": "check_circle",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "quantity_selector_EDDBXg": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {
+            "full_width_classic": true,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": false,
+            "style": "normal",
+            "headline": "BUNDLE & SAVE",
+            "preselected": "option_3",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": true,
+            "update_prices": true,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "Size:",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1 Pack",
+            "option_1_benefit": "",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "outlined",
+            "option_1_benefit_color": "accent-1",
+            "option_1_caption": "Standard Price",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "MOST POPULAR",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-1",
+            "option_2_label": "2 Pack",
+            "option_2_benefit": "",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "outlined",
+            "option_2_benefit_color": "accent-1",
+            "option_2_caption": "You save 15%",
+            "option_2_percentage_off_text": "15",
+            "option_2_fixed_amount_off": "0",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 3,
+            "option_3_badge": "BEST VALUE",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-1",
+            "option_3_label": "3 Pack",
+            "option_3_benefit": "+ Free Shipping",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "outlined",
+            "option_3_benefit_color": "accent-1",
+            "option_3_caption": "You save 20%",
+            "option_3_percentage_off_text": "20",
+            "option_3_fixed_amount_off": "0",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "kaching_bundles_app_block_UfNgxm": {
+          "type": "shopify:\/\/apps\/kaching-bundles\/blocks\/app-block\/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "display_price": false,
+            "enable_custom_color": false,
+            "custom_color": "#53af01",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": true,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "image_9tMHch": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Frame_31.png",
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "center",
+            "border_radius": 0,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "estimated_shipping_JQ6eN9": {
+          "type": "estimated_shipping",
+          "disabled": true,
+          "settings": {
+            "icon": "local_shipping",
+            "filled_icon": true,
+            "icon_size": "small",
+            "icon_alignment": "top",
+            "message": "<p>Ships by <strong>[start_date]<\/strong>.<\/p>",
+            "min_shipping_days": 2,
+            "max_shipping_days": 2,
+            "date_format": "day_mm_dd",
+            "days_labels": "Mon, Tues, Weds, Thurs, Fri, Sat, Sun",
+            "months_labels": "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sept, Oct, Nov, Dec",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "custom_liquid_JQQGCg": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% assign current_date = \"now\" | date: \"%a, %b %e\" %}\n{% assign ship_by_date = current_date | date: \"%s\" | plus: 172800 | date: \"%a, %b %e\" %}\n\n\n<style>\n  .shipping-banner {\n    background-color: #f4ffe5;\n    border: 1px solid #f4ffe5;\n    border-radius: 50px;\n    padding: 8px 12px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;\n    max-width: 100%;\n    overflow: hidden;\n    white-space: nowrap;\n  }\n  .shipping-info, .orders-info {\n    display: flex;\n    align-items: center;\n  }\n  .green-dot {\n    width: 8px;\n    height: 8px;\n    background-color: #4CAF50;\n    border-radius: 50%;\n    margin-right: 6px;\n    flex-shrink: 0;\n    display: inline-block;\n  }\n  .shipping-icon {\n    width: 16px;\n    height: 16px;\n    fill: #666;\n    margin-right: 6px;\n  }\n  .shipping-text, .orders-remaining {\n    font-size: 12px;\n    color: #333;\n  }\n<\/style>\n\n<div class=\"shipping-banner\">\n  <div class=\"shipping-info\">\n    <span class=\"green-dot\"><\/span>\n    <span class=\"shipping-text\">Ships by <b>{{ ship_by_date }}<\/b><\/span>\n  <\/div>\n  <div class=\"orders-info\">\n    <svg class=\"shipping-icon\" viewBox=\"0 0 24 24\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\">\n      \n    \n  <\/div>\n<\/div>"
+          }
+        },
+        "e0a0b690-50df-4ca4-acfd-ce2980696cce": {
+          "type": "shipping_checkpoints",
+          "disabled": true,
+          "settings": {
+            "icon_1": "shopping_bag",
+            "filled_icon_1": false,
+            "top_text_1": "<strong>[start_date]<\/strong>",
+            "bottom_text_1": "Ordered",
+            "min_days_1": 0,
+            "max_days_1": 0,
+            "icon_2": "local_shipping",
+            "filled_icon_2": false,
+            "top_text_2": "<strong>[start_date] - [end_date]<\/strong>",
+            "bottom_text_2": "Shipped",
+            "min_days_2": 1,
+            "max_days_2": 2,
+            "icon_3": "redeem",
+            "filled_icon_3": false,
+            "top_text_3": "<strong>[start_date] - [end_date]<\/strong>",
+            "bottom_text_3": "Delivered",
+            "min_days_3": 10,
+            "max_days_3": 12,
+            "icon_4": "",
+            "filled_icon_4": false,
+            "top_text_4": "",
+            "bottom_text_4": "",
+            "date_format": "mm_dd",
+            "days_labels": "Mon, Tue, Wed, Thu, Fri, Sat, Sun",
+            "months_labels": "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec",
+            "color_scheme": "inverse",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "reviews_8UgFbe": {
+          "type": "reviews",
+          "settings": {
+            "color_scheme": "background-1",
+            "show_custom_bg": false,
+            "custom_bg_color": "#f2f2f2",
+            "corner_radius": 12,
+            "border_width": 0,
+            "border_color": "#b7b7b7",
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "star_color": "#c5ff89",
+            "stars_translate": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "slider_type": "slide",
+            "autoplay": true,
+            "autoplay_speed": 5,
+            "display_arrows": false,
+            "display_dots": true,
+            "author_1": "[stars] <em>Jessica M.<\/em> <em><strong>Verified Buyer<\/strong><\/em>",
+            "image_1": "shopify:\/\/shop_images\/Middle-Aged-White-Woman-Brunette-Happy-43923559-1.png",
+            "text_1": "<p>\"I absolutely love the lemmecook cutting board! The light weight titanium is great when stowing and using frequently. I paired it with the non slip mat for easy, no mess clean up. Recommend!\"<\/p>",
+            "author_2": "[stars] <em>Taylor H. <\/em><em><strong>Verified Buyer<\/strong><\/em>",
+            "image_2": "shopify:\/\/shop_images\/3939c938-0701-4b2a-8d86-b19823f3556a-1.jpg",
+            "text_2": "<p>\"I saw one of their videos about microplastics and decided to try it for myself. My old plastic boards had tiny bits all over my knife. It was scary to think about that being in my food!\"<\/p>",
+            "author_3": "[stars] <em>Marianna C. <\/em><em><strong>Verified Buyer<\/strong><\/em>",
+            "image_3": "shopify:\/\/shop_images\/edward-cisneros-_H6wpor9mjs-unsplash-1080x675.jpg",
+            "text_3": "<p>\"This board has been a GAME CHANGER with my quick kitchen cleanup routine. Quick rinse, dry and it's ready to use again. No more scrubbing stains and lingering oders, so much better.\"<\/p>",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "de158e68-5d0d-4819-a625-e2dabdff87d1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Why I need to Sharpen my Knives",
+            "heading_size": "small",
+            "icon": "question_mark",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>While our LemmeCook titanium cutting boards help preserve your knife's edge over time, it's inevitable that your knife will dull due to regular use.<\/p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_7wiGtK": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Shipping & Delivery",
+            "heading_size": "small",
+            "icon": "travel",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Enjoy <strong>fast and reliable shipping<\/strong>! We process all orders in <strong>1-2 days<\/strong> with <strong>7-10 day shipping<\/strong>. Free shipping is available on orders over $125. Your <strong>lemmcook titanium cutting board<\/strong>s will be delivered straight to your door in no time.<\/p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_REtDWx": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Return & Refund Policy",
+            "heading_size": "small",
+            "icon": "cycle",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>We offer a <strong>30-day return policy<\/strong>. If you're not completely satisfied with your purchase, simply contact us within 30 days and we'll provide a <strong>hassle-free return.<\/strong><\/p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "a6eb81db-40e4-43e0-972f-32db010a4a56",
+        "title",
+        "price",
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
+        "text_qVDNeT",
+        "text_w6ARyB",
+        "quantity_selector_EDDBXg",
+        "kaching_bundles_app_block_UfNgxm",
+        "buy_buttons",
+        "image_9tMHch",
+        "estimated_shipping_JQ6eN9",
+        "custom_liquid_JQQGCg",
+        "e0a0b690-50df-4ca4-acfd-ce2980696cce",
+        "reviews_8UgFbe",
+        "de158e68-5d0d-4819-a625-e2dabdff87d1",
+        "collapsible_tab_7wiGtK",
+        "collapsible_tab_REtDWx"
+      ],
+      "custom_css": [
+        ".color-foreground-text {--color-foreground: var(--color-base-text); color: #000;}",
+        ".link-with-icon,.nowrap {white-space: nowrap; color: #000;}"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": true,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_count": 5,
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 0,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "dots_overlay",
+        "mobile_thumbnails": "hide",
+        "mobile_thumbnails_count": 6,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 0,
+        "enable_mobile_outher_spacing": true,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "logo_list_hr4tXT": {
+      "type": "logo-list",
+      "blocks": {
+        "logo_Fra9Rp": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/foodnetworklogo.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_ceeDUt": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/bonappetite.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_mAGzCj": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/forbes.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_Cj4kVY": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/digital_journal.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_8dmVPr": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/womens_healthtt.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_MHBXV3": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wired-vector-logo.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_8MwMwt": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/usatodayyy.png",
+            "link": "",
+            "target_blank": false
+          }
+        }
+      },
+      "block_order": [
+        "logo_Fra9Rp",
+        "logo_ceeDUt",
+        "logo_mAGzCj",
+        "logo_Cj4kVY",
+        "logo_8dmVPr",
+        "logo_MHBXV3",
+        "logo_8MwMwt"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "As Seen On",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "gray_logos": false,
+        "color_scheme": "background-1",
+        "layout": "vertical",
+        "desktop_logo_height": 50,
+        "columns_mobile": 2,
+        "mobile_logo_height": 50,
+        "mobile_slider": true,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_dots": false,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "rich_text_6KJQfG": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_HaW6tA": {
+          "type": "heading",
+          "settings": {
+            "title": "Most Cutting Boards Damage Your Health & Knives",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        },
+        "text_NmA6QU": {
+          "type": "text",
+          "settings": {
+            "text": "<p>While it seems simple, the material of your board can be an endangerment to food safety and your health.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_HaW6tA",
+        "text_NmA6QU"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "full_width": true,
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "multirow_zjcn4J": {
+      "type": "multirow",
+      "blocks": {
+        "row_YYrbHB": {
+          "type": "row",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wooden_board-removebg-preview.png",
+            "video_muted_autoplay": true,
+            "caption": "",
+            "title": "Wood & Bamboo",
+            "title_highlight_color": "#6d388b",
+            "text": "<p>These natural materials can let bacteria grow within the groves and cuts over time. This leads to food contamination and poor health over time. Not only that, they're notorious for staining and absorbing bad odors.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "atc_button_label": "",
+            "atc_product": "",
+            "atc_skip_cart": false
+          }
+        },
+        "row_GmrJgt": {
+          "type": "row",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/plastic_board-removebg-preview.png",
+            "video_muted_autoplay": true,
+            "caption": "",
+            "title": "Plastic & Epicruean",
+            "title_highlight_color": "#6d388b",
+            "text": "<p>These boards contain BPA's and other harmful chemicals that leach into food during cutting, posing a risk to your heatlh. Plastics are also notorious for microplastic shavings ending up in your food.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "atc_button_label": "",
+            "atc_product": "",
+            "atc_skip_cart": false
+          }
+        }
+      },
+      "block_order": [
+        "row_YYrbHB",
+        "row_GmrJgt"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "image_layout": "alternate-left",
+        "row_color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "testimonials_9RfAUN": {
+      "type": "testimonials",
+      "blocks": {
+        "column_YcNQpa": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/nIqp5-wjNb_mid.jpg",
+            "title": "This Board Actually Works!",
+            "text": "<p>I love how easy to clean and lightweight this board is. No bacteria, stains or odors and when I'm all done cooking, I can stow it away without having my husband help. Only downside is you can't use strong chemicals.<\/p>",
+            "author": "<em>Jordan B. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        },
+        "column_bzMFaH": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/9Jytgwy3L_mid.jpg",
+            "title": "10\/10 Would Recommend",
+            "text": "<p>Definitely seems durable and can attest to it being easy to clean. Happy to not worry about tiny microplastics in my food anymore with this board. Would recommend to friends and family! Thanks!<\/p>",
+            "author": "<em>Mark T. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        },
+        "column_A37HFJ": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/cCMViT2H3_mid.jpg",
+            "title": "Never Going Back to Wood",
+            "text": "<p>This titanium board has been outstanding in our kitchen. Durable, non-porous and resists scratches so nicely. No more worrying about scrubbing for awhile to get stains out of my old wooden board. Very happy!<\/p>",
+            "author": "<em>Susan V. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        }
+      },
+      "block_order": [
+        "column_YcNQpa",
+        "column_bzMFaH",
+        "column_A37HFJ"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "What People Just Like You Are Saying!",
+        "title_highlight_color": "#c5ff89",
+        "heading_size": "h1",
+        "text": "<p><strong>Rated 4.7\/5 by 23,719+ Happy Customers<\/strong><\/p>",
+        "color_scheme": "custom",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "stars_color": "#121212",
+        "show_quotes": false,
+        "quotes_color_scheme": "inverse",
+        "cards_color_scheme": "custom",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212",
+        "custom_cards_colors_background": "#c5ff89",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#121212"
+      }
+    },
+    "section_divider_WBDPhy": {
+      "type": "section-divider",
+      "disabled": true,
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "comparison_slider_zcBhWe": {
+      "type": "comparison-slider",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "No More Trapped Bacteria or Micro Plastics in your Food",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p>See the diference Titanium can make for your food and health!<\/p>",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "color_scheme": "background-1",
+        "layout": "slider_second",
+        "before_label": "Before",
+        "after_label": "After",
+        "labels_color_scheme": "accent-1",
+        "line_color": "background-1",
+        "arrows_style": "circle",
+        "before_image": "shopify:\/\/shop_images\/imggp2.webp",
+        "after_image": "shopify:\/\/shop_images\/Screenshot_2024-12-17_135359.png",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "section_divider_pBUL4V": {
+      "type": "section-divider",
+      "disabled": true,
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "comparison_table_6Agii9": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_Frceke": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Built to Last a Lifetime<\/strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_zthRma": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Non-Toxic<\/strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_ypdNmB": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Lightweight<\/strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_99dgqp": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Easy to Clean<\/strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_H4eWhV": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Stain Resistant<\/strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_ycjD7k": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Odorless<\/strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_WkUMrq": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Dishwasher Safe<\/strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_ELJ4YA": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Price Point<\/strong>",
+            "us": false,
+            "others": true,
+            "others_2": true,
+            "others_3": true
+          }
+        }
+      },
+      "block_order": [
+        "row_Frceke",
+        "row_zthRma",
+        "row_ypdNmB",
+        "row_99dgqp",
+        "row_H4eWhV",
+        "row_ycjD7k",
+        "row_WkUMrq",
+        "row_ELJ4YA"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Why Choose Lemmecook Over Other Cutting Boards?",
+        "title_highlight_color": "#121212",
+        "heading_size": "h1",
+        "text": "<p>A clean kitchen is crucial to preventing the spred of harmful bacteria and protecting your family's health. Upgrading to a titanium cutting board is key in reducing the risk of contamination and eliminating the injestion of microplastics in your food.<\/p>",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "atc_button_label": "Get The Lemmecook Cutting Board Now",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "desktop_alignment": "center",
+        "mobile_alignment": "center",
+        "color_scheme": "custom",
+        "layout": "table_first",
+        "style": "centered",
+        "corner_radius": 20,
+        "number_of_competitors": 1,
+        "us_label": "[shop_name]",
+        "us_label_size": 18,
+        "logo_width": 90,
+        "mobile_logo_width": 60,
+        "others_label": "Others",
+        "others_label_size": 18,
+        "others_logo_width": 90,
+        "others_mobile_logo_width": 60,
+        "others_2_label": "Competitor 2",
+        "others_2_label_size": 18,
+        "others_2_logo_width": 90,
+        "others_2_mobile_logo_width": 60,
+        "others_3_label": "Competitor 3",
+        "others_3_label_size": 18,
+        "others_3_logo_width": 90,
+        "others_3_mobile_logo_width": 60,
+        "checkmark_style": "regular",
+        "checkmark_color": "#c5ff89",
+        "checkmark_bg_color": "#ffffff",
+        "x_style": "regular",
+        "x_color": "#f70000",
+        "x_bg_color": "#ffffff",
+        "opposite_icon_colors": "original",
+        "highlighted_color_scheme": "custom",
+        "highlighted_separator_opacity": 0,
+        "highlighted_overlay_opacity": 0,
+        "other_cells_color_scheme": "background-1",
+        "regular_separator_opacity": 10,
+        "regular_overlay_opacity": 0,
+        "minimalistic_border_opacity": 16,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212",
+        "custom_colors_solid_button_background": "#c5ff89",
+        "custom_colors_solid_button_text": "#121212",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_highlighted_background": "#121212",
+        "custom_colors_highlighted_text": "#ffffff",
+        "custom_colors_others_background": "#d9b99b",
+        "custom_colors_others_text": "#121212"
+      }
+    },
+    "section_divider_BTitc7": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "icon_bar_YMmgnF": {
+      "type": "icon-bar",
+      "blocks": {
+        "column_cnRmM9": {
+          "type": "column",
+          "settings": {
+            "icon": "local_shipping",
+            "filled_icon": false,
+            "title": "Free Shipping",
+            "text": "<p>Free shipping for all orders over $125<\/p>"
+          }
+        },
+        "column_tyMD47": {
+          "type": "column",
+          "settings": {
+            "icon": "sentiment_very_satisfied",
+            "filled_icon": false,
+            "title": "Satisfaction Guarantee",
+            "text": "<p>30-day money back guarantee<\/p><p><\/p>"
+          }
+        },
+        "column_t6rUCU": {
+          "type": "column",
+          "settings": {
+            "icon": "recycling",
+            "filled_icon": false,
+            "title": "Easy 30-Day Returns",
+            "text": "<p>Simple and fast return policy<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_cnRmM9",
+        "column_tyMD47",
+        "column_t6rUCU"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Try It Absolutely Risk-Free!",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-1",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "collapsible_content_bMUR4j": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_PnXHiG": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Does it Dull Knives?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Nope! Titanium cutting boards are gentle on your knives. However, no matter what you cut on, by using said knife it will eventually cause some dulling over time. It is generally recommended to sharpen your knives occasionally so you don't risk ingesting microplastics or bacteria which is commonly found in other cutting boards made of wood and\/or plastic.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Jnrper": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Buy Lemmecook Products Elsewhere?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Nope! We sell exclusively online at lemmecook.com. The only authentic and certified titanium cutting board is currently available exclusively through our online store. Any other outlets please beware of scams and imitations.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_JrnPYF": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do You Have an Affiliate Program?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>We are launching our Lemmcook affiliate program shortly! Stay tuned.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_HMGXix": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Where Do You Ship?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>While we are based in the US. We ship internationally.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_VtAJNW": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Do I Track my Order?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Once your order has shipped, you will receive an email and text confirmation which will include your tracking number. You can always refer back to the \"Track Order\" section of our site to check on the status.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_qTE889": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Expedite Shipping?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Because we care about customer experience, we come out of pocket to upgrade all orders to expedited shipping by default. The shipping you see is the fastest provided.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_VEKHR8": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Can I Cancel or Change my Order?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>You have a brief window of time to edit\/change your order details after placing an order. After that, you can cancel within 24 hours as long as the item(s) have not shipped.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_PnXHiG",
+        "collapsible_row_Jnrper",
+        "collapsible_row_JrnPYF",
+        "collapsible_row_HMGXix",
+        "collapsible_row_VtAJNW",
+        "collapsible_row_qTE889",
+        "collapsible_row_VEKHR8"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "Frequently Asked Questions",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "background-1",
+        "container_color_scheme": "background-2",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "small",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_8zwmYh": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "173452876270d57b97": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_hDpVNL": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_hDpVNL"
+      ],
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "square",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "section_divider_nLCL4g": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "logo_list_hr4tXT",
+    "rich_text_6KJQfG",
+    "multirow_zjcn4J",
+    "testimonials_9RfAUN",
+    "section_divider_WBDPhy",
+    "comparison_slider_zcBhWe",
+    "section_divider_pBUL4V",
+    "comparison_table_6Agii9",
+    "section_divider_BTitc7",
+    "icon_bar_YMmgnF",
+    "collapsible_content_bMUR4j",
+    "section_divider_8zwmYh",
+    "173452876270d57b97",
+    "related-products",
+    "section_divider_nLCL4g"
+  ]
+}

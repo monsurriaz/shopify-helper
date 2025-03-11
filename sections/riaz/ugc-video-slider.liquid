@@ -8,6 +8,10 @@
   - toggle autoplay
 {% endcomment %}
 
+<!-- Slick Slider CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
 {%- style -%}
   .ssbd-video__slider--{{ section.id }} {
     --arrow-bg-image: 'https://cdn.shopify.com/s/files/1/0606/8509/0968/files/arrow-right.png?v=1719958988';
@@ -113,7 +117,7 @@
       <div class="ssbd-video__slider">
         {%- for block in section.blocks -%}
           {% assign index = forloop.index %}
-          <div class="ssbd-video__item" data-video-id="{{index}}" {{ block.shopify_attributes }}>
+          <div class="ssbd-video__item" data-video-id="{{ index }}" {{ block.shopify_attributes }}>
             {% if block.settings.video != blank %}
               {{
                 block.settings.video
@@ -153,6 +157,8 @@
                   alt="Pause"
                 >
               </button>
+            {% else %}
+              {{- 'lifestyle-1' | placeholder_svg_tag: 'h-full w-full placeholder' | replace: '<svg', '<svg preserveAspectRatio="xMinYMin slice"' -}}
             {% endif %}
           </div>
         {%- endfor -%}
@@ -160,6 +166,12 @@
     {% endif %}
   </div>
 </div>
+
+<!-- jQuery (required for Slick Slider) -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Slick Slider JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
   function videoInit() {
@@ -282,7 +294,8 @@
     {
       "type": "text",
       "id": "title",
-      "label": "Section Title"
+      "label": "Section Title",
+      "default": "Video Slider"
     },
     {
       "type": "select",

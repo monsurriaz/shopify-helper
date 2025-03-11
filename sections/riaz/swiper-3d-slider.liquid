@@ -1,0 +1,905 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    --accent-color: {{ section.settings.card_flip_bg }};
+  }
+
+  /*Ingradiants */
+  .section-gradiant {
+    background-image: {{ section.settings.bg_gradient }};
+    background-color: {{ section.settings.bg_color }};
+  }
+  .text-center {
+    text-align: center;
+  }
+  .d-flex {
+    display: flex;
+  }
+  .align-center {
+    align-items: center;
+  }
+  .main-wrapper {
+    flex-wrap: wrap;
+  }
+  .ingredient-card-flip-wrapper .main-wrapper__item {
+    min-width: 50%;
+    max-width: 50%;
+  }
+  .ingredient-card-flip-wrapper .info-wrapper {
+    padding: 30px 45px;
+  }
+
+  @media (max-width: 768px) {
+    .ingredient-card-flip-wrapper {
+      flex-direction: column;
+    }
+    .ingredient-card-flip-wrapper .main-wrapper__item {
+      min-width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .ingredient-card-flip-wrapper .info-wrapper.info-wrapper-mobile .rte{
+      display: none;
+    }
+    .ingredient-card-flip-wrapper .info-wrapper.info-wrapper-mobile .flip-popup-open{
+      display: none;
+    }
+  }
+  @media (max-width: 768px) {
+    .ingredient-card-flip-wrapper .info-wrapper {
+      margin-bottom: 10px;
+      padding: 0px;
+    }
+    .ingredient-card-flip-wrapper .info-wrapper:not(.info-wrapper-mobile) .rte{
+      display: none;
+    }
+    .ingredient-card-flip-wrapper .info-wrapper:not(.info-wrapper-mobile) .flip-popup-open{
+      display: none;
+    }
+  }
+
+  .ingredient-card-flip-wrapper .flip-popup-open {
+    background: transparent;
+    border: none;
+    color: #000;
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0 auto;
+    margin-top: 25px;
+    text-decoration: underline !important;
+  }
+
+  .all-ingredients-popup {
+    font-size: 14px;
+    text-align: center;
+    padding: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .all-ingredients-popup {
+      padding: 55px 15px;
+    }
+  }
+  .page-row-headline.featured h2 {
+    font-size: 24px;
+    font-style: italic;
+    letter-spacing: .33px;
+    line-height: 1;
+  }
+  .page-row-headline.featured .desc {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .page-row-headline.featured h2+.desc, .page-row-headline.featured h3+.desc {
+    margin-top: 25px;
+  }
+  .page-row-headline.featured .desc p {
+    margin-top: 0;
+    min-height: 15px;
+  }
+  .ingredient-card-flip-wrapper .flip-popup-open {
+    background: transparent;
+    border: none;
+    color: #000;
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 25px auto 0;
+    text-decoration: underline;
+  }
+  .swiper-flip {
+    overflow: hidden !important;
+  }
+
+
+  /* Section ingredients card flip */
+
+  .swiper-flip .swiper-item-wrapper {
+    position: relative;
+  }
+
+  .swiper-flip .swiper-item-footer {
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 15px;
+    box-sizing: border-box;
+    font-weight: 600;
+    text-align: left;
+  }
+  .swiper-flip .swiper-item-footer .swiper-item-info {
+    width: calc(100% - 50px);
+    word-break: break-all;
+  }
+  .swiper-flip .swiper-item-footer p {
+    margin: 0;
+    color: #000;
+    text-transform: uppercase;
+  }
+  .swiper-flip .swiper-item-footer span {
+    display: block;
+    font-weight: normal;
+    text-transform: capitalize;
+    color: #333;
+  }
+
+  .ingredient-card-front figure.image {
+    margin: 0px;
+  }
+
+  .swiper-flip img {
+    display: block;
+  }
+
+  .image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 0.76;
+  }
+
+  .item-placeholder-image {
+    aspect-ratio: 1 / 0.76;
+  }
+
+  .swiper-flip button.card-flip {
+    background: {{ section.settings.card_flip_bg }};
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0px;
+    transition: all .3s ease;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .swiper-flip .swiper-pagination {
+      width: fit-content !important;
+    }
+  }
+
+  .swiper-flip button.card-flip:hover {
+    background: #ffebf0;
+  }
+
+  .swiper-flip button.card-flip svg {
+    width: 20px;
+    height: auto;
+  }
+
+  .swiper-flip button.card-flip svg path {
+    fill: {{ section.settings.card_flip_icon }};
+  }
+
+  @media (max-width: 768px) {
+    .swiper-flip button.card-flip svg {
+      width: 12px;
+    }
+  }
+
+  .swiper-flip button.card-flip-back {
+    background: transparent;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .swiper-flip button.card-flip-back:hover {
+    background: #ffb4cd; 
+  }
+
+  .card-flip-trigger {
+    cursor: pointer;
+  }
+
+  .swiper-flip .swiper-slide {
+    border-radius: 20px;
+  }
+
+  .swiper-flip .swiper-slide-active {
+    padding: 0 2px 2px 0;
+  }
+
+  .swiper-flip .swiper-item-wrapper {
+    border-radius: 20px;
+    transform-style: preserve-3d;
+    transition: transform .5s linear;
+  }
+
+  .swiper-flip .swiper-slide-active .swiper-item-wrapper {
+    box-shadow: 0 2px 2px #0003;
+  }
+
+  .swiper-flip .swiper-item-wrapper.flipped {
+    transform: rotateY(180deg);
+  }
+
+  /*now*/
+  .swiper, swiper-container{
+    z-index: inherit !important;
+  }
+  .slider-wrapper {
+    user-select: none;
+  }
+
+  .swiper-flip .ingredient-card-front {
+    background: {{ section.settings.card_color }};
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+  
+  }
+
+  .swiper-flip .ingredient-card-back {
+    background: #FAFAFA;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    border-radius: 5px;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 0 30px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        z-index: 1;
+  }
+
+  .swiper-flip .ingredient-card-back h2 {
+    font-size: 20px !important;
+    font-style: unset !important;
+    margin-top: 0px;
+    margin-bottom: 10px;
+  }
+
+  .swiper-flip .swiper-button-prev,
+  .swiper-flip .swiper-button-next {
+    display: block;
+    left: unset;
+    right :unset;
+    margin: unset;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+  }
+
+  .swiper-flip .swiper-button-prev::after,
+  .swiper-flip .swiper-button-next::after {
+    color: #000;
+    font-size: 14px;
+  }
+
+  .swiper-flip .swiper-button-prev {
+    order: -1;
+  }
+
+  .swiper-flip .swiper-footer {
+    align-items: center;
+    justify-content: center;
+    gap: 0 30px;
+    margin-top: 30px;
+    margin-inline-end: 100px;
+  }
+
+  @media (max-width: 1023px) {
+    body.template-product .swiper.swiper-flip .swiper-pagination {
+      bottom: 0px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .swiper-flip .swiper-footer {
+      margin-top: 15px;
+      margin-inline-end: 0px;
+    }
+  }
+
+  .swiper-flip .swiper-pagination {
+    left: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    transform: unset !important;
+  }
+
+  .ingredient-card-flip-wrapper .swiper-3d .swiper-wrapper {
+    pointer-events: none !important;
+  }
+
+  .swiper-flip .swiper-slide:not(.swiper-slide-active) {
+    cursor: pointer;
+    /*filter: blur(2px);*/
+    pointer-events: all !important;
+  }
+
+  .swiper-slide-shadow {
+    background: transparent !important;
+  }
+
+  /*Swiper global*/
+  .swiper--has-primary-pagination .swiper-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    top: unset;
+    right: unset;
+    bottom: unset !important;
+    left: unset;
+    width: auto;
+    margin-top: 1rem;
+    padding: 0;
+  }
+  .swiper--has-primary-pagination .swiper-pagination .swiper-pagination-bullet {
+    cursor: pointer;
+    transition: all .16s cubic-bezier(.33,1,.68,1);
+    background: #969696;
+    opacity: 1;
+    width: 6px;
+    height: 6px;
+    margin-inline: 6px !important;
+    touch-action: manipulation;
+    text-align: center;
+  }
+  .swiper-pagination-style2 .swiper-pagination .swiper-pagination-bullet-active {
+    background: #000;
+    transform: scale(1.5);
+  }
+  button.card-flip:hover svg path {
+    fill: #666666;
+  }
+  .page-row-headline.featured.text-center h3.subtitle_badge {
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--accent-color);
+    color: {{ section.settings.card_flip_icon }};
+  }
+  .page-row-headline.featured h3.subtitle_badge {
+    border-radius: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 12px !important;
+  }
+  .page-row-headline.featured h3 {
+    font-size: 16px;
+    font-style: italic;
+    letter-spacing: .33px;
+    margin-top: 10px;
+    width: fit-content;
+
+  }
+
+  /* Base styles */
+  .flip-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 9999;
+  }
+
+  /* When active, show popup */
+  .flip-popup.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Overlay styling */
+  .flip-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
+
+  /* Popup wrapper */
+  .quick-view-wrapper {
+    position: relative;
+    height: auto;
+    background: #fff;
+    padding: 25px;
+    max-width: 500px;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Animate popup when active */
+  .flip-popup.active .quick-view-wrapper {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Close button */
+  .quick-view-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .quick-view-close:hover {
+    transform: rotate(90deg);
+  }
+
+  /* Close button SVG */
+  .quick-view-close svg {
+    fill: #333;
+  }
+
+  /* Popup content */
+  .quick-view-content {
+    text-align: center;
+    padding-top: 30px;
+  }
+
+  .quick-view-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .popup_active {
+    overflow: hidden;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .quick-view-wrapper {
+      max-width: 90%;
+      padding: 20px;
+      overflow: auto;
+    }
+    
+    .quick-view-title {
+      font-size: 18px;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .page-row-headline.featured h3.subtitle_badge {
+      margin-top: 15px !important;
+    }
+  }
+  .page-row-headline.featured .desc {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 25px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .swiper-flip .swiper-item-footer {
+      font-size: 9px;
+    }
+    .swiper-flip button.card-flip {
+      width: 15px;
+      height: 15px;
+      min-width: inherit;
+    }
+    .swiper-flip button.card-flip svg {
+      width: 8px;
+    }
+    .swiper-flip .ingredient-card-back {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .swiper-flip .ingredient-card-back h2 {
+      font-size: 13px !important;
+    }
+    .page-row-headline.featured.text-center h3.subtitle_badge {
+      font-size: 10px !important;
+    }
+    .card-flip-trigger .page-row-headline.featured .desc {
+      font-size: 12px;
+      margin-top: 15px;
+    }
+  }
+{%- endstyle -%}
+
+
+<div class="section-{{ section.id }}-padding section-gradiant">
+  <div class="page-width">
+    <div class="main-wrapper ingredient-card-flip-wrapper d-flex align-center">
+      <div class="main-wrapper__item info-wrapper">
+        <div class="page-row-headline featured text-center">
+          <h2 class="page-row-heading">
+            <p>{{ section.settings.title }}</p>
+          </h2>
+          <div class="rte desc">
+            <p>{{ section.settings.desc }}</p>
+          </div>
+        </div>
+        <button class="flip-popup-open" data-target="all-ingredients">{{ section.settings.popup_link }}</button>
+      </div>
+      <div class="main-wrapper__item slider-wrapper">
+        <div id="ingredient-slider-{{ section.id }}" class="swiper swiper--has-primary-pagination swiper-pagination-style2 swiper-flip small-nav">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                <div class="swiper-item-wrapper ingredient-flip-card">
+                  <div class="ingredient-card-front card-flip-trigger">
+                    <figure class="image">
+                      {% if block.settings.image != blank %}
+                        <img src="{{ block.settings.image | image_url: width: block.settings.image.width }}" 
+                        width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
+                      {% else %}
+                        {{ 'image' | placeholder_svg_tag: 'item-placeholder-image' }}
+                      {% endif %}
+                    </figure>
+                    <div class="swiper-item-footer text-bold d-flex">
+                      <div class="swiper-item-info">
+                        <p>{{ block.settings.front_title }}</p>
+                        <span>{{ block.settings.front_subtitle }}</span>
+                      </div>
+                      <button class="card-flip">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M8.31201 17.062V0.812012H9.56201V17.062H8.31201Z" fill="black"></path>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M0.812013 8.31201H17.062V9.56201H0.812013V8.31201Z" fill="black"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="ingredient-card-back card-flip-trigger">
+                    <div class="page-row-headline featured text-center">
+                      <h2 class="page-row-heading"><p>{{ block.settings.front_title }}</p></h2>
+                      <h3 class="sub_title subtitle_badge">{{ block.settings.front_subtitle }}</h3>
+                      <div class="rte desc">
+                        {{ block.settings.description }}
+                      </div>
+                      <button class="card-flip card-flip-back">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M0.812013 8.31201H17.062V9.56201H0.812013V8.31201Z" fill="black"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-footer d-flex">
+            <!-- If we need pagination -->
+            <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
+            </div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </div>
+      </div>
+      <div class="info-wrapper info-wrapper-mobile">
+        <div class="page-row-headline featured text-center">
+          <div class="rte desc">
+            <p>{{ section.settings.desc }}</p>
+          </div>
+        </div>
+        <button class="flip-popup-open" data-target="all-ingredients">{{ section.settings.popup_link }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="flip-popup">
+    <div class="flip-overlay"></div>
+    <div class="quick-view-wrapper">
+      <button class="quick-view-close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00003 8.20711L14.364 14.5711L15.0711 13.864L8.70714 7.5L15.0711 1.13604L14.364 0.428932L8.00003 6.79289L1.63607 0.428933L0.928962 1.13604L7.29292 7.5L0.928962 13.864L1.63607 14.5711L8.00003 8.20711Z" fill="black"></path>
+        </svg>
+      </button>
+      <div class="quick-view-content">
+        <h2 class="quick-view-title">{{ section.settings.popup_title }}</h2>
+        <div class="rte">
+          {{ section.settings.popup_content }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    var section_id = '#ingredient-slider-{{ section.id }}';
+
+    var flipSwiper = new Swiper(section_id, {
+      grabCursor: false,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
+      loop: false,
+      effect: "creative",
+      slidesPerView: 1.5,
+      loopedSlides: 1.5,
+      observer: true,
+      creativeEffect: {
+        limitProgress:2,
+        prev: {
+          shadow: true,
+          translate: ["-105%", 0, -426],
+        },
+        next: {
+          shadow: true,
+          translate: ["20%", 0, -250],
+          translate: ["40%", 0, -245],
+        },
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 1.25,
+          slidesPerView: 1.50,
+          spaceBetween: 0,
+        }
+      }
+    });
+
+    flipSwiper.on('slideChangeTransitionEnd', () => {
+      document.querySelectorAll(section_id +'.swiper-flip .swiper-slide:not(.swiper-slide-active) .ingredient-flip-card.flipped')
+      .forEach((fItem) => {
+        fItem.classList.remove('flipped');
+      })
+    })
+
+    const ingredientCardFlip = () => {
+      document.querySelectorAll(".card-flip-trigger").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          trigger.closest(".swiper-slide-active") && trigger.closest(".ingredient-flip-card").classList.toggle("flipped");
+        });
+      });
+    };
+
+    ingredientCardFlip();
+
+    if (Shopify.designMode) {
+      document.addEventListener('shopify:section:load', ingredientCardFlip);
+      document.addEventListener('shopify:section:reorder', ingredientCardFlip);
+    }
+  });
+</script>
+
+<script>
+  // Utility Functions
+  const show = (el) => el.classList.add("active");
+  const hide = (el) => el.classList.remove("active");
+
+  // Elements
+  const flipPopup = document.querySelector(".flip-popup");
+  const flipOverlay = document.querySelector(".flip-overlay");
+  const popupOpener = document.querySelectorAll(".flip-popup-open");
+  const flipClose = document.querySelector(".quick-view-close");
+
+  // open popup
+  popupOpener.forEach(btn => {
+    btn.addEventListener("click", () => {
+      show(flipPopup);
+      document.querySelector('body').classList.add('popup_active');
+    });
+  });
+
+  flipClose.addEventListener("click", () => {
+    hide(flipPopup);
+    document.querySelector('body').classList.remove('popup_active');
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Flip Slider",
+    "class": "section",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      {
+        "type": "inline_richtext",
+        "id": "title",
+        "label": "Title",
+        "default": "Vitaminreich. Pflegend. Wirksam."
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Description",
+        "default": "Das feuchtigkeitsspendende Sins 'n Lashes Wimpernserum liefert wichtige Vitamine und natürliche Fruchtextrakte direkt an den Haarfollikel. Das Ergebnis führt zu längeren & volleren Wimpern."
+      },
+      {
+        "type": "text",
+        "id": "popup_link",
+        "label": "Popup Link",
+        "default": "Alle Inhaltsstoffe sehen"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "popup_title",
+        "label": "Popup Title",
+        "default": "Unsere besten Inhaltsstoffe"
+      },
+      {
+        "type": "richtext",
+        "id": "popup_content",
+        "label": "Popup Content",
+        "default": "<p>Die Vorteile scheinen endlos, und das sind nur 8 unserer Inhaltsstoffe!</p>"
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color_background",
+        "id": "bg_gradient",
+        "label": "Background Gradient"
+      },
+      {
+        "type": "color",
+        "id": "card_color",
+        "label": "Card Background Color",
+        "default": "#f2f2f2"
+      },
+      {
+        "type": "color",
+        "id": "card_flip_bg",
+        "label": "Card Flip Background",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "card_flip_icon",
+        "label": "Card Flip Icon",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Paddings"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "padding top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "padding bottom",
+        "default": 36
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "inline_richtext",
+            "id": "front_title",
+            "label": "Front Title",
+            "default": "Kürbiskernextrakt"
+          },
+          {
+            "type": "text",
+            "id": "front_subtitle",
+            "label": "Front Subtitle",
+            "default": "Stärkend"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description",
+            "default": "Enthält essentielle Omega-3- und Omega-6-Fettsäuren zur Förderung und Unterstützung der Wimpernfollikelgesundheit. Antioxidantien verlangsamen die Alterung und den Verlust der Wimpern."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Flip Slider",
+        "blocks": [
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

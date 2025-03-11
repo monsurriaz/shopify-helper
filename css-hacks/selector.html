@@ -18,5 +18,17 @@
 
     }
   </style>
+  <script>
+    const buttons = document.querySelectorAll("[data-variant-id]");
+    const columns = document.querySelectorAll(".seats_column");
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        columns.forEach(column => {
+          column.classList.remove("selected");
+        });
+        btn.closest(".seats_column").classList.add("selected");
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+{% comment %} Boilerplate {% endcomment %}
+
+<script>
+  // Fetch Template for AJAX Form Submission
+  document.getElementById("my_form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent page reload
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: "POST", // HTTP method
+      body: formData, // Form data
+      headers: {
+        "Accept": "application/json", // Expect JSON response
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Success action
+          window.location.href = "/thank-you"; // Redirect
+        } else {
+          // Error handling
+          console.error("Form submission failed.");
+        }
+      })
+      .catch((error) => console.error("Unexpected error:", error));
+  });
+</script>
+

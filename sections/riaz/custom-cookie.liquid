@@ -1,0 +1,692 @@
+{% if section.settings.enable_cookie %}
+  <style>
+    /* Prevent scrolling */
+    {% if section.settings.hide_bg_scrolling %}
+      body.popup_active {
+        overflow: hidden;
+      }
+    {% endif %}
+    /* Overlay */
+    .cookie__overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #00000099;
+      z-index: {{ section.settings.zindex | minus: 1 }};
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .cookie__overlay:not(.hidden) {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Popup Container */
+    .cookie__popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: {{ section.settings.zindex }};
+      display: none;
+      opacity: 0;
+      transform: translate(-50%, -60%);
+      transition: all 0.4s ease-in-out;
+    }
+
+    #cookie__popup-1 {
+      width: 90%;
+      max-width: 600px;
+    }
+
+    #cookie__popup-2 {
+      width: 90%;
+      max-width: 900px;
+      border-bottom-right-radius: 8px;
+    }
+
+    #cookie__popup-2 .cookie__popup-content {
+      height: 380px;
+    }
+
+    .cookie__popup .link {
+      cursor: pointer;
+      display: inline-block;
+      padding: 0.2em;
+      text-decoration: underline;
+      color: #000;
+    }
+
+    .cookie__popup:not(.hidden) {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    .cookie__popup-large {
+      width: 90%;
+      max-width: 480px;
+      height: 80%;
+    }
+
+    .cookie__popup.cookie__popup-large .cookie__popup-large-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 30px 25px 20px;
+      box-sizing: border-box;
+    }
+
+    .cookie__popup-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 12px 20px 0px;
+    }
+
+    .cookie__popup-header div {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .cookie__popup-content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .cookie__popup-content #open-cookie__popup-2 {
+      display: block;
+      color: #767676;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .cookie__popup-top {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cookie__popup-top h2 {
+      font-size: 22px;
+      line-height: 26px;
+      margin: 0;
+      margin-bottom: 20px;
+    }
+
+    .cookie__popup-top p {
+      font-size: 14px;
+      margin-top: 0px;
+      margin-bottom: 50px;
+      opacity: 0.7;
+      font-weight: 300;
+      line-height: 1.375;
+    }
+
+    .cc-highlight {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 auto;
+      align-items: center;
+    }
+
+    .cookie__popup-body {
+      flex: 1;
+      margin: 20px 0 56px;
+      overflow-y: auto;
+      padding: 0px 15px 10px 0px;
+      margin-bottom: 16px;
+      /* scrollbar-width: thin; */
+    }
+
+    /* Custom Scrollbar Styling */
+    .cookie__popup-body::-webkit-scrollbar {
+      width: 8px; /* Set scrollbar width */
+    }
+
+    .cookie__popup-body::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1); /* Light black background for track */
+    }
+
+    .cookie__popup-body::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.8); /* Black scroller */
+      border-radius: 4px; /* Rounded corners for a smooth look */
+    }
+
+    /* For Horizontal Scrollbars */
+    .cookie__popup-body::-webkit-scrollbar:horizontal {
+      height: 8px; /* Set scrollbar height */
+    }
+
+    .cookie__popup-footer {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 5px;
+    }
+
+    .cookie__popup-footer span {
+      letter-spacing: 1px;
+      padding: 12px 24px;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+      border-radius: 4px;
+      color: #1C1C1C;
+    }
+
+    /* Buttons */
+    .cookie__popup-content .btn, .cookie__popup-footer .btn {
+      display: block;
+      flex: 1;
+      text-align: center;
+      padding: 15px 120px;
+      background: transparent;
+      color: #000000;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      transition: background 0.3s;
+    }
+
+    .cookie__popup-content .btn-inverse {
+      padding: 15px 120px;
+    }
+
+    .cookie__popup-content .btn-inverse:hover {
+      text-decoration: underline;
+    }
+
+    .cookie__popup-content .btn-primary, .cookie__popup-footer .btn-primary {
+      background: #1c1c1c;
+      border: none;
+      color: #ffffff;
+    }
+
+    .cookie__popup-close-btn {
+      background: none;
+      border: none;
+      color: #000000;
+      font-size: 25px;
+      line-height: 0.8;
+      cursor: pointer;
+      margin-left: auto;
+      margin-right: -13px;
+    }
+
+    /* Accordion */
+    .cookie__accordion {
+      border-top: 1px solid #ddd;
+    }
+
+    .cookie__accordion-item {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cookie__accordion-header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .cookie__accordion-title {
+      padding: 24px 0px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 20px;
+      text-transform: uppercase;
+      display: flex;
+      cursor: pointer;
+      flex: 0 1 70%;
+    }
+
+    span.cookie__accordion-title:before {
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid #4a6e78;
+      border-bottom: 1px solid #4a6e78;
+      content: " ";
+      transform: rotate(-45deg);
+      -webkit-transition: all 0.2s ease-in-out;
+      -moz-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      margin: 0.5em 0.7em 0 0.2em;
+      display: block;
+    }
+
+    .cookie__accordion-item.open .cookie__accordion-title:before {
+      transform: rotate(45deg);
+      -webkit-transition: all 0.2s ease-in-out;
+      -moz-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid #4a6e78;
+      border-bottom: 1px solid #4a6e78;
+      content: " ";
+      transition: all 0.2s ease-in-out;
+      margin: 0.3em 0.7em 0 0.2em;
+    }
+
+    .cookie__accordion-header .toggle-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 0 1 30%;
+      text-align: right;
+      font-size: 0.7em;
+      float: right;
+      display: block !important;
+      position: relative !important;
+      top: auto !important;
+      bottom: auto !important;
+      font-weight: 600;
+      padding: 1.1em 0;
+    }
+
+    .cookie__accordion-header label {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 20px;
+      margin: 0px;
+    }
+
+    .cookie__accordion-header input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .cookie__accordion-header .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 34px;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .cookie__accordion-header .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      border-radius: 50%;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .cookie__accordion-header input:checked + .toggle-slider {
+      background-color: #000000;
+    }
+
+    .cookie__accordion-header input:checked + .toggle-slider:before {
+      transform: translateX(26px);
+    }
+
+    .cookie__accordion-content {
+      display: none;
+      padding-left: 30px;
+      padding-bottom: 20px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      opacity: 0.7;
+      color: #171717;
+    }
+
+    .cookie__accordion-content p {
+      margin: 0px;
+    }
+
+    .cookie__accordion-item.open .cookie__accordion-content {
+      display: block;
+    }
+
+    @media screen and (max-width: 767px) {
+      .cookie__popup-content {
+        overflow-x: hidden;
+      }
+      .cookie__popup-top p {
+        margin-bottom: 25px;
+      }
+      .cookie__popup-footer .btn {
+        padding-inline: 50px;
+      }
+    }
+  </style>
+
+  {% comment %} cookie functionality {% endcomment %}
+
+  <!-- Overlay -->
+  <div id="cookie__overlay" class="cookie__overlay hidden"></div>
+
+  {% comment %} First Popup {% endcomment %}
+  <div id="cookie__popup-1" class="cookie__popup hidden">
+    <div class="cookie__popup-content">
+      <span id="open-cookie__popup-2">
+        {{ section.settings.content_1 }}
+        <a class="link">{{ section.settings.link_text_1 }}</a>
+      </span>
+      <div class="cc-highlight">
+        <button id="open-cookie__popup-3" class="btn btn-inverse">
+          {{ section.settings.link_text_2 }}
+        </button>
+        <button class="close-all btn btn-primary">{{ section.settings.btn_text_1 }}</button>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Second Popup {% endcomment %}
+  <div id="cookie__popup-2" class="cookie__popup hidden">
+    <div class="cookie__popup-header">
+      <button id="close-cookie__popup-2" class="cookie__popup-close-btn">×</button>
+      <div>{{ section.settings.title2 }}</div>
+    </div>
+    <div class="cookie__popup-content">
+      <div id="cookie-modal-text-container">
+        {% if section.settings.content2 != blank %}
+          {{ section.settings.content2 }}
+        {% else %}
+          {%- for policy in shop.policies limit: 1 -%}
+            {{ policy.body }}
+          {%- endfor -%}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Third Popup -->
+  <div id="cookie__popup-3" class="cookie__popup cookie__popup-large hidden">
+    <div class="cookie__popup-large-wrapper">
+      <div class="cookie__popup-top">
+        <h2>{{ section.settings.title3 }}</h2>
+        <p>
+          {{ section.settings.content3 }}
+        </p>
+      </div>
+      <div class="cookie__popup-body">
+        <!-- Accordions -->
+        <div class="cookie__accordion">
+          <div class="cookie__accordion-item">
+            <div class="cookie__accordion-header">
+              <span class="cookie__accordion-title">Unbedingt erforderlich:</span>
+              <div class="toggle-wrapper">
+                <label for="toggle-1">
+                  <input disabled checked type="checkbox" id="toggle-1" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="cookie__accordion-content">
+              <p>
+                Ohne diese Cookies funktioniert unsere Seite nicht richtig. Deshalb kannst du sie auch leider nicht abwählen. Sorry.
+              </p>
+            </div>
+          </div>
+          <div class="cookie__accordion-item">
+            <div class="cookie__accordion-header">
+              <span class="cookie__accordion-title">Performance Cookies:</span>
+              <div class="toggle-wrapper">
+                <label for="toggle-2">
+                  <input type="checkbox" id="toggle-2" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="cookie__accordion-content">
+              <p>
+                Mithilfe von Performance-Cookies analysieren wir Besuche, identifizieren Trafficquellen und erkennen, welche Bereiche unserer Website besonders beliebt sind. So machen wir dein Shopping-Erlebnis noch angenehmer. 
+              </p>
+            </div>
+          </div>
+          <div class="cookie__accordion-item">
+            <div class="cookie__accordion-header">
+              <span class="cookie__accordion-title">Funktionale Cookie:</span>
+              <div class="toggle-wrapper">
+                <label for="toggle-3">
+                  <input type="checkbox" id="toggle-3" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="cookie__accordion-content">
+              <p>
+                Die funktionalen Cookies erklären fast schon mit ihrem Namen, wofür sie gut sind: Sie verbessern Funktionalität und Personalisierung auf unserer Website. Wir oder Drittanbieter können sie setzen. Wenn du sie deaktivierst, funktionieren die Dienste der Drittanbieter möglicherweise nicht richtig.
+              </p>
+            </div>
+          </div>
+          <div class="cookie__accordion-item">
+            <div class="cookie__accordion-header">
+              <span class="cookie__accordion-title">Targeting Cookies:</span>
+              <div class="toggle-wrapper">
+                <label for="toggle-4">
+                  <input type="checkbox" id="toggle-4" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="cookie__accordion-content">
+              <p>
+                Hier ein Cookie, da gute Werbung. So einfach ist das mit den Targeting-Cookies. Unsere Werbepartner setzen sie auf unserer Website, um dich und deine Interessen besser zu verstehen. So bekommst du wirklich relevante Werbung auf anderen Websites angezeigt. Sie speichern keine direkten personenbezogenen Daten, sondern basieren auf der eindeutigen Identifizierung deines Browsers und deines Internetgeräts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cookie__popup-footer">
+        <span class="close-all">Speichern</span>
+        <button class="btn btn-primary close-all">Alle akzeptieren</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Utility Functions
+    const show = (el) => el.classList.remove("hidden");
+    const hide = (el) => el.classList.add("hidden");
+
+    // Elements
+    const overlay = document.getElementById("cookie__overlay");
+    const popup1 = document.getElementById("cookie__popup-1");
+    const popup2 = document.getElementById("cookie__popup-2");
+    const popup3 = document.getElementById("cookie__popup-3");
+    const openPopup2 = document.getElementById("open-cookie__popup-2");
+    const openPopup3 = document.getElementById("open-cookie__popup-3");
+    const closePopup2 = document.getElementById("close-cookie__popup-2");
+    const closeAll = document.querySelectorAll(".close-all");
+
+    // Show Popup 1 with Delay
+    {% unless request.design_mode %}
+      if (!localStorage.getItem("cookiePopupClosed")) {
+        setTimeout(() => {
+          show(overlay);
+          show(popup1);
+          document.querySelector('body').classList.add('popup_active');
+        }, {{ section.settings.delay_time | times: 1000 }});
+      }
+    {% endunless %}
+
+    // Open Second Popup
+    openPopup2.addEventListener("click", () => {
+      show(popup2);
+    });
+
+    // Close Second Popup
+    closePopup2.addEventListener("click", () => {
+      hide(popup2);
+    });
+
+    // Open Third Popup and Close Popup 1
+    openPopup3.addEventListener("click", () => {
+      hide(popup1);
+      show(popup3);
+    });
+
+    // Close All Popups
+    closeAll.forEach((close) => {
+      close.addEventListener("click", () => {
+        hide(overlay);
+        hide(popup1);
+        hide(popup2);
+        hide(popup3);
+        localStorage.setItem("cookiePopupClosed", "true");
+        document.querySelector('body').classList.remove('popup_active');
+      });
+    });
+
+    // Accordion Toggle
+    document.querySelectorAll(".cookie__accordion-title").forEach((header) => {
+      header.addEventListener("click", () => {
+        header.closest(".cookie__accordion-item").classList.toggle("open");
+      });
+    });
+    
+    {% if request.design_mode and section.settings.show_preview %}
+      document.addEventListener('shopify:section:select', ()=> {
+        show(overlay);
+        show(popup1);
+        document.querySelector('body').classList.add('popup_active');
+      });
+      document.addEventListener('shopify:section:deselect', ()=> {
+        hide(overlay);
+        hide(popup1);
+        document.querySelector('body').classList.remove('popup_active');
+      });
+    {% endif %}
+  </script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Cookie",
+    "class": "cookie-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Cookie Content"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cookie",
+        "label": "Enable Cookie",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_bg_scrolling",
+        "label": "Hide Background scrolling",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_preview",
+        "label": "Show preview on editor",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "delay_time",
+        "label": "Delay time",
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "unit": "sec",
+        "default": 5
+      },
+      {
+        "type": "number",
+        "id": "zindex",
+        "label": "Z-index value",
+        "default": 999999999,
+        "info": "Adjust it with any positive number. it should be always larger than Klaviyo's z-index value"
+      },
+      {
+        "type": "header",
+        "content": "First Popup"
+      },
+      {
+        "type": "textarea",
+        "id": "content_1",
+        "label": "Content 1",
+        "default": "Auch wir machen diese Sache mit den Cookies. Sie helfen uns dabei, unsere Seite geiler zu machen. Geht das für dich klar?"
+      },
+      {
+        "type": "text",
+        "id": "link_text_1",
+        "label": "Second Popup opening link text",
+        "default": "Ich will mehr wissen."
+      },
+      {
+        "type": "text",
+        "id": "link_text_2",
+        "label": "Third Popup opening link text",
+        "default": "Einstellungen"
+      },
+      {
+        "type": "text",
+        "id": "btn_text_1",
+        "label": "Button Text",
+        "default": "Okay"
+      },
+      {
+        "type": "header",
+        "content": "Second Popup"
+      },
+      {
+        "type": "text",
+        "id": "title2",
+        "label": "Title",
+        "default": "WEITERE INFORMATIONEN"
+      },
+      {
+        "type": "richtext",
+        "id": "content2",
+        "label": "Content",
+        "info": "Keep it blank, it will automatically update privacy policy's content."
+      },
+      {
+        "type": "header",
+        "content": "Third Popup"
+      },
+      {
+        "type": "text",
+        "id": "title3",
+        "label": "Title",
+        "default": "Deine Cookies, deine Entscheidung"
+      },
+      {
+        "type": "textarea",
+        "id": "content3",
+        "label": "Content",
+        "default": "Wir verwenden Cookies, um die Funktionalität der Website zu optimieren, die Leistung zu analysieren und dir ein personalisiertes Erlebnis zu bieten. Ein paar davon sind essentiell, über alle weiteren lassen wir dir die Wahl."
+      }
+    ]
+  }
+{% endschema %}

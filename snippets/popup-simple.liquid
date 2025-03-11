@@ -1,0 +1,157 @@
+{% style %}
+  /* Base styles */
+  .flip-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 9999;
+  }
+
+  /* When active, show popup */
+  .flip-popup.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Overlay styling */
+  .flip-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
+
+  /* Popup wrapper */
+  .quick-view-wrapper {
+    position: relative;
+    height: auto;
+    background: #fff;
+    padding: 25px;
+    max-width: 500px;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Animate popup when active */
+  .flip-popup.active .quick-view-wrapper {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Close button */
+  .quick-view-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .quick-view-close:hover {
+    transform: rotate(90deg);
+  }
+
+  /* Close button SVG */
+  .quick-view-close svg {
+    fill: #333;
+  }
+
+  /* Popup content */
+  .quick-view-content {
+    text-align: center;
+    padding-top: 30px;
+  }
+
+  .quick-view-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .popup_active {
+    overflow: hidden;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .quick-view-wrapper {
+      max-width: 90%;
+      padding: 20px;
+      overflow: auto;
+    }
+    
+    .quick-view-title {
+      font-size: 18px;
+    }
+  }
+{% endstyle %}
+
+{% comment %} Tigger {% endcomment %}
+<button class="flip-popup-open" data-target="all-ingredients">{{ section.settings.popup_link }}</button>
+
+{% comment %} Popup body {% endcomment %}
+<div class="flip-popup">
+  <div class="flip-overlay"></div>
+  <div class="quick-view-wrapper">
+    <button class="quick-view-close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00003 8.20711L14.364 14.5711L15.0711 13.864L8.70714 7.5L15.0711 1.13604L14.364 0.428932L8.00003 6.79289L1.63607 0.428933L0.928962 1.13604L7.29292 7.5L0.928962 13.864L1.63607 14.5711L8.00003 8.20711Z" fill="black"></path>
+      </svg>
+    </button>
+    <div class="quick-view-content">
+      <h2 class="quick-view-title">{{ section.settings.popup_title }}</h2>
+      <div class="rte">
+        {{ section.settings.popup_content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Utility Functions
+  const show = (el) => el.classList.add("active");
+  const hide = (el) => el.classList.remove("active");
+
+  // Elements
+  const flipPopup = document.querySelector(".flip-popup");
+  const flipOverlay = document.querySelector(".flip-overlay");
+  const popupOpener = document.querySelectorAll(".flip-popup-open");
+  const flipClose = document.querySelector(".quick-view-close");
+
+  // open popup
+  popupOpener.forEach(btn => {
+    btn.addEventListener("click", () => {
+      show(flipPopup);
+      document.querySelector('body').classList.add('popup_active');
+    });
+  });
+
+  flipClose.addEventListener("click", () => {
+    hide(flipPopup);
+    document.querySelector('body').classList.remove('popup_active');
+  });
+
+  // Close popup when clicking outside the popup
+  flipOverlay.addEventListener("click", (event) => {
+    if (event.target === flipOverlay) { // Ensures only overlay click closes it
+      hide(flipPopup);
+      document.querySelector('body').classList.remove('popup_active');
+    }
+  });
+</script>

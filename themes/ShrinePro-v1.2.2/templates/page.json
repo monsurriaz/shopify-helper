@@ -1,0 +1,137 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_blog_A7rr6C": {
+      "type": "featured-blog",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Blog posts",
+        "title_highlight_color": "#6D388B",
+        "heading_size": "h1",
+        "blog": "news",
+        "post_limit": 4,
+        "columns_desktop": 3,
+        "color_scheme": "background-1",
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
+        "show_view_all": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "horizontal_ticker_djawR6": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "text_3gamHg": {
+          "type": "text",
+          "settings": {
+            "title": "LEMMECOOK"
+          }
+        },
+        "text_3mtkB3": {
+          "type": "text",
+          "settings": {
+            "title": "LEMMECOOK"
+          }
+        },
+        "text_UrW4RW": {
+          "type": "text",
+          "settings": {
+            "title": "LEMMECOOK"
+          }
+        }
+      },
+      "block_order": [
+        "text_3gamHg",
+        "text_3mtkB3",
+        "text_UrW4RW"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 1,
+        "direction": "reverse",
+        "stop_on_hover": false,
+        "mobile_spacing": 60,
+        "desktop_spacing": 100,
+        "color_scheme": "background-1",
+        "mobile_text_size": 16,
+        "desktop_text_size": 18,
+        "italic_text": false,
+        "uppercase_text": false,
+        "bold_text": false,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "custom_colors_background": "#000000",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "title": "Subscribe to our emails",
+            "title_highlight_color": "#6D388B",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Join our email list for exclusive offers and the latest news. <\/p>"
+          }
+        },
+        "email-form": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "paragraph",
+        "email-form"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "button_type": "solid",
+        "button_label": "Sign up",
+        "button_style_secondary": false,
+        "color_scheme": "background-2",
+        "full_width": true,
+        "padding_top": 68,
+        "padding_bottom": 52,
+        "custom_colors_background": "#FFFFFF",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2E2A39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "featured_blog_A7rr6C",
+    "horizontal_ticker_djawR6",
+    "newsletter"
+  ]
+}

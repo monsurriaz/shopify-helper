@@ -1,0 +1,190 @@
+<div
+  {% if section.settings.free_product != blank %}
+    data-free-product-id="{{ section.settings.free_product.id }}"
+    data-free-variant-id="{{ section.settings.free_product.selected_or_first_available_variant.id }}"
+  {% endif %}
+>
+  {% comment %} Cart drawer other stuff {% endcomment %}
+</div>
+
+<script>
+  // Retrieve productId and variantId from a specific element
+  const freeProduct = document.querySelector('[data-free-product-id]');
+  let productId, variantId;
+  if (freeProduct) {
+    productId = freeProduct.getAttribute('data-free-product-id');
+    variantId = freeProduct.getAttribute('data-free-variant-id');
+  }
+
+  // Get product line ID
+  function getProductLineId(productId) {
+    return fetch('/cart.js')
+      .then(res => res.json())
+      .then(cart => {
+        const productLine = cart.items.find(item => item.product_id === parseInt(productId));
+        return productLine ? productLine.id : null;
+      })
+      .catch(error => {
+        console.error('Error fetching cart:', error);
+        return null;
+      });
+  }
+
+  // Check if the product already exists
+  function eligibleProduct(productId) {
+    return getProductLineId(productId).then(lineId => lineId === null);
+  }
+
+  // update cart count
+  function getCartCount() {
+    return fetch('/cart.js')
+      .then(res => res.json())
+      .then(cart => {
+        return cart.item_count;
+      })
+      .catch(error => {
+        console.error('Error fetching cart: ', error);
+        return null;
+      })
+  }
+
+  // Update cart drawer
+  function updateCartDrawer() {
+    fetch('/?section_id=cart-drawer')
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch cart drawer section');
+        return res.text();
+      })
+      .then(text => {
+        const html = document.createElement('div');
+        html.innerHTML = text;
+
+        const newDrawer = html.querySelector('.cart_drawer');
+        const currentDrawer = document.querySelector('.cart_drawer');
+
+        if (newDrawer && currentDrawer) {
+          if (newDrawer.classList.contains("is-empty"))
+            currentDrawer.classList.add("is-empty");
+          currentDrawer.innerHTML = newDrawer.innerHTML;
+        }
+      })
+      .catch(error => console.error('Error updating cart drawer:', error));
+  }
+
+  // Update cart count on header
+  function updateCartCount() {
+    fetch('/?section_id=header')
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch header section');
+        return res.text();
+      })
+      .then(text => {
+        const html = document.createElement('div');
+        html.innerHTML = text;
+
+        const newCartIcon = html.querySelector('#cart-icon-bubble');
+        const currentCartIcon = document.querySelector('#cart-icon-bubble');
+
+        if (newCartIcon && currentCartIcon) {
+          currentCartIcon.innerHTML = newCartIcon.innerHTML;
+        }
+      })
+      .catch(error => console.error('Error updating header section: ' + error));
+  }
+
+  // Add product to cart
+  function addProductToCart(variantId) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: [{ id: variantId, quantity: 1 }],
+      }),
+    })
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to add product to cart');
+        updateCartDrawer();
+      })
+      .then(() => updateCartCount())
+      .catch(error => console.error('Error adding product to cart:', error));
+  }
+
+  // Remove product from cart
+  function removeProductFromCart(productLineId) {
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ updates: { [productLineId]: 0 } }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to remove product from cart');
+        updateCartDrawer();
+      })
+      .then(() => updateCartCount())
+      .catch(error => console.error('Error removing product from cart:', error));
+  }
+
+  // Update cart total logic
+  function updateCartTotal() {
+    return fetch('/cart.js')
+      .then(res => res.json())
+      .then(cart => {
+        const cartValue = cart.total_price / 100; // Convert from cents to currency
+
+        if (cartValue >= 50) {
+          eligibleProduct(productId).then(isEligible => {
+            if (isEligible) addProductToCart(variantId);
+          });
+        } else {
+          getProductLineId(productId).then(lineId => {
+            if (lineId) {
+              document.querySelector(`[data-id="${lineId}"]`).querySelector(`.loading-overlay`).classList.remove('hidden');
+              removeProductFromCart(lineId);
+            }
+          });
+          getCartCount().then(count => {
+            if (count == 1) {
+              getProductLineId(8136959885491).then(lineId => {
+                if (lineId) {
+                  document.querySelector('.drawer__inner-loading').classList.remove('hidden')
+                  removeProductFromCart(lineId);
+                }
+              });
+            }
+          });
+        }
+      })
+      .catch(error => console.error('Error updating cart total:', error));
+  }
+
+  // Main function to handle cart updates
+  function handleCartUpdate() {
+    updateCartTotal().catch(error => console.error('Error handling cart update:', error));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Perform the initial cart update check
+    handleCartUpdate();
+
+    const parentContainer = document.getElementById('shopify-section-cart-drawer');
+    if (parentContainer) {
+      // Observe changes in the parent container's DOM
+      const observer = new MutationObserver(() => {
+        handleCartUpdate(); // Rebind logic when changes are detected
+      });
+      observer.observe(parentContainer, { childList: true, subtree: true });
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "product",
+        "id": "free_product",
+        "label": "Select Free Product"
+      }
+    ]
+  }
+{% endschema %}

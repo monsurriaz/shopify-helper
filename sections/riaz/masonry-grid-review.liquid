@@ -38,11 +38,6 @@
 {% endstyle %}
 
 {% style %}
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
   body.no-scroll {
     overflow: hidden;
   }
@@ -173,6 +168,20 @@
     color: #ffffff;
   }
 
+  .show-redirect-wrapper {
+    text-align: center;
+  }
+
+  .show-redirect-wrapper a {
+    display: inline-block;
+    text-decoration: none;
+    color: #50bb44;
+  }
+
+  .show-redirect-wrapper a:hover {
+    text-decoration: underline;
+  }
+
   /* Overlay styles */
   .item-overlay {
     position: fixed;
@@ -281,8 +290,9 @@
   }
 
   #item-popup #popup-stars svg {
-    width: 18px;
+    width: 16px;
     height: auto;
+    fill: {{ section.settings.star_color }};
   }
 
   #item-popup h4 {
@@ -312,7 +322,7 @@
       border-radius: 8px 8px 0 0;
     }
     #item-popup {
-      width: 100%;
+      width: calc(100% - 30px);
       max-width: 600px;
     }
     #item-popup .popup-content {
@@ -336,7 +346,8 @@
     }
     #item-popup .close-popup {
       top: 20px;
-      left: 20px;
+      left: unset;
+      right: 20px;
       width: 30px;
       height: 30px;
       font-size: 26px;
@@ -348,10 +359,20 @@
   <div class="section-{{ section.id }}-settings page-width">
     <div class="masonry-grid{% if section.settings.enable_lightbox and section.settings.enable_image %} enable_lightbox{% endif %}">
       <!-- Initial items will be loaded by JavaScript -->
+      <div class="masonry-preview">
+        {% for block in section.blocks %}
+          
+        {% endfor %}
+      </div>
     </div>
     
     <div class="load-more-container">
-      <button class="load-more-btn">Show more reviews</button>
+      <button class="load-more-btn">Mehr anzeigen</button>
+      {% if section.settings.show_redirect_link %}
+        <div style="display: none;" class="show-redirect-wrapper">
+          Weitere Bewertungen findest du <a href="{{ section.settings.redirect_link }}">hier</a>
+        </div>
+      {% endif %}
     </div>
     
     <!-- overlay and popup -->
@@ -422,7 +443,7 @@
               </g>
             </g>
           </svg>
-          <span>Verified purchase</span>
+          <span>Verifizierter Käufer</span>
         </div>
       `;
     }
@@ -490,6 +511,7 @@
   
       if (itemsLoaded >= items.length) {
         $(".load-more-btn").hide();
+        $(".show-redirect-wrapper").show();
       }
     }
   
@@ -516,7 +538,7 @@
         if(item.img == null)
           $("#popup-img").attr("class", 'hide_img');
         else
-          $("#popup-img").attr("src", item.img);
+          $("#popup-img").attr("src", item.img).removeClass("hide_img");
         $(".popup-title-wrapper").html($(this).find(".masonry-block_title").html());
         $("#popup-description").text(item.description);
         $("#popup-stars").html($(this).find(".masonry-stars").html());
@@ -537,17 +559,10 @@
   
   }
 
-  {% if request.design_mode %}
-    document.addEventListener('DOMContentLoaded', initMasonry);
-    document.addEventListener("shopify:section:load", initMasonry);
-    document.addEventListener('shopify:block:select', initMasonry);
-    document.addEventListener('shopify:section:load', initMasonry);
-    document.addEventListener('shopify:section:unload', initMasonry);
-    document.addEventListener('shopify:section:select', initMasonry);
-    document.addEventListener('shopify:section:deselect', initMasonry);
-  {% endif %}
+  {% unless request.design_mode %}
+    $(document).ready(initMasonry);
+  {% endunless %}
   
-  $(document).ready(initMasonry);
 </script>
 
 {% schema %}
@@ -571,6 +586,17 @@
         "id": "load_more_text",
         "label": "Load More",
         "default": "Show more reviews"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_redirect_link",
+        "label": "Show Redirect Text",
+        "default": false
+      },
+      {
+        "type": "url",
+        "id": "redirect_link",
+        "label": "Redirect Link"
       },
       {
         "type": "checkbox",

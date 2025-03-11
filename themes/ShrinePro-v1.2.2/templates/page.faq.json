@@ -1,0 +1,308 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "9c121ec4-42cd-4c8e-82a2-935e073db7d7": {
+      "type": "collapsible-content",
+      "blocks": {
+        "template--19742927749415__9c121ec4-42cd-4c8e-82a2-935e073db7d7-16889993318614e07a-0": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Does it Dull Knives?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Nope! Titanium cutting boards are gentle on your knives. However, no matter what you cut on, by using said knife it will eventually cause some dulling over time. It is generally recommended to sharpen your knives occasionally so you don't risk ingesting microplastics or bacteria which is commonly found in other cutting boards made of wood and\/or plastic.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_iKtXTA": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Buy Lemmecook Products Elsewhere?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Nope! We sell exclusively online at lemmecook.com. The only authentic and certified titanium cutting board is currently available exclusively through our online store. Any other outlets please beware of scams and imitations.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_AJcNWL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do You Have an Affiliate Program?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>We are launching our Lemmcook affiliate program shortly! Stay tuned.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_TE3jk7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Where Do You Ship?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>While we are based in the US. We ship internationally.<\/p>",
+            "page": ""
+          }
+        },
+        "template--19742927749415__9c121ec4-42cd-4c8e-82a2-935e073db7d7-16889993318614e07a-1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Do I Track my Order?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Once your order has shipped, you will receive an email and text confirmation which will include your tracking number. You can always refer back to the \"Track Order\" section of our site to check on the status.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_gKxzqY": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Expedite Shipping?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Because we care about customer experience, we come out of pocket to upgrade all orders to expedited shipping by default. The shipping you see is the fastest provided.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_JV7tw7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Can I Cancel or Change my Order?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>You have a brief window of time to edit\/change your order details after placing an order. After that, you can cancel within 24 hours as long as the item(s) have not shipped.<\/p>",
+            "page": ""
+          }
+        },
+        "template--19742927749415__9c121ec4-42cd-4c8e-82a2-935e073db7d7-16889993318614e07a-2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Much is Shipping?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Shipping is free for orders over $125. If you're under that amount, shipping is $4.99<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_cfNFR9": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Return or Exchange?",
+            "icon": "help",
+            "filled_icon": false,
+            "row_content": "<p>Absolutely, if you don't love it, no questions asked exchange or refund.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--19742927749415__9c121ec4-42cd-4c8e-82a2-935e073db7d7-16889993318614e07a-0",
+        "collapsible_row_iKtXTA",
+        "collapsible_row_AJcNWL",
+        "collapsible_row_TE3jk7",
+        "template--19742927749415__9c121ec4-42cd-4c8e-82a2-935e073db7d7-16889993318614e07a-1",
+        "collapsible_row_gKxzqY",
+        "collapsible_row_JV7tw7",
+        "template--19742927749415__9c121ec4-42cd-4c8e-82a2-935e073db7d7-16889993318614e07a-2",
+        "collapsible_row_cfNFR9"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "Frequently asked questions",
+        "title": "We're Here to Help",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h0",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "background-1",
+        "container_color_scheme": "background-2",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "small",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#2e2a39"
+      }
+    },
+    "horizontal_ticker_zMKGCk": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "text_rnfay7": {
+          "type": "text",
+          "settings": {
+            "title": "Lemmecook"
+          }
+        },
+        "image_HtpjnF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Favicon_2.png"
+          }
+        },
+        "text_jcrgiX": {
+          "type": "text",
+          "settings": {
+            "title": "Lemmecook"
+          }
+        },
+        "image_94mqyw": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Favicon_2.png"
+          }
+        },
+        "text_3pm49g": {
+          "type": "text",
+          "settings": {
+            "title": "Lemmecook"
+          }
+        },
+        "image_KQbQ7P": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Favicon_2.png"
+          }
+        }
+      },
+      "block_order": [
+        "text_rnfay7",
+        "image_HtpjnF",
+        "text_jcrgiX",
+        "image_94mqyw",
+        "text_3pm49g",
+        "image_KQbQ7P"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 1,
+        "direction": "reverse",
+        "stop_on_hover": false,
+        "mobile_spacing": 60,
+        "desktop_spacing": 75,
+        "color_scheme": "custom",
+        "mobile_text_size": 12,
+        "desktop_text_size": 16,
+        "italic_text": false,
+        "uppercase_text": false,
+        "bold_text": true,
+        "mobile_image_height": 18,
+        "desktop_image_height": 18,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "custom_colors_background": "#121212",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#c5ff89"
+      }
+    },
+    "testimonials_UB4KyC": {
+      "type": "testimonials",
+      "blocks": {
+        "column_XWBFP6": {
+          "type": "column",
+          "settings": {
+            "title": "This Board Actually Works!",
+            "text": "<p>I love how easy to clean and lightweight this board is. No bacteria, stains or odors and when I'm all done cooking, I can stow it away without having my husband help. Only downside is you can't use strong chemicals.<\/p>",
+            "author": "<em>Jordan B. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        },
+        "column_CLmnPC": {
+          "type": "column",
+          "settings": {
+            "title": "10\/10 Would Recommend",
+            "text": "<p>Definitely seems durable and can attest to it being easy to clean. Happy to not worry about tiny microplastics in my food anymore with this board. Would recommend to friends and family! Thanks!<\/p>",
+            "author": "<em>Mark T. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        },
+        "column_i7P8M8": {
+          "type": "column",
+          "settings": {
+            "title": "Never Going Back to Wood",
+            "text": "<p>This titanium board has been outstanding in our kitchen. Durable, non-porous and resists scratches so nicely. No more worrying about scrubbing for awhile to get stains out of my old wooden board. Very happy!<\/p>",
+            "author": "<em>Susan V. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        }
+      },
+      "block_order": [
+        "column_XWBFP6",
+        "column_CLmnPC",
+        "column_i7P8M8"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Testimonials",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "stars_color": "#ffd700",
+        "show_quotes": false,
+        "quotes_color_scheme": "accent-2",
+        "cards_color_scheme": "bg-overlay",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "9c121ec4-42cd-4c8e-82a2-935e073db7d7",
+    "horizontal_ticker_zMKGCk",
+    "testimonials_UB4KyC"
+  ]
+}

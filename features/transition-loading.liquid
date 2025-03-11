@@ -1,0 +1,85 @@
+{% comment %} 
+  Add this script to a place where you want to show loading during any operation.
+{% endcomment %}
+
+<style>
+  .hidden {
+    display: none !important;
+  }
+  .loading-overlay:not(.hidden)~* {
+    visibility: visible;
+    opacity: .4;
+  }
+  .loading-overlay {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 1;
+  }
+  .loading-overlay__spinner {
+    width: 1.8rem;
+    display: inline-block;
+  }
+  .spinner {
+    animation: rotator 1.4s linear infinite;
+  }
+  .path {
+    stroke-dasharray: 280;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    stroke: rgb(18, 18, 18);
+    animation: dash 1.4s ease-in-out infinite;
+  }
+  @keyframes rotator {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 280;
+    }
+
+    50% {
+      stroke-dashoffset: 75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 280;
+      transform: rotate(450deg);
+    }
+  }
+</style>
+
+<div class="loading-overlay hidden">
+  <div class="loading-overlay__spinner">
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      class="spinner"
+      viewBox="0 0 66 66"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+    </svg>
+  </div>
+</div>
+
+{% comment %} 
+  Remove this hidden class for showing loading, if needed, add it after 1 or 2 seconds.
+{% endcomment %}
+<script>
+  document.querySelector(`.loading-overlay`).classList.remove('hidden');
+</script>
+

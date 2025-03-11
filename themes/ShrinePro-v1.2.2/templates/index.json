@@ -1,0 +1,973 @@
+{
+  "sections": {
+    "horizontal_ticker_ngT6Rc": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "image_QixHbw": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Vector_307.png"
+          }
+        },
+        "text_JrLj39": {
+          "type": "text",
+          "settings": {
+            "title": "Free shipping on orders $125+"
+          }
+        },
+        "image_FqDjPk": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Vector_307.png"
+          }
+        },
+        "text_GpgLE8": {
+          "type": "text",
+          "settings": {
+            "title": "Free shipping on orders $125+"
+          }
+        },
+        "image_ymU3wF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Vector_307.png"
+          }
+        },
+        "text_xeKrzB": {
+          "type": "text",
+          "settings": {
+            "title": "Free shipping on orders $125+"
+          }
+        }
+      },
+      "block_order": [
+        "image_QixHbw",
+        "text_JrLj39",
+        "image_FqDjPk",
+        "text_GpgLE8",
+        "image_ymU3wF",
+        "text_xeKrzB"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 1,
+        "direction": "reverse",
+        "stop_on_hover": false,
+        "mobile_spacing": 20,
+        "desktop_spacing": 30,
+        "color_scheme": "custom",
+        "mobile_text_size": 12,
+        "desktop_text_size": 14,
+        "italic_text": false,
+        "uppercase_text": true,
+        "bold_text": true,
+        "mobile_image_height": 16,
+        "desktop_image_height": 16,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12,
+        "desktop_padding_top": 12,
+        "desktop_padding_bottom": 12,
+        "custom_colors_background": "#c5ff89",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39"
+      }
+    },
+    "image_banner_nU3CNk": {
+      "type": "image-banner",
+      "blocks": {
+        "rating_stars_QTbeY9": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.7,
+            "star_color": "#121212",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4.7\/5 By 23,719+ Happy Customers",
+            "size": 14,
+            "scroll_id": ""
+          }
+        },
+        "heading_nVDRq7": {
+          "type": "heading",
+          "settings": {
+            "title": "Holiday Sale up to 50% Off",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        },
+        "text_BTAgrF": {
+          "type": "text",
+          "settings": {
+            "text": "Give them the gift of hygiene & safety with 100% non-toxic, antibacterial kitchenware - built to last a lifetime.",
+            "text_style": "body"
+          }
+        },
+        "buttons_eqYqEn": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SHOP NOW",
+            "button_link_1": "shopify:\/\/products\/knife-sharpener-dummy-product",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "rating_stars_QTbeY9",
+        "heading_nVDRq7",
+        "text_BTAgrF",
+        "buttons_eqYqEn"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify:\/\/shop_images\/Untitled_2530_x_850_px_3.png",
+        "image_1_visibility": "always-display",
+        "image_2_visibility": "always-display",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "url": "",
+        "desktop_content_position": "middle-left",
+        "show_text_box": false,
+        "desktop_content_alignment": "left",
+        "color_scheme": "background-1",
+        "transparent_container_color": "black",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "rich_text_KteCRr": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Fdda9V": {
+          "type": "heading",
+          "settings": {
+            "title": "As Seen On",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Fdda9V"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "full_width": true,
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 16,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "horizontal_ticker_7zPWbp": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "image_bWge3q": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/womens_health.png"
+          }
+        },
+        "image_Adyt48": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/usatodayyy.png"
+          }
+        },
+        "image_HjjpwU": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wired-vector-logo.png"
+          }
+        },
+        "image_WTrAg8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/foodnetworklogo_2b1c3239-ff6e-44b7-a0c7-06572fdf8721.png"
+          }
+        },
+        "image_VbDMKA": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/bonappetite_fd8ba9ef-5d15-4713-995b-c4d001be1b13.png"
+          }
+        },
+        "image_GeFiCJ": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/digital_journal.png"
+          }
+        },
+        "image_th3w9X": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/forbes_a9c840d1-c577-42d6-8a0f-1f6b641cabdd.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_bWge3q",
+        "image_Adyt48",
+        "image_HjjpwU",
+        "image_WTrAg8",
+        "image_VbDMKA",
+        "image_GeFiCJ",
+        "image_th3w9X"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 3,
+        "direction": "normal",
+        "stop_on_hover": false,
+        "mobile_spacing": 30,
+        "desktop_spacing": 60,
+        "color_scheme": "background-1",
+        "mobile_text_size": 16,
+        "desktop_text_size": 18,
+        "italic_text": false,
+        "uppercase_text": false,
+        "bold_text": false,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39"
+      }
+    },
+    "logo_list_EF3NgK": {
+      "type": "logo-list",
+      "blocks": {
+        "logo_6r3DhE": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/foodnetworklogo_2b1c3239-ff6e-44b7-a0c7-06572fdf8721.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_DzqQJN": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/bonappetite_fd8ba9ef-5d15-4713-995b-c4d001be1b13.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_YfMXBF": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/forbes_a9c840d1-c577-42d6-8a0f-1f6b641cabdd.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_KyHkTp": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/digital_journal.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_CFgT7q": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/womens_healthtt.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_WwUphF": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wired-vector-logo.png",
+            "link": "",
+            "target_blank": false
+          }
+        },
+        "logo_RdhMc8": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/usatodayyy.png",
+            "link": "",
+            "target_blank": false
+          }
+        }
+      },
+      "block_order": [
+        "logo_6r3DhE",
+        "logo_DzqQJN",
+        "logo_YfMXBF",
+        "logo_KyHkTp",
+        "logo_CFgT7q",
+        "logo_WwUphF",
+        "logo_RdhMc8"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "As Seen On",
+        "title_highlight_color": "#121212",
+        "heading_size": "h1",
+        "gray_logos": false,
+        "color_scheme": "custom",
+        "layout": "horizontal",
+        "desktop_logo_height": 50,
+        "columns_mobile": 3,
+        "mobile_logo_height": 50,
+        "mobile_slider": true,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_dots": false,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "section_divider_LbHhff": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "testimonials_cbfW4Y": {
+      "type": "testimonials",
+      "blocks": {
+        "column_bbfRgB": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Screenshot_2024-12-17_102117.png",
+            "title": "",
+            "text": "",
+            "author": "<em>Rachel C. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        },
+        "column_Hc7C8j": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Screenshot_2024-12-17_101815.png",
+            "title": "",
+            "text": "",
+            "author": "<em>Cara N. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        },
+        "column_jXrWpM": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Screenshot_2024-12-17_101913.png",
+            "title": "",
+            "text": "",
+            "author": "<em>Tanya V. <\/em><em><strong>Verified Buyer<\/strong><\/em>"
+          }
+        }
+      },
+      "block_order": [
+        "column_bbfRgB",
+        "column_Hc7C8j",
+        "column_jXrWpM"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Over 23,700+ Kitchen Trust Lemmecook!",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "stars_color": "#ffd700",
+        "show_quotes": false,
+        "quotes_color_scheme": "accent-2",
+        "cards_color_scheme": "bg-overlay",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_84Lxmi": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_columns_NyX4n8": {
+      "type": "custom-columns",
+      "blocks": {
+        "heading_wjweem": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "The Preferred Choice for Healthy Kitchens",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1",
+            "alignment": "center",
+            "mobile_alignment": "mobile-center",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "richtext_CWaVnp": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "<p>Revolutionize your kitchen for the modern era. Say goodbye to bacteria, odors and scratches.<\/p>",
+            "text_style": "body",
+            "alignment": "center",
+            "mobile_alignment": "mobile-center",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "icon_with_text_Udkmyf": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "mood",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Hassle-Free Cleaning",
+            "text": "<p>From beets to berries, titanium doesn't stain. Just a quick rinse and it's cleaner than a wood board with minutes of scrubbing.<\/p>",
+            "margin_top": 20,
+            "margin_bottom": 30
+          }
+        },
+        "icon_with_text_QB3Vj3": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "schedule",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Built to Last a Life-Time",
+            "text": "<p>Engineered from the highest quality titanium, it's stronger, more durable and lighter than stainless steel.<\/p>",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "image_AEYhrX": {
+          "type": "image",
+          "settings": {
+            "column": "col_3",
+            "visibility": "always-display",
+            "image": "shopify:\/\/shop_images\/board_photo.png",
+            "width": 100,
+            "alignment": "center",
+            "mobile_alignment": "center",
+            "border_radius": 0,
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "icon_with_text_JXnTep": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_4",
+            "visibility": "always-display",
+            "icon": "liquor",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Stain Resistant",
+            "text": "<p>Titanium has a smooth, non absorbent surface which prevents stains and liquids from seaping in. Keep your board looking new for longer.<\/p>",
+            "margin_top": 20,
+            "margin_bottom": 30
+          }
+        },
+        "icon_with_text_VXXkWE": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_4",
+            "visibility": "always-display",
+            "icon": "psychiatry",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Antibacterial & Safe",
+            "text": "<p>Non-porous repells & resists bacteria and even the toughest odors. Ensuring a cleaner more hygenic kitchen to prepare food in.<\/p>",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "heading_wjweem",
+        "richtext_CWaVnp",
+        "icon_with_text_Udkmyf",
+        "icon_with_text_QB3Vj3",
+        "image_AEYhrX",
+        "icon_with_text_JXnTep",
+        "icon_with_text_VXXkWE"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "color_scheme": "custom",
+        "columns_count": 4,
+        "column_gap_desktop": 40,
+        "row_gap_desktop": 40,
+        "desktop_vertical_alignment": "center",
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 30,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "section_divider_JLm8xJ": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "multirow_UBTwXw": {
+      "type": "multirow",
+      "blocks": {
+        "row_mcQVtC": {
+          "type": "row",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Screenshot_2024-12-17_104918.png",
+            "video_muted_autoplay": true,
+            "caption": "",
+            "title": "<strong>Exceptional Quality<\/strong>",
+            "title_highlight_color": "#121212",
+            "text": "<p>Inspired by timeless japanese craftsmanship, where longevity, quality and durability reign supreme. Our line of products embody these principles at their core (literally).<br\/><br\/>Made from 100% sustainable titanium, we ensure the highest standard of hygiene, durability and quality while keeping our civic duties to ensure a sustainable enviroment.<br\/><br\/>Let Lemmecook into your kitchen, where we honor and care about both your health, and our planet.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "atc_button_label": "",
+            "atc_product": "",
+            "atc_skip_cart": false
+          }
+        }
+      },
+      "block_order": [
+        "row_mcQVtC"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "image_layout": "alternate-left",
+        "row_color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_TxJmNB": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "horizontal_ticker_aLUdgx": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "text_G7NUyj": {
+          "type": "text",
+          "settings": {
+            "title": "Lemmecook"
+          }
+        },
+        "image_GcNcVD": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Favicon_2.png"
+          }
+        },
+        "text_xaaiAz": {
+          "type": "text",
+          "settings": {
+            "title": "Lemmecook"
+          }
+        },
+        "image_WJzgJx": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Favicon_2.png"
+          }
+        },
+        "text_9qnqGf": {
+          "type": "text",
+          "settings": {
+            "title": "Lemmecook"
+          }
+        },
+        "image_dg4i9K": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Favicon_2.png"
+          }
+        }
+      },
+      "block_order": [
+        "text_G7NUyj",
+        "image_GcNcVD",
+        "text_xaaiAz",
+        "image_WJzgJx",
+        "text_9qnqGf",
+        "image_dg4i9K"
+      ],
+      "settings": {
+        "visibility": "always-display",
+        "speed": 1,
+        "direction": "reverse",
+        "stop_on_hover": false,
+        "mobile_spacing": 60,
+        "desktop_spacing": 75,
+        "color_scheme": "custom",
+        "mobile_text_size": 12,
+        "desktop_text_size": 16,
+        "italic_text": false,
+        "uppercase_text": false,
+        "bold_text": true,
+        "mobile_image_height": 18,
+        "desktop_image_height": 18,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "custom_colors_background": "#121212",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#c5ff89"
+      }
+    },
+    "section_divider_CQKFei": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "results_VJytjW": {
+      "type": "results",
+      "blocks": {
+        "row_mUACK3": {
+          "type": "row",
+          "settings": {
+            "percentage": 97,
+            "row_text": "<p>Noticed less microplastics in their kitchen after switching.<\/p>"
+          }
+        },
+        "row_hLTqJw": {
+          "type": "row",
+          "settings": {
+            "percentage": 93,
+            "row_text": "<p>Reported an easier time cleaning up after cooking.<\/p>"
+          }
+        },
+        "row_6XybG9": {
+          "type": "row",
+          "settings": {
+            "percentage": 91,
+            "row_text": "<p>Felt satisified with their purchase after initial hesitation. <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "row_mUACK3",
+        "row_hLTqJw",
+        "row_6XybG9"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "image": "shopify:\/\/shop_images\/Untitled_design_e5c11baf-ad79-4978-b0c9-e118bd76bbfa.jpg",
+        "video_muted_autoplay": true,
+        "color_scheme": "background-1",
+        "layout": "results_second",
+        "results_headline": "Real Results from Real Kitchens",
+        "results_title_highlight_color": "#121212",
+        "results_headline_size": "h2",
+        "results_text": "",
+        "results_headline_alignment": "left",
+        "caption": "<p>Surveyed from actual customers who bought from Lemmcook*<\/p>",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212",
+        "custom_colors_accent": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "section_divider_QDBcMP": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_3eGyYb": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_4qrYj4": {
+          "type": "heading",
+          "settings": {
+            "title": "30-Day Money Back Guarantee",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        },
+        "text_JznzaE": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Your satisfaction with lemmecook is our priority. We back every purchase with our 30-day money back guarantee!<\/p>"
+          }
+        },
+        "button_8BKtAr": {
+          "type": "button",
+          "settings": {
+            "button_label": "Try it Risk-Free",
+            "button_link": "shopify:\/\/collections",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_4qrYj4",
+        "text_JznzaE",
+        "button_8BKtAr"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "full_width": true,
+        "color_scheme": "custom",
+        "padding_top": 40,
+        "padding_bottom": 52,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#000000",
+        "custom_colors_solid_button_background": "#000000",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#000000"
+      }
+    },
+    "section_divider_jP3xT8": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "random_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#ffffff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "horizontal_ticker_ngT6Rc",
+    "image_banner_nU3CNk",
+    "rich_text_KteCRr",
+    "horizontal_ticker_7zPWbp",
+    "logo_list_EF3NgK",
+    "section_divider_LbHhff",
+    "testimonials_cbfW4Y",
+    "section_divider_84Lxmi",
+    "custom_columns_NyX4n8",
+    "section_divider_JLm8xJ",
+    "multirow_UBTwXw",
+    "section_divider_TxJmNB",
+    "horizontal_ticker_aLUdgx",
+    "section_divider_CQKFei",
+    "results_VJytjW",
+    "section_divider_QDBcMP",
+    "rich_text_3eGyYb",
+    "section_divider_jP3xT8"
+  ]
+}

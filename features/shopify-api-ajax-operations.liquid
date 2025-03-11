@@ -1,0 +1,107 @@
+{% comment %} 
+  - Complete Shopify APIs AJAX operations
+{% endcomment %}
+
+<script>
+  // 1. Adding a Product to the Cart 
+  function addToCart(productId, quantity = 1) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: productId, quantity: quantity })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Added to cart:', data);
+      // Update cart UI dynamically
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  // 2. Update cart quantity
+  function updateCart(lineItemId, quantity) {
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ updates: { [lineItemId]: quantity } })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Cart updated:', data);
+      // Refresh cart UI with new data
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  // 3. remove item from cart
+  function removeFromCart(lineItemId) {
+    updateCart(lineItemId, 0);
+  }
+
+  // 4. Fetching cart data
+  function fetchCart() {
+    fetch('/cart.js')
+    .then(response => response.json())
+    .then(data => {
+      console.log('Cart data:', data);
+      // Render cart items dynamically
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  // 5. Fetching product details
+  function fetchProduct(handle) {
+    fetch(`/products/${handle}.js`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('Product data:', data);
+      // Populate product details dynamically
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  // 6. Applying discount code
+  function applyDiscount(discountCode) {
+    fetch('/cart.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ discount: discountCode })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Discount applied:', data);
+      // Update cart total dynamically
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  // 7. Handle form submissions dynamically 
+  document.querySelector('#newsletter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch(this.action, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Form submitted:', data);
+      // Show success message
+    })
+    .catch(error => console.error('Error:', error));
+  });
+
+  // 8. Loading section dynamically
+  function loadSection(sectionId) {
+    fetch(`/?section_id=${sectionId}`)
+    .then(response => response.json())
+    .then(data => {
+      document.querySelector(`#${sectionId}`).innerHTML = data[sectionId];
+      console.log('Section loaded:', data);
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+
+</script>

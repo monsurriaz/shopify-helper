@@ -1,0 +1,147 @@
+{% comment %} 
+  - complete snippets of add, remove a product based on cart value.
+  - ajax cart drawer update after operations
+  - implement mutationObserver for ajax operations
+{% endcomment %}
+
+<script>
+  // Retrieve productId and variantId from a specific element
+  const freeProduct = document.querySelector('[data-free-product-id]');
+  let productId, variantId;
+  if (freeProduct) {
+    productId = freeProduct.getAttribute('data-free-product-id');
+    // productId = 8137040920755;
+    variantId = freeProduct.getAttribute('data-free-variant-id');
+    // variantId = 44329378578611;
+  }
+
+  // Get product line ID
+  async function getProductLineId(productId) {
+    try {
+      const res = await fetch('/cart.js');
+      const cart = await res.json();
+
+      // Find the line item based on product ID
+      const productLine = cart.items.find(item => item.product_id === parseInt(productId));
+
+      return productLine ? productLine.id : null;
+    } catch (error) {
+      console.error('Error fetching cart:', error);
+      return null;
+    }
+  }
+
+  // Check if the product already exists
+  async function eligibleProduct(productId) {
+    const lineId = await getProductLineId(productId);
+    return lineId === null;
+  }
+
+  // Update cart drawer
+  async function updateCartDrawer() {
+    try {
+      const res = await fetch('/?section_id=cart-drawer');
+      if (!res.ok) throw new Error('Failed to fetch cart drawer section');
+
+      const text = await res.text();
+      const html = document.createElement('div');
+      html.innerHTML = text;
+
+      const newDrawer = html.querySelector('.cart_drawer');
+      const currentDrawer = document.querySelector('.cart_drawer');
+
+      if (newDrawer && currentDrawer) {
+        currentDrawer.innerHTML = newDrawer.innerHTML;
+      }
+    } catch (error) {
+      console.error('Error updating cart drawer:', error);
+    }
+  }
+
+  // Add product to cart
+  async function addProductToCart(variantId) {
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: [{ id: variantId, quantity: 1 }] // Ensure the item is formatted correctly
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to add product to cart');
+
+      // Update cart drawer UI
+      await updateCartDrawer();
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  }
+
+  // Remove product from cart
+  async function removeProductFromCart(productLineId) {
+    try {
+      const res = await fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ updates: { [productLineId]: 0 } }),
+      });
+
+      if (!res.ok) throw new Error('Failed to remove product from cart');
+
+      // Update cart drawer UI
+      await updateCartDrawer();
+    } catch (error) {
+      console.error('Error removing product from cart:', error);
+    }
+  }
+
+  // Update cart total logic
+  async function updateCartTotal() {
+    try {
+      const res = await fetch('/cart.js');
+      const cart = await res.json();
+
+      const cartValue = cart.total_price / 100; // Convert from cents to currency
+
+      if (cartValue >= 50) {
+        // Add the free product if eligible
+        if (await eligibleProduct(productId)) {
+          await addProductToCart(variantId);
+        } 
+      } else {
+        // Remove the free product if it exists
+        const lineId = await getProductLineId(productId);
+        if (lineId) {
+          await removeProductFromCart(lineId);
+        }
+      }
+    } catch (error) {
+      console.error('Error updating cart total:', error);
+    }
+  }
+
+  // Main function to handle cart updates
+  async function handleCartUpdate() {
+    try {
+      await updateCartTotal();
+    } catch (error) {
+      console.error('Error handling cart update:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Perform the initial cart update check
+    await handleCartUpdate();
+
+    const parentContainer = document.getElementById('shopify-section-cart-drawer');
+    if (parentContainer) {
+      // Observe changes in the parent container's DOM
+      const observer = new MutationObserver(async () => {
+        await handleCartUpdate(); // Rebind logic when changes are detected
+      });
+      observer.observe(parentContainer, { childList: true, subtree: true });
+    }
+  });
+
+</script>

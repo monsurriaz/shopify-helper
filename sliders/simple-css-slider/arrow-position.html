@@ -76,26 +76,26 @@
     }
 
     @media screen and (max-width: 768px) {
-    .related-product-loop.grid__wrapper.enable__scrolling-slider {
-      cursor: grab;
+      .related-product-loop.grid__wrapper.enable__scrolling-slider {
+        cursor: grab;
+      }
+      .enable__scrolling-slider .product {
+        width: calc(50% - var(--grid-horizontal-spacing) / 2); /* partial view, full view; anything is possible. */
+      }
+      .simple--button {
+        width: 30px;
+        height: 30px;
+      }
+      .simple--button .simple-button-icon {
+        width: 12px;
+      }
+      button.simple--button.slider-right {
+        right: 0px;
+      }
+      button.simple--button.slider-left {
+        left: 0px;
+      }
     }
-    .enable__scrolling-slider .product {
-      width: calc(50% - var(--grid-horizontal-spacing) / 2); /* partial view, full view; anything is possible. */
-    }
-    .simple--button {
-      width: 30px;
-      height: 30px;
-    }
-    .simple--button .simple-button-icon {
-      width: 12px;
-    }
-    button.simple--button.slider-right {
-      right: 0px;
-    }
-    button.simple--button.slider-left {
-      left: 0px;
-    }
-  }
   </style>
 </head>
 <body>

@@ -1,0 +1,117 @@
+{% comment %} Move the popup body in a safe place {% endcomment %}
+<script>
+  (function () {
+    function moreLoadProductForm() {
+      var bodyInner = document.querySelector('body');
+      const templateContent2 = document.querySelector(
+        '#ss-size-guide-2-modal-{{ section.id }}'
+      ).content;
+      
+      bodyInner.insertAdjacentElement(
+        'beforeend',
+        templateContent2.firstElementChild
+      );
+    }
+    window.addEventListener('DOMContentLoaded', moreLoadProductForm);
+  })();
+</script>
+
+{% if toggle != blank %}
+  <div class="size-toggle-{{ section.id }}">
+    <span>{{ toggle }}</span>
+    {% unless hide_icon %}
+      <div class="size-toggle-icon-{{ section.id }}">
+        {% if icon != blank %}
+          <img src="{{ icon | image_url }}" alt="{{ icon.alt }}" {% if lazy %}loading="lazy"{% endif %} width="auto" height="auto">
+        {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g clip-path="url(#clip0_1_3)">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.625863 16.1183C-0.0280383 16.7722 -0.0280383 17.8324 0.625863 18.4863L5.36183 23.2223C6.01573 23.8762 7.07592 23.8762 7.72982 23.2223L23.1217 7.83037C23.7756 7.17647 23.7756 6.11629 23.1217 5.46239L18.3858 0.726418C17.7319 0.0725167 16.6717 0.0725178 16.0178 0.726418L0.625863 16.1183ZM6.74316 11.5797L4.37515 13.9477L6.34849 15.921C6.67544 16.248 6.67544 16.7781 6.34849 17.105C6.02154 17.432 5.49145 17.432 5.1645 17.105L3.19116 15.1317L1.41519 16.9077C1.19722 17.1256 1.19722 17.479 1.41519 17.697L6.15116 22.433C6.36913 22.6509 6.72252 22.6509 6.94049 22.433L22.3324 7.04105C22.5504 6.82308 22.5504 6.46968 22.3324 6.25172L17.5964 1.51575C17.3785 1.29778 17.0251 1.29778 16.8071 1.51575L15.0311 3.29175L17.0044 5.26507C17.3314 5.59202 17.3314 6.12211 17.0044 6.44906C16.6775 6.77601 16.1474 6.77601 15.8204 6.44906L13.8471 4.47574L11.4791 6.84372L13.4524 8.81704C13.7794 9.14399 13.7794 9.67409 13.4524 10.001C13.1255 10.328 12.5954 10.328 12.2685 10.001L10.2951 8.02771L7.92715 10.3957L9.90047 12.369C10.2274 12.696 10.2274 13.2261 9.90047 13.553C9.57352 13.88 9.04343 13.88 8.71648 13.553L6.74316 11.5797Z" fill="black"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_1_3">
+            <rect width="24" height="24" fill="white"/>
+            </clipPath>
+            </defs>
+          </svg>
+        {% endif %}
+      </div>
+    {% endunless %}
+  </div>
+{% endif %}
+
+<template class="size-modal-wrapper-{{ section.id }}" id="ss-size-guide-2-modal-{{ section.id }}">
+  <div class="size-modal-{{ section.id }}">
+    <div class="size-modal-inner-{{ section.id }}">
+      <button class="size-modal-close-{{ section.id }}">
+        <svg viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0002 10.586L4.70718 3.29297L3.29297 4.70718L10.586 12.0002L3.29297 19.2933L4.70718 20.7075L12.0002 13.4145L19.2933 20.7075L20.7075 19.2933L13.4145 12.0002L20.7075 4.70723L19.2933 3.29302L12.0002 10.586Z" fill="white"></path></svg>
+      </button>
+  
+      {% if heading != blank %}
+        <div class="size-modal-heading-{{ section.id }}">
+          {{ heading }}
+        </div>
+      {% endif %}
+  
+      <div class="size-modal-content-top-{{ section.id }}">
+        {% if title != blank %}
+          <p class="size-modal-title-{{ section.id }}">{{ title }}</p>
+        {% endif %}
+      </div>
+      
+      <div class="size-modal-body-{{ section.id }}">
+        <div class="size-modal-content-{{ section.id }}">
+          <div class="size-modal-text-{{ section.id }}">
+            {{ text }}
+          </div>
+        </div>
+        {% unless hide_modal_image %}
+          <div class="size-modal-image-{{ section.id }}">
+            {% if modal_image != blank %}
+              <img src="{{ modal_image | image_url }}" alt="{{ modal_image.alt }}" {% if lazy %}loading="lazy"{% endif %} width="auto" height="auto">
+            {% else %}
+              {{ 'image' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+        {% endunless %}
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  function initSizeGuide() {
+    setTimeout(() => {
+
+      let toggle = document.querySelector('.size-toggle-{{ section.id }}');
+      const modal = document.querySelector('.size-modal-{{ section.id }}');
+      const close = document.querySelector('.size-modal-close-{{ section.id }}');
+      if(toggle) {
+        toggle.addEventListener('click', () => {
+          document.body.style.overflow = 'hidden';
+          modal.classList.add('active');
+        })
+      }
+
+      close.addEventListener('click', () => {
+        document.body.style.overflow = '';
+        modal.classList.remove('active');
+      });
+      
+      document.addEventListener('click', (e) => {
+        if (e.target == modal) {
+          document.body.style.overflow = '';
+          modal.classList.remove('active');
+        }
+      });
+      
+    }, 400)
+  }
+  
+  document.addEventListener('DOMContentLoaded', initSizeGuide);
+  
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:unload', initSizeGuide);
+    document.addEventListener('shopify:section:load', initSizeGuide);
+  }
+</script>

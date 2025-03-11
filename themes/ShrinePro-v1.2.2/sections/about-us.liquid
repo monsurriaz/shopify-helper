@@ -1,0 +1,284 @@
+{% style %}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+  .about-us__left-item.grid__item,
+  .about-us__right-item.grid__item {
+    width: 50%;
+    max-width: 100%;
+    display: grid;
+  }
+  .about-us__left-grid,
+  .about-us__right-grid {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 24px;
+  }
+  .about-us__right-grid {
+    column-gap: 40px;
+  }
+  .about-us__left-grid {
+    align-items: center;
+  }
+  .about-us__left-img-wrapper img {
+    width: 50px;
+    height: auto;
+    object-fit: contain;
+  }
+  h2.about-us__left-title {
+    margin: 0px;
+    font-size: 23px;
+    line-height: 150%;
+    color: #242424;
+  }
+  .about-us__right-satisfied-customer,
+  .about-us__right-winning-awards,
+  .about-us__right-rating {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+  }
+  .about-us__right-satisfied-number,
+  .about-us__right-awards-number,
+  .about-us__right-rating-number {
+    margin-bottom: 4px;
+  }
+  .about-us__right-satisfied-title,
+  .about-us__right-awards-title,
+  .about-us__right-rating-title {
+    margin: 0px;
+    font-size: 40px;
+    line-height: 130%;
+    color: #242424;
+  }
+  .about-us__right-satisfied-text,
+  .about-us__right-awards-text,
+  .about-us__right-rating-text {
+    font-size: 16px;
+    line-height: 180%;
+    color: #575757;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: 749px) {
+    .about-us__grid {
+      flex-direction: column;
+    }
+    .about-us__left-item.grid__item, 
+    .about-us__right-item.grid__item {
+      width: 100%;
+    }
+    .about-us__left-grid {
+      justify-content: center;
+      text-align: center;
+    }
+    .about-us__left-media,
+    .about-us__left-text {
+      margin-bottom: 24px;
+    }
+    h2.about-us__left-title {
+      font-size: 19px;
+    }
+    .about-us__left-grid, 
+    .about-us__right-grid {
+      justify-content: center;
+      text-align: center;
+    }
+    .about-us__right-satisfied-customer, 
+    .about-us__right-winning-awards,
+    .about-us__right-rating {
+      flex: 1 1 100%;
+      margin-right: 0px;
+    }
+    .about-us__right-satisfied-sub__text,
+    .about-us__right-awards-sub__text,
+    .about-us__right-rating-sub__text {
+      margin-bottom: 24px;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.desktop_padding_top }}px;
+      padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{% liquid
+  assign ss = section.settings
+%}
+
+<div id="about-us-{{ section.id }}" class="gradient content-for-grouping animate-section animate--hidden">
+  <div class="about-us page-width section-{{ section.id }}-padding">
+    <div class="about-us__grid grid grid--gapless animate-item">
+      <div class="about-us__left-item grid__item">
+        <div class="about-us__left-grid">
+          <div class="about-us__left-media">
+            <div class="about-us__left-img-wrapper">
+              {% if ss.left_image != blank %}
+                <img 
+                  src="{{ ss.left_image | image_url: width: ss.left_image.width }}" 
+                  alt="{{ ss.left_image.alt }}"
+                  height="auto" width="auto"
+                >
+              {% endif %}
+            </div>
+          </div>
+          <div class="about-us__left-text">
+            <div class="about-us__left-text-wrapper">
+              <h2 class="about-us__left-title">{{ ss.left_text }}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-us__right-item grid__item">
+        <div class="about-us__right-grid">
+          <div class="about-us__right-satisfied-customer">
+            <div class="about-us__right-satisfied-number">
+              <h2 class="about-us__right-satisfied-title">{{ ss.satisfied_number }}</h2>
+            </div>
+            <div class="about-us__right-satisfied-sub__text">
+              <div class="about-us__right-satisfied-text">
+                {{ ss.satisfied_subtext }}
+              </div>
+            </div>
+          </div>
+          <div class="about-us__right-rating">
+            <div class="about-us__right-rating-number">
+              <h2 class="about-us__right-rating-title">{{ ss.rating_number }}</h2>
+            </div>
+            <div class="about-us__right-rating-sub__text">
+              <div class="about-us__right-rating-text">
+                {{ ss.rating_subtext }}
+              </div>
+            </div>
+          </div>
+          <div class="about-us__right-winning-awards">
+            <div class="about-us__right-awards-number">
+              <h2 class="about-us__right-awards-title">{{ ss.awards_number }}</h2>
+            </div>
+            <div class="about-us__right-awards-sub__text">
+              <div class="about-us__right-awards-text">
+                {{ ss.awards_subtext }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "About us",
+    "class": "section",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "left_image",
+        "label": "Left image"
+      },
+      {
+        "type": "textarea",
+        "id": "left_text",
+        "label": "Left text",
+        "info": "Use <br> for new lines",
+        "default": "PASSIONATE ABOUT INNOVATION."
+      },
+      {
+        "type": "text",
+        "id": "satisfied_number",
+        "label": "Satisfied number",
+        "default": "22,500+"
+      },
+      {
+        "type": "textarea",
+        "id": "satisfied_subtext",
+        "label": "Satisfied subtext",
+        "default": "Satisfied Customers"
+      },
+      {
+        "type": "text",
+        "id": "rating_number",
+        "label": "Rating number",
+        "default": "4.7/5"
+      },
+      {
+        "type": "textarea",
+        "id": "rating_subtext",
+        "label": "Rating Subtext",
+        "default": "Star Rating"
+      },
+      {
+        "type": "text",
+        "id": "awards_number",
+        "label": "Wining award number",
+        "default": "10+"
+      },
+      {
+        "type": "textarea",
+        "id": "awards_subtext",
+        "label": "Awards Subtext",
+        "default": "Winning Awards"
+      },
+      {
+        "type": "header",
+        "content": "Mobile padding"
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Desktop padding"
+      },
+      {
+        "type": "range",
+        "id": "desktop_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "desktop_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 36
+      }
+    ],
+    "presets": [
+      {
+        "name": "About us",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}
