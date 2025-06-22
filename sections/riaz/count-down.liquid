@@ -1,0 +1,121 @@
+<style>
+  #countdown-smart__bar {
+    width: 100%;
+    z-index: 9999;
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding: 10px 0;
+    text-align: center;
+    font-weight: bold;
+  }
+  #countdown-smart__bar_container {
+
+  }
+  .countdown-before__text {
+
+  }
+  #countdown_text {
+    font-weight: bold;
+    padding: 0 5px;
+    border-radius: 10px;
+    color: {{ section.settings.ctdn_text_color }};
+    background-color: {{ section.settings.ctdn_bg_color }};
+  }
+</style>
+
+<div id="countdown-smart__bar">
+  <div id="countdown-smart__bar_container">
+    <span class="countdown-before__text">{{ section.settings.banner_text }}</span>
+    <span id="countdown_text">
+      6d 12h 39m 25s
+    </span>
+    {% if section.settings.after_text != blank %}
+      <span class="coundown-after__text">{{ section.settings.after_text }}</span>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  // Convert Shopify datetime string to Date object
+  function parseShopifyDate(datetime) {
+    return new Date(datetime + 'Z'); // Add Z for UTC
+  }
+
+  const countdownSpan = document.getElementById('countdown_text');
+  const smartBar = document.getElementById('countdown-smart__bar');
+
+  // Replace with your Liquid-rendered end time from settings
+  const countdownEndDate = parseShopifyDate("{{ section.settings.end_date }}");
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = countdownEndDate - now;
+
+    if (diff <= 0) {
+      countdownSpan.textContent = "0d 0h 0m 0s";
+      smartBar.style.display = "none"; // Hide bar
+      clearInterval(timer);
+      return;
+    }
+
+    const seconds = Math.floor(diff / 1000) % 60;
+    const minutes = Math.floor(diff / (1000 * 60)) % 60;
+    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    countdownSpan.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  updateCountdown(); // Initial call
+  const timer = setInterval(updateCountdown, 1000); // Every 1s
+</script>
+
+{% schema %}
+{
+  "name": "Countdown Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Banner Text",
+      "default": "30% OFF SALE ENDS IN"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "Countdown End Date",
+      "default": "2025-05-20T23:59:59",
+      "placeholder": "2025-05-20T23:59:59"
+    },
+    {
+      "type": "text",
+      "id": "after_text",
+      "label": "Banner After Text"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section's Background",
+      "default": "#fff4f4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "ctdn_bg_color",
+      "label": "Countdown Background Color",
+      "default": "#990404"
+    },
+    {
+      "type": "color",
+      "id": "ctdn_text_color",
+      "label": "Countdown Text Color",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+it's a custom filter for collection page.
+
+Features:
+==============
+
+In this section, we have two type of filters.
+i. Filter by collection and metafields.
+ii. Filter by metafields inside a specific collection.
+
+File Requires:
+=============
+
+i. filter-drawer.liquid (it's the main sidebar or drawer)
+ii. filter-swatch-input.liquid (it's the snippet that show either image or text based filter option)
+iii. collection-template.liquid (it's the main collection template)
+

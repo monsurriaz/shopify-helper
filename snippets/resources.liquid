@@ -8,3 +8,12 @@
   {{- 'lifestyle-1' | placeholder_svg_tag: 'h-full w-full placeholder' | replace: '<svg', '<svg preserveAspectRatio="xMinYMin slice"' -}}
 {%- endif -%}
 
+
+{% comment %} 
+  How to get different placeholder svg images
+{% endcomment %}
+{% for i in (1..10) %}
+  {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+  {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+{% endfor %}
+

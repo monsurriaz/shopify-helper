@@ -1,5 +1,5 @@
 {%- style -%}
-  div#shop-hcaptcha-badge-container {
+  #shop-hcaptcha-badge-container {
     display: none;
   }
   .section-{{ section.id }}-padding {
@@ -21,29 +21,24 @@
   .mr-form-builder-{{ section.id }} {
     background-color:{{section.settings.background-color}};
   }
-
   .mr-form-builder-{{ section.id }} .mr-form__builder-title {
     color:{{ section.settings.header_color }};
     text-align: {{ section.settings.text_align }};
     font-size:{{ section.settings.font_size_title }}px;
   }
-
   .mr-form-builder-{{ section.id }} .mr-form__builder-text {
     color:{{ section.settings.header_color }};
     text-align: {{ section.settings.text_align }};
     margin-bottom: 20px;
   }
-
   .mr-form-builder-{{ section.id }} .mr-form__input-wrapper {
     display: flex; 
     flex-wrap: wrap;
     justify-content: space-between;
   }
-
   .mr-form-builder-{{ section.id }} .mr-form__input-item.hide:not(.show) {
     display: none;
   }
-
   .mr-form-builder-{{ section.id }} label {
     color: {{section.settings.field_title_color}};
     font-size: {{section.settings.font_size_label}}px;
@@ -51,12 +46,10 @@
     margin-bottom: 10px;
     font-weight: 600;
   }
-
   .mr-form-builder-{{ section.id }} label span {
     color: red;
     font-weight: 700;
   }
-
   .mr-form-builder-{{ section.id }} .ss-form-field {
     border: 1px solid {{section.settings.field_border_color}};
     outline: none;
@@ -67,9 +60,9 @@
     display: block;
     margin-bottom: 20px;
     background: #fff;
-    font-size: {{section.settings.font_size_placeholder}}px;
+    font-size: {{ section.settings.font_size_placeholder }}px;
     line-height:1.3;
-    border-radius: {{section.settings.input_border_radius}}px;
+    border-radius: {{ section.settings.input_border_radius }}px;
     font-family: var(--font-body-family);
   } 
 
@@ -84,23 +77,19 @@
     box-shadow: none;
     /* Add any other properties you want to override */
   }
-
   .mr-form-builder-{{ section.id }} .ss-form-field::placeholder { /* Most modern browsers support this */
     font-size: {{section.settings.font_size_placeholder}}px;
     color: {{ section.settings.field_color }}; /* Change to desired color */
     opacity: 1; /* Firefox requires this to not be 0 */
   }
-  
   .mr-form-builder-{{ section.id }} .ss-form-field::-ms-input-placeholder { /* Internet Explorer 10-11 */
     font-size: {{section.settings.font_size_placeholder}}px;
     color: {{section.settings.field_color}};
   }
-  
   .mr-form-builder-{{ section.id }} .ss-form-field::-ms-input-placeholder { /* Microsoft Edge */
     font-size: {{section.settings.font_size_placeholder}}px;
     color: {{section.settings.field_color}};
   }
-
   .mr-form__input-item-checkbox {
     display: flex;
     justify-content: flex-start;
@@ -108,13 +97,11 @@
     margin-bottom: 20px;
     position: relative;
   }
-
   .mr-form__input-item-checkbox input.ss-form-field-checkbox {
     width: 0.99px;
     margin: 0;
     height: 15px;
   }
-
   .mr-form__input-item-checkbox input.ss-form-field-checkbox::after {
     position: absolute;
     content: "";
@@ -122,7 +109,6 @@
     height: 100%;
     z-index: 1;
   }
-
   .mr-form__input-item-checkbox label.input-item__checkbox-label {
     margin: 0;
     font-weight: 400;
@@ -132,7 +118,6 @@
     user-select: none;
     line-height: 1.25;
   }
-
   .ss-form-field.ss-form-field-select {
     height: 53px;
     min-height: 53px; /* Ensures the height is at least 53px */
@@ -159,7 +144,6 @@
     border-radius: 4px;
     transition: 0.3s;
   }
-
   .mr-form__input-item-checkbox label.input-item__checkbox-label::after {
     content: '';
     position: absolute;
@@ -173,15 +157,12 @@
     transform: rotate(45deg);
     transition: opacity 0.3s;
   }
-
   input.ss-form-field-checkbox:checked + label.input-item__checkbox-label::after {
     opacity: 1;
   }
-
   .mr-form-builder-{{ section.id }} .ss-text-area {
     height: 150px;
   }
-
   .mr-form-builder-{{ section.id }} .mr-form__input-item-messagebox {
     margin-bottom: 20px;
     display: flex;
@@ -190,17 +171,14 @@
     padding: 15px;
     border-radius: 9px;
   }
-
   .mr-form-builder-{{ section.id }} .mr-form__input-item-messagebox img {
     width: 25px;
     height: auto;
   }
-
   .mr-form-builder-{{ section.id }} .message-box__content {
     display: flex;
     flex-direction: column;
   }
-
   .mr-form-builder-{{ section.id }} .message-box__text {
     font-size: 14px;
     font-weight: 600;
@@ -208,13 +186,11 @@
     text-transform: uppercase;
     letter-spacing: 0.3px;
   }
-
   .mr-form-builder-{{ section.id }} .message-box__subtitle {
     font-size: 12px;
     line-height: 1.2;
     margin-top: 3px;
   }
-
   .mr-form-builder-{{ section.id }} .submit-button-wrapper {
     display:flex;
     width:100%;
@@ -222,7 +198,6 @@
       justify-content:center;
     {% endif %}
   }
-  
   .mr-form-builder-{{ section.id }} .ss-submit-button {
     height: {{ section.settings.button_height }}px;
     {% if section.settings.button_full_width %}
@@ -244,7 +219,6 @@
     padding: 0 10px! important;
     -webkit-appearance: none;
   }
-
   .mr-form-builder-{{ section.id }} .ss-submit-button:hover {
     color: {{ section.settings.button_color_hover }};
     background: {{ section.settings.button_background_color_hover }};

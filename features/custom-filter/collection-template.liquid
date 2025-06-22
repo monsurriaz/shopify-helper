@@ -1,0 +1,539 @@
+<div class="collection-template">
+  <header class="collection-header">
+    {% if section.settings.sort_enable or section.settings.enable_advanced_filter %}
+      <div class="filters-toolbar-wrapper{% if is_filter_by_available %} filters-toolbar--has-filter{% endif %}">
+        <div class="page-width">
+          <div class="filters-toolbar{% if section.settings.enable_advanced_filter %} advanced-filters__toolbar{% endif %}">
+            {% comment %} <div class="filters-toolbar__active">
+              <span>{{ collection.title }}</span>
+            </div> {% endcomment %}
+            <div class="filters-toolbar__item-wrapper">
+              {% if section.settings.enable_advanced_filter %}
+                {% comment %} Show the selected Collection Title {% endcomment %}
+                {% if section.settings.advanced_filter == 'collections_and_metafields' %}
+                  <div class="filters-toolbar__item-child item-collection_list">
+                    <button class="filter-open__drawer" data-panel="models" role="button" tabindex="0">
+                      <span>{{ collection.title | remove: "cases" | remove: "CASES" | remove: "Cases" }}</span>
+                      {% include 'icon-chevron-down' %}
+                    </button>
+                  </div>
+                {% endif %}
+  
+                {% if section.settings.advanced_filter == 'model_and_magsafe_metafields' %}
+                  {% comment %} Filter by metafields / meta-object {% endcomment %}
+                  <div class="filters-toolbar__item-child">
+                    {% assign col_title = collection.title | remove: "cases" | remove: "CASES" | remove: "Cases" %}
+                    {% liquid
+                      for filter in collection.filters
+                        if filter.label == "Select Model"
+                          for value in filter.values
+                            if value.active 
+                              assign model = value.label
+                            endif
+                          endfor
+                        endif
+                      endfor
+                    %}
+                    <button class="filter-open__drawer" data-panel="tags" role="button" tabindex="0">
+                      <span>{{ model | default: col_title }}</span>
+                      {% include 'icon-chevron-down' %}
+                    </button>
+                  </div>
+                {% endif %}
+  
+                {% comment %} Filter by metafields {% endcomment %}
+                <div class="filters-toolbar__item-child">
+                  <div class="filters-toolbar__magsafe-wrapper select-group">
+                    <select 
+                      id="filters-toolbar__input"
+                      class="filters-toolbar__input" aria-describedby="a11y-refresh-page-message a11y-selection-message"
+                      data-name="filter.p.m.custom.magsafe_vs_non_magsafe"
+                    >
+                      <option value="">Select Case Type</option>
+                      {% for filter in collection.filters %}
+                        {% case filter.type %}
+                          {% when 'boolean', 'list' %}
+                            {% if filter.label contains "MagSafe" %}
+                              {% for value in filter.values %}
+                                {% liquid
+                                  assign is_disabled = false
+                                  if value.count == 0 and value.active == false
+                                    assign is_disabled = true
+                                  endif
+                                %}
+                                <option 
+                                  value="{{ value.value }}"
+                                  {% if value.active %}
+                                    selected
+                                  {% endif %}
+                                  {% if is_disabled %}
+                                    disabled
+                                  {% endif %}
+                                >{{ value.label }}</option>
+                              {% endfor %}
+                            {% endif %}
+                        {% endcase %}
+                      {% endfor %}
+                    </select>
+                    {% include 'icon-chevron-down' %}
+                  </div>
+                </div>
+  
+                {% if section.settings.advanced_filter == 'collections_and_metafields' %}
+                  {% assign active_filter_count = 0 %}
+                  {% comment %} Show the current active filters count without MagSafe, MODEL and Model filter type for better UX {% endcomment %}
+                  {% for filter in collection.filters %}
+                    {% unless filter.label contains "MagSafe" or filter.label contains "MODEL" or filter.label contains "Model" %}
+                      {% assign active_filter_count = active_filter_count | plus: filter.active_values.size %}
+                    {% endunless %}
+                  {% endfor %}
+                  <div class="filters-toolbar__item-child" {{ active_filter_count }}>
+                    <button class="filter-open__drawer" data-panel="metafields" role="button" tabindex="0">
+                      <img class="filter-icon" src="https://cdn.shopify.com/s/files/1/0278/5902/5968/files/filter-by.svg?v=1746940633" 
+                        height="auto" width="auto" />
+                      <span>Filter by</span>
+                      {% if active_filter_count > 0 %}
+                        <span style="margin-inline: 4px;">({{ active_filter_count }})</span>
+                      {% endif %}
+                      {% include 'icon-chevron-down' %}
+                    </button>
+                  </div>
+                {% endif %}
+              {% endif %}
+
+              {% comment %} Filter by Tags with URL updates {% endcomment %}
+              {% if section.settings.tags_enable %}
+                {% unless collection.all_tags.size == 0 %}
+                  <div class="filters-toolbar__item-child">
+                    <label class="filters-toolbar__label select-label" for="FilterTags">{{ 'collections.filters.title_tags' | t }}</label>
+                    <div class="filters-toolbar__input-wrapper select-group">
+                      <select class="filters-toolbar__input hidden" name="FilterTags" id="FilterTags" aria-describedby="a11y-refresh-page-message a11y-selection-message">
+                        <option value="{{ collection.url }}">{{ 'collections.filters.all_tags' | t }}</option>
+                        {% for tag in collection.all_tags %}
+                          {%- assign new_url = tag | link_to_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                          <option value="{{ new_url }}"{% if current_tags contains tag %} selected="selected"{% endif %}>{{ tag }}</option>
+                        {% endfor %}
+                      </select>
+                      {% include 'icon-chevron-down' %}
+                    </div>
+                  </div>
+                {% endunless %}
+              {% endif %}
+
+              {% comment %} Sort {% endcomment %}
+              {% if section.settings.sort_enable %}
+                <div class="filters-toolbar__item-child">
+                  {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                  <label class="filters-toolbar__label select-label" for="SortBy">{{ 'collections.sorting.title' | t }}</label>
+                  <div class="filters-toolbar__input-wrapper select-group">
+                    <select name="sort_by" id="SortBy"
+                      class="filters-toolbar__input hidden"
+                      aria-describedby="a11y-refresh-page-message a11y-selection-message"
+                      data-default-sortby="{{ collection.default_sort_by }}"
+                    >
+                      {%- for option in collection.sort_options -%}
+                        <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>{{ option.name }}</option>
+                      {%- endfor -%}
+                    </select>
+                    {% include 'icon-chevron-down' %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            {% if section.settings.show_product_count %}
+              <div class="filters-toolbar__item filters-toolbar__item--count">
+                <span class="filters-toolbar__product-count">{{ 'collections.general.items_with_count' | t: count: collection.products_count }}</span>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="product-grid__wrapper" id="product-container">
+    <ul class="grid">
+      {% if collection.products_count > 0 %}
+        {% for product in collection.products %}
+          <li class="grid-item">
+            {% render 'product-card-grid', product: product %}
+          </li>
+        {% endfor %}
+      {% else %}
+        {%- assign is_empty_collection = true -%}
+      {% endif %}
+    </ul>
+    
+    {% if is_empty_collection %}
+      <div class="grid__item small--text-center">
+        {% unless active_filter_count > 0 %}
+          <p class="text-center">The Collection is Empty!</p>
+        {% else %}
+          <p class="text-center">No products found <br>
+          Use fewer filters or <span class="reset_all">Remove All</span>
+          </p>
+        {% endunless %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% comment %} Main JS code {% endcomment %}
+<script>
+  // Show/hide preloader and overlay
+  function initPreLoader(state = 0) {
+    // const preloader = document.getElementById('collection-preloader');
+    // const overlay = document.getElementById('filter-drawer__overlay');
+
+    if (state) {
+      document.body.classList.add('preloading-body');
+      // preloader.style.display = 'block';
+    } else {
+      // preloader.style.display = 'none';
+      // overlay?.classList.remove('open');
+      document.body.classList.remove('preloading-body');
+    }
+  }
+
+  // Drawer open/close core logic
+  function initDrawerCore() {
+    const overlay = document.getElementById('filter-drawer__overlay');
+    const drawer = document.getElementById('filter-left__drawer');
+    const closeBtn = drawer?.querySelector('.close-btn');
+    const panels = document.querySelectorAll('.filter-drawer__content');
+    let lastTrigger = null;
+
+    function openDrawer(panelId, triggerBtn) {
+      document.body.classList.add('body-masked');
+      lastTrigger = triggerBtn;
+
+      panels.forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById('panel-' + panelId);
+      if (panel) panel.classList.add('active');
+
+      overlay?.classList.add('open');
+      drawer?.classList.add('open');
+
+      const firstInteractive = drawer?.querySelector('input, button, [tabindex]');
+      if (firstInteractive) firstInteractive.focus();
+    }
+
+    function closeDrawer() {
+      document.body.classList.remove('body-masked');
+      overlay?.classList.remove('open');
+      drawer?.classList.remove('open');
+      if (lastTrigger) lastTrigger.focus();
+    }
+
+    // Global close actions
+    overlay?.addEventListener('click', closeDrawer);
+    closeBtn?.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // Export the needed functions
+    return { openDrawer, closeDrawer };
+  }
+
+  // Binds drawer toggle buttons (re-call after DOM update)
+  function setupDrawerTriggers(openDrawerFn) {
+    const openButtons = document.querySelectorAll('.filter-open__drawer');
+
+    openButtons.forEach(btn => {
+      btn.addEventListener('click', () => openDrawerFn(btn.dataset.panel, btn));
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openDrawerFn(btn.dataset.panel, btn);
+        }
+      });
+    });
+  }
+
+  // Main Ajax filtering logic
+  function initAjaxFiltering() {
+    const productContainer = document.getElementById('product-container');
+    const headerContainer = document.querySelector('.collection-header');
+    const formWrapper = document.getElementById('FacetFiltersForm');
+    const tagFormWrapper = document.getElementById('facetFiltersTagsForm');
+    const collectionListWrapper = document.getElementById('filter-drawer__model-wrapper');
+
+    let debounceTimer = null;
+    let firstRadioInitialized = false;
+
+
+    const { openDrawer, closeDrawer } = initDrawerCore();
+    setupDrawerTriggers(openDrawer);
+    bindSelectListener(); // initial bind
+    bindTagRadioListener(); // initial bind
+
+    function getCombinedFilters() {
+      const metafieldSelect = document.getElementById('filters-toolbar__input'); // always get fresh element
+      const formData = new FormData(formWrapper);
+      const params = new URLSearchParams();
+
+      // Add form filters
+      for (const [key, value] of formData.entries()) {
+        const el = formWrapper.querySelector(`[name="${key}"][value="${value}"]`);
+        if (!el?.disabled && value !== '') {
+          params.append(key, value);
+        }
+      }
+
+      // Add metafield select if it has a value
+      if (metafieldSelect) {
+        const name = metafieldSelect.dataset.name;
+        const value = metafieldSelect.value;
+        if (name && value !== '') {
+          params.append(name, value);
+        }
+      }
+
+      // Add tags radio from #facetFiltersTagsForm
+      if (tagFormWrapper) {
+        const selected = tagFormWrapper.querySelector('input[type="radio"]:checked');
+        if (selected && selected.name && selected.value !== '') {
+          params.append(selected.name, selected.value);
+        }
+      }
+
+      return params;
+    }
+
+    function bindSelectListener() {
+      const metafieldSelect = document.getElementById('filters-toolbar__input');
+      if (!metafieldSelect) return;
+
+      metafieldSelect.addEventListener('change', () => {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(applyFilters, 300);
+      });
+    }
+
+    // Select Model metafields, previously known as tags
+    function bindTagRadioListener() {
+      const tagForm = document.getElementById('facetFiltersTagsForm');
+      if (!tagForm) return;
+
+      const radios = tagForm.querySelectorAll('input[type="radio"]');
+      if (!radios.length) return;
+
+      // Attach 'change' listener with debounce
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if (debounceTimer) clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(applyFilters, 300);
+        });
+      });
+
+      // Pre-select the first filter option initially 
+      {% if section.settings.advanced_filter == 'model_and_magsafe_metafields' %}
+        const alreadySelected = [...radios].some(r => r.checked);
+        if (!alreadySelected && !firstRadioInitialized) {
+          const firstRadio = radios[0];
+          if (firstRadio) {
+            firstRadio.checked = true;
+  
+            // Dispatch 'change' to trigger filtering
+            const event = new Event('change', { bubbles: true });
+            firstRadio.dispatchEvent(event);
+          }
+  
+          // Prevent future auto-dispatch
+          firstRadioInitialized = true;
+        }
+      {% endif %}
+    }
+
+    function applyFilters() {
+      closeDrawer();
+
+      const params = getCombinedFilters();
+      const baseUrl = window.location.origin + window.location.pathname;
+      const newUrl = `${baseUrl}?${params.toString()}`;
+
+      window.history.pushState({ filters: params.toString() }, '', newUrl);
+      initPreLoader(1);
+
+      fetch(newUrl)
+        .then(res => res.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+
+          const newProducts = doc.getElementById('product-container');
+          const newHeader = doc.querySelector('.collection-header');
+          const newForm = doc.getElementById('FacetFiltersForm');
+          const newTagForm = doc.getElementById('facetFiltersTagsForm');
+
+          if (newProducts && productContainer) {
+            productContainer.innerHTML = newProducts.innerHTML;
+            initPreLoader(0);
+            document.querySelector('.collection-header')?.scrollIntoView({ behavior: 'smooth' });
+          }
+
+          if (newHeader && headerContainer) headerContainer.innerHTML = newHeader.innerHTML;
+          if (newForm && formWrapper) formWrapper.innerHTML = newForm.innerHTML;
+          if (newTagForm && tagFormWrapper) tagFormWrapper.innerHTML = newTagForm.innerHTML;  // dom update for tagform.
+
+          setupDrawerTriggers(openDrawer); // rebind buttons
+          bindSelectListener(); // rebind select dropdown
+          bindTagRadioListener(); // rebind selct model (metafield)
+        })
+        .catch(err => {
+          console.error('Filter apply error:', err);
+          initPreLoader(0);
+          document.querySelector('.collection-header')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    document.body.addEventListener('click', (e) => {
+      if (e.target.matches('.js-filter-nav__update')) {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(applyFilters, 300);
+      }
+    });
+
+    function changeCollection(combineHandle) {
+      if (!combineHandle) return;
+
+      const params = getCombinedFilters();
+      const newPath = `${combineHandle}?${params.toString()}`;
+
+      window.history.pushState({}, '', newPath);
+      initPreLoader(1);
+
+      fetch(newPath)
+        .then(res => res.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+
+          const newProducts = doc.getElementById('product-container');
+          const newHeader = doc.querySelector('.collection-header');
+          const newForm = doc.getElementById('FacetFiltersForm');
+          const newTagForm = doc.getElementById('facetFiltersTagsForm');
+          const newCollectionList = doc.getElementById('filter-drawer__model-wrapper');
+
+          if (newProducts && productContainer) {
+            productContainer.innerHTML = newProducts.innerHTML;
+            initPreLoader(0);
+            document.querySelector('.collection-header')?.scrollIntoView({ behavior: 'smooth' });
+          }
+
+          if (newHeader && headerContainer) headerContainer.innerHTML = newHeader.innerHTML;
+          if (newForm && formWrapper) formWrapper.innerHTML = newForm.innerHTML;
+          if (newTagForm && tagFormWrapper) tagFormWrapper.innerHTML = newTagForm.innerHTML;
+          if (newCollectionList && collectionListWrapper) {
+            collectionListWrapper.innerHTML = newCollectionList.innerHTML;
+          }
+
+          setupDrawerTriggers(openDrawer); // rebind drawer triggers
+          bindSelectListener(); // rebind metafield select
+          bindTagRadioListener();
+        })
+        .catch(err => {
+          console.error('Collection switch error:', err);
+          initPreLoader(0);
+        });
+    }
+
+    document.body.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-drawer__nav-item');
+      if (!btn) return;
+
+      closeDrawer();
+      const handle = btn.dataset.itemHandle;
+      changeCollection(handle);
+    });
+
+    // Reset All Button (inside drawer)
+    const resetBtn = document.getElementById('reset_all');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        const basePath = window.location.pathname;
+
+        window.history.pushState({}, '', basePath);
+        initPreLoader(1);
+        closeDrawer();
+
+        fetch(basePath)
+          .then(res => res.text())
+          .then(html => {
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+
+            const newProducts = doc.getElementById('product-container');
+            const newHeader = doc.querySelector('.collection-header');
+            const newForm = doc.getElementById('FacetFiltersForm');
+            const newTagForm = doc.getElementById('facetFiltersTagsForm');
+            const newCollectionList = doc.getElementById('filter-drawer__model-wrapper');
+
+            if (newProducts) {
+              productContainer.innerHTML = newProducts.innerHTML;
+              initPreLoader(0);
+              document.querySelector('.collection-header')?.scrollIntoView({ behavior: 'smooth' });
+            }
+            if (newHeader) headerContainer.innerHTML = newHeader.innerHTML;
+            if (newForm) formWrapper.innerHTML = newForm.innerHTML;
+            if (newTagForm) tagFormWrapper.innerHTML = newTagForm.innerHTML;
+            if (newCollectionList) collectionListWrapper.innerHTML = newCollectionList.innerHTML;
+
+            // Re-bind triggers & listeners after DOM change
+            firstRadioInitialized = false;
+            setupDrawerTriggers(openDrawer);
+            bindSelectListener();
+            bindTagRadioListener();
+          })
+          .catch(err => {
+            console.error('Reset failed:', err);
+            initPreLoader(0);
+          });
+      });
+    }
+
+  }
+
+  document.addEventListener('DOMContentLoaded', initAjaxFiltering);
+</script>
+
+{% schema %}
+  {
+    "name": "Collection Template",
+    "class": "collection--template",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "sort_enable",
+        "label": "Enable sorting",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "tags_enable",
+        "label": "Enable filter by tags",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_advanced_filter",
+        "label": "Enable Advanced Filter",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "advanced_filter",
+        "label": "Advanced Filter Type",
+        "options": [
+          {
+            "label": "Collections and metafields",
+            "value": "collections_and_metafields"
+          },
+          {
+            "label": "Select Model and MagSafe",
+            "value": "model_and_magsafe_metafields"
+          }
+        ],
+        "default": "collections_and_metafields"
+      }
+    ]
+  }
+{% endschema %}

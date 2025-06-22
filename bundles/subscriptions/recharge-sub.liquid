@@ -2,27 +2,22 @@
   .rc-container.rc_container {
     display: none;
   }
-
-  div#variant_wrapper {
+  #variant_wrapper {
     display: none;
   }
-
   .pricing-options {
     max-width: 100%;
     margin: 0 auto;
   }
-
   .pricing-options h2 {
     font-size: 16px;
     margin-bottom: 15px;
   }
-
   .bundle-first-line {
     display: flex;
     flex-wrap: wrap;
     column-gap: 10px;
   }
-
   .bundle-first-line__title {
     display: inline-block;
     word-break: break-word;
@@ -32,7 +27,6 @@
     color: #000000;
     letter-spacing: 0px;
   }
-
   .variants-bundles__option {
     border: 2px solid #e0e0e0;
     background-color: white;
@@ -43,7 +37,6 @@
     display: flex;
     align-items: center;
   }
-
   .variants-bundles__option input[type="radio"] {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -58,12 +51,10 @@
     display: inline-block;
     margin-left: 0;
   }
-
   .variants-bundles__option input[type="radio"]:checked {
     background-color: #135d4b;
     box-shadow: inset 0 0 0 4px white;
   }
-
   .variants-bundles__option label {
     flex-grow: 1;
     display: flex;
@@ -72,7 +63,6 @@
     cursor: pointer;
     font-weight: bold;
   }
-
   .variants-bundles__option label:before {
     position: absolute;
     width: 100%;
@@ -83,32 +73,27 @@
     left: 0;
     border-radius: 10px;
   }
-
   .variants-bundles__option .subtitle {
     color: #000000;
     font-size: 14px;
     font-weight: normal;
     font-style: italic;
   }
-
   .variants-bundles__option .shipping {
     font-weight: normal;
     font-family: Poppins;
     color: #000000;
     font-size: 14px;
   }
-
   .variants-bundles__option .shipping b {
     color: #135d4b;
   }
-
   .variants-bundles__option .price-info {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     margin-left: auto;
   }
-
   .variants-bundles__option .save {
     display: inline-flex;
     align-items: center;
@@ -123,25 +108,21 @@
     font-style: normal;
     border-radius: 12px;
   }
-
   .variants-bundles__option .current-prcie {
     font-weight: bold;
     color: #000000;
     font-family: 'Poppins';
   }
-
   .variants-bundles__option .compare-prcie {
     text-decoration: line-through;
     color: #888;
     font-size: 14px;
   }
-
   .variants-bundles__option:has(input:checked) {
     border-color: #135d4b;
     border-width: 2px;
     background-color: #FFFBF1;
   }
-
   .most-popular::before {
     content: "MOST POPULAR";
     position: absolute;
@@ -154,7 +135,6 @@
     font-size: 12px;
     font-weight: bold;
   }
-
   .best-value {
     content: "BEST VALUE";
     position: absolute;
@@ -167,7 +147,6 @@
     font-size: 12px;
     font-weight: bold;
   }
-
   .best-value::before,
   .best-value::after {
     content: "";
@@ -179,17 +158,14 @@
     /* Shadow color to give the appearance of depth */
     z-index: -1;
   }
-
   .badge::before {
     left: -5px;
     transform: skewX(-15deg);
   }
-
   .badge::after {
     right: -5px;
     transform: skewX(15deg);
   }
-
   .auto-refill {
     display: flex;
     align-items: center;
@@ -199,7 +175,6 @@
     border-radius: 10px;
     background-color: #f1fdf0;
   }
-
   .auto-refill input[type="checkbox"] {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -212,12 +187,10 @@
     outline: none;
     cursor: pointer;
   }
-
   .auto-refill input[type="checkbox"]:checked {
     background-color: #135d4b;
     position: relative;
   }
-
   .auto-refill input[type="checkbox"]:checked::after {
     content: '✓';
     font-size: 14px;
@@ -227,19 +200,16 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
   .auto-refill label {
     display: flex;
     flex-direction: column;
     cursor: pointer;
     padding-left: 15px;
   }
-
   .auto-refill .note {
     color: #888;
     font-size: 14px;
   }
-
   .total-price-display {
     display: flex;
     flex-wrap: wrap;
@@ -250,7 +220,6 @@
     font-size: 18px;
     font-weight: bold;
   }
-
   .total-price-display .original-price {
     margin-right: 10px;
     text-decoration: line-through;
@@ -259,14 +228,12 @@
     font-family: Montserrat;
     font-weight: 400;
   }
-
   .total-price-display .discounted-price {
     color: #e04c0e;
     font-weight: 700;
     font-size: 24px;
     font-family: Montserrat;
   }
-
   .variants-bundles__block-title {
     display: flex;
     align-items: center;
@@ -277,7 +244,6 @@
     font-weight: var(--block-title-font-weight, bold);
     font-style: var(--block-title-font-style);
   }
-
   .variants-bundles__block-title:before,
   .variants-bundles__block-title:after {
     content: "";
@@ -285,7 +251,6 @@
     height: 2px;
     background-color: var(--bar-border-color, rgba(0, 0, 0, .3));
   }
-
   .savings-percentage {
     padding: 4px 10px;
     font-weight: 700;
@@ -296,14 +261,12 @@
     margin: 0px;
     text-decoration: none;
   }
-
   .total-price-display1 {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-
   .you-save-section {
     padding: 0px 15px;
     display: flex;
@@ -313,7 +276,6 @@
     border-radius: 10px;
     background-color: white;
   }
-
   .you-save-price {
     font-size: 16px;
   }
@@ -322,30 +284,24 @@
     .variants-bundles__option {
       padding: 15px 12px;
     }
-
     .variants-bundles__option .save {
       border-radius: 10px;
     }
-
     .bundle-first-line__title {
       font-size: 16px;
     }
-
     .total-price-display1 {
       align-items: center;
       justify-content: space-around !important;
       flex-wrap: wrap;
       column-gap: 30px;
     }
-
     .you-save-section {
       padding: 15px !important;
     }
-
     .you-save-section p {
       margin-top: 0px !important;
     }
-
     #original-total-price1,
     #discounted-total-price1 {
       margin-bottom: 5px !important;

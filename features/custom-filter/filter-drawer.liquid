@@ -1,0 +1,392 @@
+{% comment %} 
+  - it's the main filter drawer that should appear under header or above.
+{% endcomment %}
+
+<!-- Drawer Wrapper -->
+<div class="filter-drawer__wrapper">
+  <!-- Overlay -->
+  <div id="filter-drawer__overlay"></div>
+
+  <!-- Preloader -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" class="loader">
+    <defs>
+      <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+        <stop stop-color="#000000" stop-opacity="0" offset="0%"/>
+        <stop stop-color="#000000" stop-opacity=".631" offset="63.146%"/>
+        <stop stop-color="#000000" offset="100%"/>
+      </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+      <g transform="translate(1 1)">
+        <path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="url(#a)" stroke-width="2">
+          <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"/>
+        </path>
+        <circle fill="#000000" cx="36" cy="18" r="1">
+          <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+  </svg>
+  {% comment %} <div id="collection-preloader" style="display: none;">
+    <div class="spinner"></div>
+  </div> {% endcomment %}
+
+  <!-- Single Drawer -->
+  <aside id="filter-left__drawer" role="dialog" aria-modal="true">
+
+    <button class="close-btn" aria-label="Close">
+      {% comment %} &times; {% endcomment %}
+      {% include 'icon-close' %}
+    </button>
+
+    <button class="reset_all" id="reset_all" aria-label="Reset">
+      Reset Filters
+    </button>
+
+    <!-- Panel: Models -->
+    <div id="panel-models" class="filter-drawer__content">
+      <h2 class="filter-drawer__title">Select Model</h2>
+      {% assign coll_handle = collection.handle | downcase %}
+      <div id="filter-drawer__model-wrapper" class="filter-drawer__nav-wrapper">
+        <div class="filter-drawer__nav-group">
+          <span class="filter-drawer__nav-title">Apple</span>
+          {% for coll in section.settings.apple_collections %}
+            <button class="filter-drawer__nav-item{% if coll.handle == coll_handle %} filter-drawer__nav-item--active{% endif %}" data-item-handle="{{ '/collections/' | append: coll.handle }}">
+              {{ coll.title | remove: "cases" | remove: "CASES" | remove: "Cases" }}
+            </button>
+          {% endfor %}
+        </div>
+        <div class="filter-drawer__nav-group">
+          <span class="filter-drawer__nav-title">Samsung</span>
+          {% for coll in section.settings.samsung_collections %}
+            <button class="filter-drawer__nav-item{% if coll.handle == coll_handle %} filter-drawer__nav-item--active{% endif %}" data-item-handle="{{ coll.handle }}">{{ coll.title | remove: "cases" | remove: "CASES" | remove: "Cases" }}</button>
+          {% endfor %}
+        </div>
+        <div class="filter-drawer__nav-group">
+          <span class="filter-drawer__nav-title">Google</span>
+          {% for coll in section.settings.google_collections %}
+            <button class="filter-drawer__nav-item{% if coll.handle == coll_handle %} filter-drawer__nav-item--active{% endif %}" data-item-handle="{{ coll.handle }}">{{ coll.title | remove: "cases" | remove: "CASES" | remove: "Cases" }}</button>
+          {% endfor %}
+        </div>
+        <div class="filter-drawer__nav-group">
+          <span class="filter-drawer__nav-title">Motorola</span>
+          {% for coll in section.settings.motorola_collections %}
+            <button class="filter-drawer__nav-item{% if coll.handle == coll_handle %} filter-drawer__nav-item--active{% endif %}" data-item-handle="{{ coll.handle }}">{{ coll.title | remove: "cases" | remove: "CASES" | remove: "Cases" }}</button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Tags/Select Model Metafields -->
+    <div id="panel-tags" class="filter-drawer__content">
+      <h2 class="filter-drawer__title">Select Model</h2>
+      <div id="filter-drawer__tag-wrapper" class="filter-drawer__nav-wrapper">
+        {% assign iphone = false %}
+        {% assign samsung = false %}
+        {% assign google = false %}
+        {% assign motorola = false %}
+        {% for filter in collection.filters %}
+          {% case filter.type %}
+            {% when 'list' %}
+              {% if filter.label == "Select Model" %}
+                {% for value in filter.values %}
+                  {% if value.label contains 'iPhone' %}
+                    {% assign iphone = true %}
+                  {% endif %}
+                  {% if value.label contains 'Samsung' %}
+                    {% assign samsung = true %}
+                  {% endif %}
+                  {% if value.label contains 'Google' %}
+                    {% assign google = true %}
+                  {% endif %}
+                  {% if value.label contains 'Motorola' %}
+                    {% assign motorola = true %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+          {% endcase %}
+        {% endfor %}
+
+        <form id="facetFiltersTagsForm">
+          {% for filter in collection.filters %}
+            {% assign presentation = filter.presentation %}
+            {% case filter.type %}
+              {% when 'boolean', 'list' %}
+                {% if filter.label contains "Select Model" %}
+                  {% comment %} Apple {% endcomment %}
+                  {% if iphone %}
+                    <div class="filter-drawer__nav-group">
+                      <span class="filter-drawer__nav-title">Apple</span>
+                      {% for value in filter.values %}
+                        {% if value.label contains 'iPhone' or value.label contains 'iphone' or value.label contains 'IPHONE' %}
+                          {% liquid
+                            assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                            assign is_disabled = false
+                            if value.count == 0 and value.active == false
+                              assign is_disabled = true
+                            endif
+                          %}
+                          <div class="filter-drawer__select-model">
+                            <input 
+                              type="radio" 
+                              id="{{ input_id }}"
+                              class="select-model__input" 
+                              name="{{ value.param_name }}" 
+                              value="{{ value.value }}"
+                              {% if value.active %}
+                                checked
+                              {% endif %}
+                              {% if is_disabled %}
+                                disabled
+                              {% endif %}
+                            >
+                            <label data-value="{{ value.label }}" for="{{ input_id }}" class="filter-drawer__nav-item">
+                              {{ value.label }}
+                            </label>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  {% comment %} Samsung {% endcomment %}
+                  {% if samsung %}
+                    <div class="filter-drawer__nav-group">
+                      <span class="filter-drawer__nav-title">Samsung</span>
+                      {% for value in filter.values %}
+                        {% if value.label contains 'Samsung' or value.label contains 'samsung' or value.label contains 'SAMSUNG' %}
+                          {% liquid
+                            assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                            assign is_disabled = false
+                            if value.count == 0 and value.active == false
+                              assign is_disabled = true
+                            endif
+                          %}
+                          <div class="filter-drawer__select-model">
+                            <input 
+                              type="radio" 
+                              id="{{ input_id }}"
+                              class="select-model__input" 
+                              name="{{ value.param_name }}" 
+                              value="{{ value.value }}"
+                              {% if value.active %}
+                                checked
+                              {% endif %}
+                              {% if is_disabled %}
+                                disabled
+                              {% endif %}
+                            >
+                            <label data-value="{{ value.label }}" for="{{ input_id }}" class="filter-drawer__nav-item">
+                              {{ value.label }}
+                            </label>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  {% comment %} Google {% endcomment %}
+                  {% if google %}
+                    <div class="filter-drawer__nav-group">
+                      <span class="filter-drawer__nav-title">Google</span>
+                      {% for value in filter.values %}
+                        {% if value.label contains 'Google' or value.label contains 'google' or value.label contains 'GOOGLE' %}
+                          {% liquid
+                            assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                            assign is_disabled = false
+                            if value.count == 0 and value.active == false
+                              assign is_disabled = true
+                            endif
+                          %}
+                          <div class="filter-drawer__select-model">
+                            <input 
+                              type="radio" 
+                              id="{{ input_id }}"
+                              class="select-model__input" 
+                              name="{{ value.param_name }}" 
+                              value="{{ value.value }}"
+                              {% if value.active %}
+                                checked
+                              {% endif %}
+                              {% if is_disabled %}
+                                disabled
+                              {% endif %}
+                            >
+                            <label data-value="{{ value.label }}" for="{{ input_id }}" class="filter-drawer__nav-item">
+                              {{ value.label }}
+                            </label>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  {% comment %} Motorola {% endcomment %}
+                  {% if motorola %}
+                    <div class="filter-drawer__nav-group">
+                      <span class="filter-drawer__nav-title">Motorola</span>
+                      {% for value in filter.values %}
+                        {% if value.label contains 'Motorola' or value.label contains 'motorola' or value.label contains 'MOTOROLA' %}
+                          {% liquid
+                            assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                            assign is_disabled = false
+                            if value.count == 0 and value.active == false
+                              assign is_disabled = true
+                            endif
+                          %}
+                          <div class="filter-drawer__select-model">
+                            <input 
+                              type="radio" 
+                              id="{{ input_id }}"
+                              class="select-model__input" 
+                              name="{{ value.param_name }}" 
+                              value="{{ value.value }}"
+                              {% if value.active %}
+                                checked
+                              {% endif %}
+                              {% if is_disabled %}
+                                disabled
+                              {% endif %}
+                            >
+                            <label data-value="{{ value.label }}" for="{{ input_id }}" class="filter-drawer__nav-item">
+                              {{ value.label }}
+                            </label>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endif %}
+            {% endcase %}
+          {% endfor %}
+        </form>
+      </div>
+    </div>
+
+    {% comment %} <div class="filter-drawer__nav-group">
+      <span class="filter-drawer__nav-title"></span>
+      {% assign default_url = '/collections/' | append: collection.handle %}
+      <button class="filter-drawer__nav-item" data-item-handle="{{ default_url }}">
+        {{ 'collections.filters.all_tags' | t }}
+      </button>
+      {% for tag in collection.all_tags %}
+        {%- assign new_url = tag | link_to_tag: tag | split: 'href="' | last | split: '"' | first -%}
+        <button class="filter-drawer__nav-item{% if current_tags contains tag %} filter-drawer__nav-item--active{% endif %}" data-item-handle="{{ new_url }}">
+          {{ tag }}
+        </button>
+      {% endfor %}
+    </div> {% endcomment %}
+
+    <!-- Panel: Metafields -->
+    <div id="panel-metafields" class="filter-drawer__content">
+      <h2 class="filter-drawer__title">Filter By</h2>
+      <div class="filter-drawer__nav-wrapper">
+        <form id="FacetFiltersForm">
+          {% for filter in collection.filters %}
+            {% assign presentation = filter.presentation %}
+            {% case filter.type %}
+              {% when 'boolean', 'list' %}
+                {% unless filter.label contains "MagSafe" or filter.label contains "MODEL" or filter.label contains "Model" %}
+                  <div class="filter-drawer__nav-group">
+                    <span class="filter-drawer__nav-title">{{ filter.label | escape }}</span>
+                    <div class="filter-drawer__nav-values">
+                      {% for value in filter.values %}
+                        {% liquid
+                          assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                          assign is_disabled = false
+                          if value.count == 0 and value.active == false
+                            assign is_disabled = true
+                          endif
+                        %}
+                        {% if presentation == 'swatch' %}
+                          <div class="filter-drawer__nav-value">
+                            <div class="swatch-input-wrapper">
+                              {% render 'filter-swatch-input',
+                                id: input_id,
+                                type: 'checkbox',
+                                name: value.param_name,
+                                value: value.value,
+                                label: value.label,
+                                product_form_id: 'FacetFiltersForm',
+                                swatch: value.swatch,
+                                checked: value.active,
+                                disabled: is_disabled
+                              %}
+                            </div>
+                            <span class="filter-option__tab">
+                              {{ value.label }}
+                              {% comment %} <span class="filter-value__count">{{ value.count }}</span> {% endcomment %}
+                            </span>
+                          </div>
+                        {% else %}
+                          <label data-value="{{ value.label }}" for="{{ input_id }}" class="filter-drawer__no-swatch__value">
+                            <input 
+                              type="checkbox" 
+                              id="{{ input_id }}" 
+                              class="" 
+                              name="{{ value.param_name }}" 
+                              value="{{ value.value }}"
+                              {% if value.active %}
+                                checked
+                              {% endif %}
+                              {% if is_disabled %}
+                                disabled
+                              {% endif %}
+                            >
+                            <div class="filter-option__tab">
+                              {{ value.label }}
+                              {% comment %} <span class="filter-value__count">{{ value.count }}</span> {% endcomment %}
+                            </div>
+                          </label>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endunless %}
+              {% else %}
+                <div class="filter-drawer__nav-group">
+                  <span class="filter-drawer__nav-title">{{ filter.label | escape }}</span>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </form>
+        <div class="filter-nav__sticky-panel">
+          <button type="button" class="js-filter-nav__update btn btn--green">APPLY FILTER</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+
+{% schema %}
+{
+  "name": "Filter Drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Select Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "apple_collections",
+      "label": "Apple Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "samsung_collections",
+      "label": "Samsung Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "google_collections",
+      "label": "Google Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "motorola_collections",
+      "label": "Motorola Collections"
+    }
+  ]
+}
+{% endschema %}

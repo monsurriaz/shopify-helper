@@ -1,13 +1,11 @@
 <style>
-  div#variant_wrapper {
+  #variant_wrapper {
     display: none;
   }
-
   .kaching-bundles .variants-bundle__bar-container * {
     letter-spacing: normal;
     text-transform: initial;
   }
-
   .variants-bundle {
     display: flex;
     flex-direction: column;
@@ -16,7 +14,6 @@
     line-height: 1.4;
     text-align: start;
   }
-
   .variants-bundle-title {
     display: flex;
     align-items: center;
@@ -26,7 +23,6 @@
     font-size: 15px;
     font-weight: 700;
   }
-
   .variants-bundle-title:before,
   .variants-bundle-title:after {
     content: "";
@@ -34,22 +30,18 @@
     height: 2px;
     background-color: rgba(19, 93, 75, 0.3);
   }
-
   .variants-bundle__bars {
     display: flex;
     flex-direction: column;
   }
-
   .variants-bundle__bar {
     display: flex;
     flex: 1;
     margin: 5px 0;
   }
-
   .variants-bundle__bar>input[type=radio] {
     display: none;
   }
-
   .variants-bundle__bar .variants-bundle__bar-container {
     display: flex;
     flex-direction: column;
@@ -64,17 +56,14 @@
     border-radius: 10px;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
   }
-
   .variants-bundle__bar .variants-bundle__bar-most-popular {
     position: absolute;
     z-index: 1;
   }
-
   .variants-bundle__bar .variants-bundle__bar-most-popular.variants-bundle__bar-most-popular--simple {
     top: -8px;
     right: 10px;
   }
-
   .variants-bundle__bar .variants-bundle__bar-most-popular__content {
     margin: 0 8px;
     padding: 6px 8px;
@@ -87,7 +76,6 @@
     color: #fff;
     background-color: #135d4b;
   }
-
   .variants-bundle__bar .variants-bundle__bar-most-popular__content:before,
   .variants-bundle__bar .variants-bundle__bar-most-popular__content:after {
     display: block;
@@ -101,28 +89,23 @@
     filter: brightness(.7);
     border-bottom-color: #135d4b;
   }
-
   .variants-bundle__bar .variants-bundle__bar-most-popular__content:before {
     left: 0;
     border-left: 8px solid transparent;
   }
-
   .variants-bundle__bar .variants-bundle__bar-most-popular__content:after {
     right: 0;
     border-right: 8px solid transparent;
   }
-
   .variants-bundle__bar .variants-bundle__bar-wrapper {
     padding: 10px 20px;
   }
-
   .variants-bundle__bar .variants-bundle__bar-main {
     display: flex;
     align-items: center;
     gap: 18px;
     min-height: 55px;
   }
-
   .variants-bundle__bar .variants-bundle__bar-radio {
     display: flex;
     flex-shrink: 0;
@@ -134,7 +117,6 @@
     box-sizing: border-box;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, .3);
   }
-
   .variants-bundle__bar .variants-bundle__bar-content {
     align-items: center;
     justify-content: space-between;
@@ -142,20 +124,17 @@
     gap: 8px;
     flex: 1;
   }
-
   .variants-bundle__bar .variants-bundle__bar-left {
     display: flex;
     flex-direction: column;
     flex: 1;
     align-items: flex-start;
   }
-
   .variants-bundle__bar .variants-bundle__bar-firs-tline {
     display: flex;
     flex-wrap: wrap;
     column-gap: 8px;
   }
-
   .variants-bundle__bar .variants-bundle__bar-title {
     display: inline-block;
     word-break: break-word;
@@ -164,7 +143,6 @@
     font-style: normal;
     color: #000;
   }
-
   .variants-bundle__bar .variants-bundle__bar-label {
     display: inline-flex;
     align-items: center;
@@ -179,50 +157,42 @@
     border-radius: 10px;
     text-transform: uppercase;
   }
-
   .variants-bundle__bar .variants-bundle__bar-subtitle {
     word-break: break-word;
     font-size: 14px;
     font-weight: 500;
     color: #000000;
   }
-
   .variants-bundle__bar-subtitle span {
     color: #135D4B;
     font-weight: 600;
     display: inline-block;
   }
-
   .variants-bundle__bar .variants-bundle__bar-pricing {
     align-items: flex-end;
     display: flex;
     flex-direction: column;
   }
-
   .variants-bundle__bar .variants-bundle__bar-price {
     font-size: 19px;
     font-weight: bold;
     color: #000000;
   }
-
   .variants-bundle__bar .variants-bundle__bar-fullprice {
     font-size: 14px;
     font-weight: 500;
     color: #000;
     text-decoration: line-through;
   }
-
   .variants-bundle__bars .bundle-bar__selected .variants-bundle__bar-container {
     cursor: default;
     background-color: rgba(255, 251, 241);
     box-shadow: inset 0 0 0 2px #135d4b;
   }
-
   .variants-bundle__bars .bundle-bar__selected .variants-bundle__bar-radio {
     background: #135d4b;
     box-shadow: 0 0 0 2px #135d4b;
   }
-
   .variants-bundle__bars .variants-bundle__bar-container--most-popular--simple .variants-bundle__bar-main {
     margin-top: 7px;
     margin-bottom: 7px;

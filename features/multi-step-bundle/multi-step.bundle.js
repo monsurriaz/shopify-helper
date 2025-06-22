@@ -26,6 +26,7 @@ function startTimer() {
 
 document.addEventListener('DOMContentLoaded', startTimer);
 
+// multistep button to show/hide next section
 $(document).ready(function () {
   $('#btnChooseColorSize').click(function () {
     $('html, body').animate({
@@ -59,7 +60,7 @@ $(document).on('click', '.bundles__bars input[type="radio"]', function () {
   $(this).closest('.bundle__bar').addClass('bundle__bar--selected');
 });
 
-// show/hide custom dropdown options
+// show/hide custom color swatch dropdown options
 $(document).on('click', ".select-selected .color-option", function () {
   if ($(this).parents('.custom-select').find(".select-items").hasClass("select-items-open")) {
     $(".select-items").removeClass("select-items-open");
@@ -87,7 +88,7 @@ $(document).on('click', '.select-items .color-option', function () {
   $(this).parents('.color-container').find('.color-label .color-label-text').text(title)
 });
 
-// show number of dropdowns set
+// show number of dropdowns sets
 $(document).on('click', '.bundle__bar', function (e) {
   setTimeout(function () {
     var title_prod = $('.bundle__bar--selected .bundle__bar-container').data('qty');
@@ -112,7 +113,7 @@ $(document).on('click', '.bundle__bar', function (e) {
   }, 100)
 })
 
-// show number of dropdowns set
+// show number of dropdowns set for next button 
 $(document).on('click', '.ctm_select_your_color_size', function (e) {
   e.preventDefault();
   var title_prod = $('.bundle__bar--selected .bundle__bar-container').data('qty');
@@ -144,7 +145,7 @@ $(document).on('click', '.ctm_checkout-form-submit-next-main-submit', function (
   e.preventDefault();
 
   var select_len = $('.selector.active').length - 1;
-  var prod_1 = '', prod_2 = '', prod_3 = ''
+  var prod_1 = '', prod_2 = '', prod_3 = '';
   var var_prod_1 = '', var_prod_2 = '', var_prod_3 = '';
 
   var addon_1 = '', addon_list = '';

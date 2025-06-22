@@ -1,0 +1,83 @@
+{% comment %} 
+  Instagram Story Frame 
+{% endcomment %}
+
+<style>
+  /* Instagram Story Profile Circle Frame Border */
+  /* Video overlay - PDP */
+  .overlay-video__wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    /* border: 3px solid #833ab4; */
+    opacity: 0;
+    animation: fadeIn 3s forwards;
+  }
+
+  @media screen and (min-width: 500px) {
+    .overlay-video__wrapper {
+      width: 124px;
+      height: 125px;
+    }
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .overlay-video {
+    align-items: center;
+    background-image: linear-gradient(
+      45deg,
+      #ffa95f 5%,
+      #f99c4a 15%,
+      #f47838 30%,
+      #e75157 45%,
+      #d92d7a 70%,
+      #cc2a92 80%,
+      #c32e92 95%
+    );
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    overflow: hidden;
+    padding: 3px;
+    width: 100%;
+    cursor: pointer;
+  }
+  .overlay-video,
+  .overlay-video #product-video {
+    border-radius: 50%;
+  }
+  .overlay-video #product-video {
+    border: 3px solid #ffffff;
+    height: auto;
+    margin: 0;
+    width: 100% !important;
+  }
+</style>
+
+<div class="overlay-video__wrapper" id="overlay-video__wrapper">
+  <div class="overlay-video" id="overlay-video">
+    <video
+      id="product-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      loading="lazy"
+    >
+      <source
+        src="{{ product.metafields.custom.product_video | file_url }}"
+        type="video/mp4"
+      />
+    </video>
+  </div>
+</div>
