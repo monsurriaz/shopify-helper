@@ -1,0 +1,86 @@
+{% assign ebook_pro = all_products['free-e-book'] %}
+{% assign mystery_box_pro = all_products['free-mystery-gift'] %}
+{% assign warranty_pro = all_products['free-lifetime-warranty'] %}
+
+<div class="addon_wrapper" style="display: none;">
+  <span class="ebook" data-id="{{ ebook_pro.selected_or_first_available_variant.id }}"></span>
+  <span class="mystery_box" data-id="{{ mystery_box_pro.selected_or_first_available_variant.id }}"></span>
+  <span class="warranty" data-id="{{ warranty_pro.selected_or_first_available_variant.id }}"></span>
+</div>
+
+<button id="custom-atc" class="together-btn">Buy Together</button>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      const mainATC = document.querySelector('#main_atc'); // main atc of product page.
+      const customATC = document.querySelector('#custom-atc');
+      const variants = document.querySelectorAll('.quantity-break__container input[name="subscription"]');
+      const productsToAdd = [];
+
+      // Store variant IDs in JS 
+      const FREE_PRODUCTS = {
+        ebook: parseInt(document.querySelector('.addon_wrapper .ebook')?.dataset.id || 0),
+        mystery: parseInt(document.querySelector('.addon_wrapper .mystery_box')?.dataset.id || 0),
+        warranty: parseInt(document.querySelector('.addon_wrapper .warranty')?.dataset.id || 0)
+      };
+
+      // Quantity based number of free products selection
+      function findQuantity() {
+        const selectedOption = document.querySelector('.quantity-break__container input[name="subscription"]:checked');
+        return selectedOption ? parseInt(selectedOption.dataset.quantity || '0') : 0;
+      }
+  
+      // Decide which free items to add based on quantity
+      function buildAddon() {
+        productsToAdd.length = 0;
+        const quantity = findQuantity();
+  
+        if (quantity >= 4) {
+          productsToAdd.push({ id: FREE_PRODUCTS.ebook, quantity: 1 });
+        }
+        if (quantity >= 6) {
+          productsToAdd.push({ id: FREE_PRODUCTS.mystery, quantity: 1 });
+        }
+        if (quantity >= 8) {
+          productsToAdd.push({ id: FREE_PRODUCTS.warranty, quantity: 1 });
+        }
+      }
+      
+      // Allow customer to choose variants.
+      variants.forEach(option => {
+        option.addEventListener('change', (e) => {
+          buildAddon();
+        });
+      });
+  
+      // Click Bought together button
+      customATC?.addEventListener('click', function() {
+        // if not found any addon products
+        if (productsToAdd.length === 0) {
+          mainATC?.click();
+          return;
+        }
+  
+        // If found: Send each item one by one using AJAX
+        fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: productsToAdd })
+          })
+          .then(res => res.json())
+          .then(() => {
+            alert("Free gifts added to cart!");
+            mainATC?.click(); // optional 
+          })
+          .catch(err => {
+            console.error("Error adding products:", err);
+            alert("Something went wrong. Please try again.");
+          });
+      });
+  
+      // initial call
+      buildAddon();
+    }, 500);
+  })
+</script>

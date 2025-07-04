@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swiper Slider Boilerplate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Swiper CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+    .swiper {
+      width: 600px;
+      height: 300px;
+      margin: 40px auto 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #fff;
+      background: #007aff;
+      border-radius: 10px;
+    }
+    .swiper-progress-bar-container {
+      width: 600px;
+      margin: 0 auto 40px auto;
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      top: 10px;
+    }
+    .swiper-progress-bar {
+      height: 100%;
+      background: #007aff;
+      width: 0%;
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <!-- Swiper -->
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">Slide 1</div>
+      <div class="swiper-slide">Slide 2</div>
+      <div class="swiper-slide">Slide 3</div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+    <!-- Add Navigation -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+  <!-- Progress Bar -->
+  <div class="swiper-progress-bar-container">
+    <div class="swiper-progress-bar"></div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const progressBar = document.querySelector('.swiper-progress-bar');
+      const swiper = new Swiper('.swiper', {
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        on: {
+          slideChange: updateProgressBar,
+          init: updateProgressBar,
+        }
+      });
+
+      function updateProgressBar() {
+        // Swiper uses realIndex for the actual slide index (ignoring loop duplicates)
+        const totalSlides = swiper.slides.length - swiper.loopedSlides * 2;
+        const currentIndex = swiper.realIndex + 1;
+        const percent = (currentIndex / totalSlides) * 100;
+        progressBar.style.width = percent + '%';
+      }
+    });
+  </script>
+</body>
+</html>

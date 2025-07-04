@@ -1,0 +1,554 @@
+<style>
+  .quantity__breaks {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .quantity-break__option {
+    border: 0.2rem solid rgba(63, 191, 198, 0.3);;
+    background-color: rgba(63, 191, 198, 0.02);
+    border-radius: 10px;
+    padding: 20px 20px 20px 15px;
+    margin-bottom: .87rem;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+  }
+  .quantity-break__option input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 0.2rem solid rgba(63, 191, 198, 0.3);
+    border-radius: 50%;
+    margin-right: 15px;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 0;
+  }
+  .quantity-break__option input[type="radio"]:checked {
+    border: 0.2rem solid #ffffff;
+    background-color: rgb(63, 191, 198);
+    box-shadow: 0 0 0 0.1rem rgb(63, 191, 198);
+  }
+  .quantity-break__option label {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    cursor: pointer;
+  }
+  .quantity-break__option label:before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: "";
+    z-index: 1;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+  }
+  .quantity-break__option .quantity-break__left {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.8rem;
+  }
+  .quantity-break__option .quantity-break__left__title {
+    display: block;
+    font-weight: 600;
+    font-size: 17.5px;
+    line-height: 1;
+    color: #000000;
+    letter-spacing: 0px;
+  }
+  .quantity-break__option .quantity-break__subtitle {
+    color: rgba(18, 18, 18, 0.7);
+    font-weight: 300;
+    font-size: 15.5px;
+    line-height: 1;
+  }
+  .quantity-break__option .quantity-break__right dynamic_price {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 0.6rem;
+  }
+  .quantity-break__option .quantity-break__price {
+    display: block;
+    font-size: 17.5px;
+    line-height: 1;
+    font-weight: 600;
+    color: rgba(63, 191, 198);
+  }
+  .quantity-break__option .quantity-break__compare-price {
+    font-size: 15.4px;
+    text-decoration: line-through;
+    color: rgba(18, 18, 18, 0.9);
+    line-height: 1;
+  }
+  .quantity-break__extra-info {
+    display: none;
+    width: 100%;
+  }
+  .quantity-break__extra-info ul {
+    padding: 0;
+  }
+  .quantity-break__extra-info ul li {
+    font-size: 16px;
+    letter-spacing: 0;
+    position: relative;
+    list-style: none;
+  }
+  .quantity-break__extra-info ul li::before {
+    content: "+";
+    color: rgb(63, 191, 198);
+    padding-right: 10px;
+    font-size: 16px;
+  }
+  .quantity-break__option:has(input:checked) {
+    border-color: rgba(63, 191, 198);
+    border-width: 2px;
+    background-color: rgba(63, 191, 198, 0.1);
+  }
+  .quantity-break__option input:checked ~ label .quantity-break__extra-info {
+    display: block;
+  }
+  .top-badge {
+    position: absolute;
+    background: rgb(63, 191, 198);
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.6;
+    top: -10px;
+    right: -10px;
+    transform: rotate(3deg);
+    margin: 0;
+    padding: 0 .5em;
+    border-radius: .2em;
+  }
+  .auto-refill {
+    display: flex;
+    align-items: center;
+    margin-top: 0.87rem;
+    padding: 6.5px;
+    border: 2px solid rgb(63, 191, 198);
+    border-radius: 10px;
+    background-color: rgba(63, 191, 198, 0.1);
+  }
+  .auto-refill input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(63, 191, 198);
+    border-radius: 4px;
+    margin-right: 15px;
+    outline: none;
+    cursor: pointer;
+  }
+  .auto-refill input[type="checkbox"]:checked {
+    background-color: rgb(63, 191, 198);
+    position: relative;
+  }
+  .auto-refill input[type="checkbox"]:checked::after {
+    content: '✓';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .auto-refill label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    letter-spacing: .06rem;
+    padding-left: 15px;
+    row-gap: 2px;
+  }
+  .auto-refill .note {
+    color: #888;
+    font-size: 14px;
+    display: inline-block;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .custom-atc {
+    background-color: rgb(63, 191, 198);
+    border-radius: 6px;
+    color: #fff;
+    margin-top: 30px;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 20px;
+    font-weight: 600;
+    border: 3px solid #3fbfc6;
+    transition: .3s linear;
+    text-align: center;
+    line-height: 1;
+    cursor: pointer;
+  }
+  #main_atc {
+    display: none;
+  }
+  .custom-atc:hover {
+    color: #121212;
+    background-color: #fff;
+  }
+
+  @media(max-width: 993px) {
+    .quantity-break__option {
+      padding: 15px 12px;
+    }
+    .quantity-break__left__title {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<select style="display: none;">
+  {% for selling_plan_group in product.selling_plan_groups %}
+    {% for selling_plan in selling_plan_group.selling_plans %}
+      <option data-id="{{ selling_plan.price_adjustments[0].value }}" value="{{ selling_plan.id }}">{{ selling_plan.name }}</option>
+    {% endfor %}
+  {% endfor %}
+</select>
+
+<div class="quantity__breaks">
+  <div class="quantity-break__container">
+    <div class="quantity-break__option">
+      <input
+        type="radio"
+        id="month"
+        name="subscription"
+        data-price="{{ product.price | money }}"
+        data-selling-plan="7940407587"
+        data-quantity="2"
+        data-discount="25"
+      >
+      <label class="quantity-break__content" for="month">
+        <div class="quantity-break__left">
+          <span class="quantity-break__left__title">Buy 1 Get 1 Free</span>
+          <span class="quantity-break__subtitle">1 Month Supply</span>
+        </div>
+        <div class="quantity-break__right dynamic_price">
+          <span class="quantity-break__price">{{ product.selected_or_first_available_variant.price | money }}</span>
+          <span class="quantity-break__compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        </div>
+        <div class="quantity-break__extra-info">
+          <ul>
+            <li>Free Warranty</li>
+            <li>Free 1 Gum Packs </li>
+            <li>Free Holistic E-Book</li>
+          </ul>
+        </div>
+      </label>
+    </div>
+
+    <div class="quantity-break__option">
+      <input
+        type="radio"
+        id="months"
+        name="subscription"
+        data-selling-plan="7940440355"
+        data-quantity="4"
+        data-discount="25"
+        checked
+      >
+      <label class="quantity-break__content" for="months">
+        <div class="quantity-break__left">
+          <span class="quantity-break__left__title">Buy 2 Get 2 Free</span>
+          <span class="quantity-break__subtitle">2 Month Supply</span>
+        </div>
+        <div class="quantity-break__right dynamic_price">
+          <span class="quantity-break__price">{{ product.selected_or_first_available_variant.price | times: 2 | money }}</span>
+          <span class="quantity-break__compare-price">{{ product.selected_or_first_available_variant.compare_at_price | times: 2 | money }}</span>
+        </div>
+        <div class="quantity-break__extra-info">
+          <ul>
+            <li>Free Warranty</li>
+            <li>Free 2 Gum Packs </li>
+            <li>Free Holistic E-Book</li>
+          </ul>
+        </div>
+      </label>
+    </div>
+
+    <div class="quantity-break__option">
+      <div class="top-badge free-shipping">Free Shipping</div>
+      <input
+        type="radio"
+        id="quarterly"
+        name="subscription"
+        data-selling-plan="7940473123"
+        data-quantity="6"
+        data-discount="25"
+      >
+      <label class="quantity-break__content" for="quarterly">
+        <div class="quantity-break__left">
+          <span class="quantity-break__left__title">Buy 3 Get 3 Free</span>
+          <span class="quantity-break__subtitle">3 Month Supply</span>
+        </div>
+        <div class="quantity-break__right dynamic_price">
+          <span class="quantity-break__price">{{ product.selected_or_first_available_variant.price | times: 3 | money }}</span>
+          <span class="quantity-break__compare-price">{{ product.selected_or_first_available_variant.compare_at_price | times: 3 | money }}</span>
+        </div>
+        <div class="quantity-break__extra-info">
+          <ul>
+            <li>Free Warranty</li>
+            <li>Free 3 Gum Packs </li>
+            <li>Free Holistic E-Book</li>
+            <li>Free Mystery Gift</li>
+            <li>Free Shipping</li>
+          </ul>
+        </div>
+      </label>
+    </div>
+
+    <div class="quantity-break__option">
+      <div class="top-badge best-value">Best Value</div>
+      <input
+        type="radio"
+        id="triannual"
+        name="subscription"
+        data-selling-plan="7940505891"
+        data-quantity="8"
+        data-discount="25"
+      >
+      <label class="quantity-break__content" for="triannual">
+        <div class="quantity-break__left">
+          <span class="quantity-break__left__title">Buy 4 Get 4 Free</span>
+          <span class="quantity-break__subtitle">4 Month Supply</span>
+        </div>
+        <div class="quantity-break__right dynamic_price">
+          <span class="quantity-break__price">{{ product.selected_or_first_available_variant.price | times: 4 | money }}</span>
+          <span class="quantity-break__compare-price">{{ product.selected_or_first_available_variant.compare_at_price | times: 4 | money }}</span>
+        </div>
+        <div class="quantity-break__extra-info">
+          <ul>
+            <li>Free Warranty</li>
+            <li>Free 4 Gum Packs </li>
+            <li>Free Holistic E-Book</li>
+            <li>Free Mystery Gift</li>
+            <li>Free Shipping</li>
+          </ul>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="auto-refill">
+    <input type="checkbox" id="auto_refill" name="auto-refill" checked>
+    <label for="auto_refill">
+      Save More with Automatic Refills!
+      <span class="note">Zero commitment, Cancel Anytime</span>
+    </label>
+  </div>
+</div>
+
+<div class="custom-atc">
+  Add to Cart
+</div>
+
+<!-- Hidden inputs for selling_plan and quantity -->
+<input type="hidden" name="selling_plan" id="selling_plan_input">
+<input type="hidden" name="quantity" id="quantity_input" value="1">
+
+{% assign ebook_pro = all_products['free-e-book'] %}
+{% assign mystery_box_pro = all_products['free-mystery-gift'] %}
+{% assign warranty_pro = all_products['free-lifetime-warranty'] %}
+
+<div class="addon_wrapper" style="display: none;">
+  <span class="ebook" data-id="{{ ebook_pro.selected_or_first_available_variant.id }}"></span>
+  <span class="mystery_box" data-id="{{ mystery_box_pro.selected_or_first_available_variant.id }}"></span>
+  <span class="warranty" data-id="{{ warranty_pro.selected_or_first_available_variant.id }}"></span>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const subscriptionOptions = document.querySelectorAll('.quantity-break__container input[name="subscription"]');
+    const autoRefillCheckbox = document.getElementById('auto_refill');
+    const sellingPlanInput = document.getElementById('selling_plan_input');
+    const quantityInput = document.getElementById('quantity_input');
+
+    function formatPrice(input, formatString) {
+      // Step 1: Normalize the input number
+      let num = typeof input === 'string' ? parseFloat(input.replace(',', '.')) : input;
+      if (isNaN(num)) return '';
+
+      // Step 2: Use passed formatString or fallback to DOM
+      if (!formatString) {
+        let el = document.querySelector('.quantity-break__option input');
+        if (el) formatString = el.dataset.price;
+        else return num.toFixed(2);
+      }
+
+      // Step 3: Extract currency symbol and style
+      const match = formatString.match(/([^0-9.,]*)([\d.,]+)([^0-9.,]*)/);
+      if (!match) return num.toFixed(2);
+
+      const prefix = match[1]; // e.g. "$", "Tk ", "€"
+      const originalNumber = match[2]; // e.g. "1,234.56" or "1.234,56"
+      const suffix = match[3]; // e.g. "", " BDT", etc.
+
+      // Step 4: Detect separator style
+      const useCommaAsDecimal = originalNumber.includes(',') && originalNumber.indexOf(',') > originalNumber.indexOf('.');
+      const decimalSeparator = useCommaAsDecimal ? ',' : '.';
+      const thousandSeparator = useCommaAsDecimal ? '.' : ',';
+
+      // Step 5: Format number with 2 decimals and thousands separator
+      const parts = num.toFixed(2).split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator); // Add thousands sep
+      const final = parts.join(decimalSeparator); // Add decimal sep
+
+      // Step 6: Return combined
+      return `${prefix}${final}${suffix}`;
+    }
+
+    function updatePricesForAllOptions() {
+      subscriptionOptions.forEach(option => {
+        const priceInfo = option.closest('.quantity-break__option').querySelector('.quantity-break__right.dynamic_price');
+        const currentPriceElement = priceInfo.querySelector('.quantity-break__price');
+        const comparePriceElement = priceInfo.querySelector('.quantity-break__compare-price');
+
+        let currentPrice = parseFloat(currentPriceElement.textContent.replace(/[^0-9.]/g, ''));
+        let comparePrice = comparePriceElement ? parseFloat(comparePriceElement.textContent.replace(/[^0-9.]/g, '')) : null;
+        let discountPercentage = parseFloat(option.dataset.discount.replace(/[^0-9.]/g, ''));
+
+        // Store the original current price if not already stored 
+        if (!option.dataset.originalPrice) {
+          option.dataset.originalPrice = currentPrice;
+        }
+
+        if (autoRefillCheckbox.checked) {
+          if (discountPercentage) {
+            // Apply 50% discount to the compare price if available
+            currentPrice = parseFloat(option.dataset.originalPrice) * (1 - (discountPercentage / 100));
+          } else if (comparePrice) {
+            // Apply 50% discount to the compare price if available
+            currentPrice = comparePrice * 0.50;
+          } else {
+            // If no compare price exists, apply the discount to the current price
+            currentPrice = currentPrice * 0.05;
+          }
+        } else {
+          // Use the original price of the option when unchecked
+          currentPrice = parseFloat(option.dataset.originalPrice);
+        }
+
+        // Update the price in the option list
+        currentPriceElement.textContent = formatPrice(currentPrice);
+      });
+    }
+
+    function updateInputs() {
+      const selectedOption = document.querySelector('.quantity-break__container input[name="subscription"]:checked');
+      const sellingPlan = selectedOption.dataset.sellingPlan;
+      const quantity = selectedOption.dataset.quantity;
+
+      quantityInput.value = quantity;
+
+      if (autoRefillCheckbox.checked) {
+        sellingPlanInput.value = sellingPlan;
+      } else {
+        sellingPlanInput.removeAttribute('value');
+      }
+
+      // Update the prices for all options
+      updatePricesForAllOptions();
+    }
+
+    subscriptionOptions.forEach(option => {
+      option.addEventListener('change', (e) => {
+        updateInputs();
+      });
+    });
+
+    autoRefillCheckbox.addEventListener('change', updateInputs);
+
+    // Initial update
+    updateInputs();
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      const mainATC = document.querySelector('#main_atc');
+      const customATC = document.querySelector('.custom-atc');
+      const productsToAdd = [];
+
+      // Store variant IDs in JS 
+      const FREE_PRODUCTS = {
+        ebook: parseInt(document.querySelector('.addon_wrapper .ebook')?.dataset.id || 0),
+        mystery: parseInt(document.querySelector('.addon_wrapper .mystery_box')?.dataset.id || 0),
+        warranty: parseInt(document.querySelector('.addon_wrapper .warranty')?.dataset.id || 0)
+      };
+  
+      function findQuantity() {
+        const selectedOption = document.querySelector('.quantity-break__container input[name="subscription"]:checked');
+        return selectedOption ? parseInt(selectedOption.dataset.quantity || '0') : 0;
+      }
+  
+      function buildAddon() {
+        productsToAdd.length = 0;
+        const quantity = findQuantity();
+  
+        // Decide which free items to add based on quantity
+        if (quantity >= 4) {
+          productsToAdd.push({ id: FREE_PRODUCTS.ebook, quantity: 1 });
+        }
+        if (quantity >= 6) {
+          productsToAdd.push({ id: FREE_PRODUCTS.mystery, quantity: 1 });
+        }
+        if (quantity >= 8) {
+          productsToAdd.push({ id: FREE_PRODUCTS.warranty, quantity: 1 });
+        }
+
+        console.log(productsToAdd);
+      }
+  
+      document.querySelectorAll('.quantity-break__container input[name="subscription"]')
+      .forEach(option => {
+        option.addEventListener('change', (e) => {
+          buildAddon();
+        });
+      });
+  
+      customATC?.addEventListener('click', function() {
+        if (productsToAdd.length === 0) {
+          mainATC?.click();
+          return;
+        }
+  
+        // Send each item one by one using AJAX
+        fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: productsToAdd })
+          })
+          .then(res => res.json())
+          .then(() => {
+            alert("Free gifts added to cart!");
+            mainATC?.click();
+          })
+          .catch(err => {
+            console.error("Error adding products:", err);
+            alert("Something went wrong. Please try again.");
+          });
+      });
+  
+      // initial call
+      buildAddon();
+    }, 500);
+  })
+</script>
+

@@ -1,0 +1,81 @@
+<style>
+  .hidden {
+    display: none;
+  }
+  .loader-btn {
+    background-color: rgb(63, 191, 198);
+    border-radius: 6px;
+    color: #fff;
+    margin-top: 30px;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 20px;
+    font-weight: 600;
+    border: 3px solid #3fbfc6;
+    transition: .3s linear;
+    text-align: center;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
+  .loader-btn:hover {
+    color: #121212;
+    background-color: #fff;
+  }
+  .loader-btn.loading {
+    color: transparent;
+    position: relative;
+  }
+  .loading-overlay__spinner {
+    width: 18px;
+    display: inline-block;
+  }
+  .loader-btn.loading > .loading-overlay__spinner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .loader-btn.loading > .loading-overlay__spinner .path {
+    stroke: #181818;
+  }
+</style>
+
+<button 
+  type="submit"
+  class="loader-btn"
+>
+  <span>
+    Add to cart
+  </span>
+  <div class="loading-overlay__spinner hidden">
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      class="spinner"
+      viewBox="0 0 66 66"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+    </svg>
+  </div>
+</button>
+
+<script>
+  const btn = document.querySelector('.loader-btn');
+  btn.addEventListener('click', ()=> {
+    btn.classList.add('loading');
+    btn.querySelector('.loading-overlay__spinner').classList.remove('hidden');
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      btn.querySelector('.loading-overlay__spinner').classList.add('hidden');
+    }, 2000);
+  })
+</script>

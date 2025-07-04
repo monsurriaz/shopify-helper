@@ -17,3 +17,9 @@
   {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
 {% endfor %}
 
+{% comment %} 
+  Get Product by handle
+{% endcomment %}
+{% assign some_product = all_products['some-handle'] %}
+{% assign another_product = all_products.some_handle %}
+

@@ -1,0 +1,9 @@
+/* Operations of child of flex/grid container */
+.child {
+  align-self: stretch; /* Make the child of flex/grid container stretch to fill the available space. */
+  align-self: center; /* Make the child of a flex/grid container center itself vertically. */
+  align-self: flex-start; /* Make the child of a flex/grid container shrink to fit its content. */
+  align-self: flex-end; /* Make the child of a flex/grid container grow to fill the available space. */
+}
+
+
