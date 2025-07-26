@@ -1,103 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Swiper Slider Boilerplate</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Swiper CSS -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-  />
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
-    .swiper {
-      width: 600px;
-      height: 300px;
-      margin: 40px auto 0 auto;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .swiper-slide {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #fff;
-      background: #007aff;
-      border-radius: 10px;
-    }
-    .swiper-progress-bar-container {
-      width: 600px;
-      margin: 0 auto 40px auto;
-      height: 6px;
-      background: #e0e0e0;
-      border-radius: 3px;
-      overflow: hidden;
-      position: relative;
-      top: 10px;
-    }
-    .swiper-progress-bar {
-      height: 100%;
-      background: #007aff;
-      width: 0%;
-      transition: width 0.3s;
-    }
-  </style>
-</head>
-<body>
-  <!-- Swiper -->
-  <div class="swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
+<style>
+  
+  .ingredients__controls {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 16px;
+  }
+  .ingredient-button,
+  .ingredient-button {
+    position: static;
+    margin: 0;
+    background: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 1px 4px #e2e1f5;
+    border: 1.4px solid #e2e1f5;
+    color: #23203f;
+  }
+  .swiper-button-next.ingredient-button:after,
+  .swiper-button-prev.ingredient-button:after {
+    font-size: 15px;
+  }
+</style>
+
+<section class="ingredients" id="section-{{ section.id }}">
+  <div class="page-width">
+    <div class="section-header">
+      <h2 class="section-title">{{ section.settings.section_title }}</h2>
+      <div class="subtitle">{{ section.settings.section_subtitle }}</div>
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-    <!-- Add Navigation -->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+    
+    <!-- Slider main container -->
+    <div class="ingredients__content">
+      <div class="swiper mySwiper" id="swiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide ingredient-card" {{ block.shopify_attributes }}>
+              <div class="ingredient-card__content">
+                <div class="ingredient-card__top">
+                  <div class="ingredient-type">{{ block.settings.ingredient_type }}</div>
+                  <div class="ingredient-title">{{ block.settings.ingredient_title }}</div>
+                </div>
+                <div class="ingredient-desc">
+                  {{ block.settings.ingredient_desc }}
+                </div>
+                <div class="ingredient-dose">{{ block.settings.ingredient_dose }}</div>
+              </div>
+              {% if block.settings.ingredient_image != blank %}
+                <div class="ingredient-image">
+                  <img src="{{ block.settings.ingredient_image | image_url: width: 500 }}" width="auto" height="auto" alt="Ashwagandha">
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        <!-- If we need navigation buttons -->
+        <div class="ingredients__controls">
+          <div class="swiper-button-prev ingredient-button"></div>
+          <div class="swiper-button-next ingredient-button"></div>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- Progress Bar -->
-  <div class="swiper-progress-bar-container">
-    <div class="swiper-progress-bar"></div>
-  </div>
+</section>
 
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const progressBar = document.querySelector('.swiper-progress-bar');
-      const swiper = new Swiper('.swiper', {
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        on: {
-          slideChange: updateProgressBar,
-          init: updateProgressBar,
-        }
-      });
-
-      function updateProgressBar() {
-        // Swiper uses realIndex for the actual slide index (ignoring loop duplicates)
-        const totalSlides = swiper.slides.length - swiper.loopedSlides * 2;
-        const currentIndex = swiper.realIndex + 1;
-        const percent = (currentIndex / totalSlides) * 100;
-        progressBar.style.width = percent + '%';
-      }
-    });
-  </script>
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script>
+  var swiper = new Swiper('#swiper-{{ section.id }}', {
+    slidesPerView: 1,
+    centeredSlides: true,
+    centeredSlidesBounds: true,
+    spaceBetween: 10,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 2.3,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 3.3,
+        spaceBetween: 25,
+      },
+    }
+  });
+</script>

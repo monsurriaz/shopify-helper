@@ -1,0 +1,309 @@
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+  /* Custom Styles for This Section */
+  .ingredients {
+    background: #fff;
+    padding: 48px 0;
+    font-family: 'NeueHaasDisplayRegular';
+  }
+  .page-width {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .section-ingredients .section-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 15px;
+    margin-bottom: 60px;
+  }
+  .section-ingredients .section-title {
+    font-family: 'NeueHaasDisplayMedium';
+    font-weight: 600;
+    font-size: 48px;
+    color: #23203f;
+    text-align: center;
+    margin-bottom: 0px;
+  }
+  .section-ingredients .subtitle {
+    font-weight: 700;
+    font-size: 17px;
+    color: #6f6d7b;
+    margin: 0px;
+    text-align: center;
+  }
+  .ingredients__content .mySwiper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+  .ingredients__content .ingredient-card {
+    display: flex;
+    align-items: flex-start;
+    align-self: stretch;
+    background: #f2f0fa;
+    padding: 0 10px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+  }
+  .ingredient-card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    column-gap: 40px;
+    row-gap: 30px;
+    width: 60%;
+    padding: 30px 0;
+    position: relative;
+  }
+  .ingredient-card__top {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    column-gap: 10px;
+    row-gap: 10px;
+    width: 100%;
+    position: relative;
+  }
+  .ingredient-type {
+    display: flex;
+    align-items: center;
+    background: #1a192e;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+  .ingredient-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: #1a192e;
+    padding: 0 0 0 7px;
+  }
+  .ingredient-desc {
+    font-weight: 300;
+    font-size: 16px;
+    color: #4e4e4f;
+    margin: 0;
+    line-height: 1.25;
+  }
+  .ingredient-dose {
+    font-weight: 700;
+    font-size: 18px;
+    color: #1a192e;
+  }
+  .ingredient-image {
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    max-width: 200px;
+    top: 50%;
+    right: -70px;
+    transform: translateY(-50%);
+  }
+  .ingredient-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .section-ingredients .section-header {
+      row-gap: 16px;
+      margin-bottom: 24px;
+    }
+    .section-ingredients .section-title {
+      font-size: 30px;
+      margin-bottom: 0px;
+    }
+    .section-ingredients .subtitle {
+      font-size: 14px;
+    }
+    .ingredients__content .mySwiper {
+      row-gap: 20px;
+    }
+    .ingredient-card__content {
+      column-gap: 12px;
+      row-gap: 20px;
+    }
+  }
+  
+  .ingredients__controls {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 16px;
+  }
+  .ingredient-button,
+  .ingredient-button {
+    position: static;
+    margin: 0;
+    background: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 1px 4px #e2e1f5;
+    border: 1.4px solid #e2e1f5;
+    color: #23203f;
+  }
+  .swiper-button-next.ingredient-button:after,
+  .swiper-button-prev.ingredient-button:after {
+    font-size: 15px;
+  }
+</style>
+
+<section class="ingredients" id="section-{{ section.id }}">
+  <div class="page-width">
+    <div class="section-header">
+      <h2 class="section-title">{{ section.settings.section_title }}</h2>
+      <div class="subtitle">{{ section.settings.section_subtitle }}</div>
+    </div>
+    
+    <!-- Slider main container -->
+    <div class="ingredients__content">
+      <div class="swiper mySwiper" id="swiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide ingredient-card" {{ block.shopify_attributes }}>
+              <div class="ingredient-card__content">
+                <div class="ingredient-card__top">
+                  <div class="ingredient-type">{{ block.settings.ingredient_type }}</div>
+                  <div class="ingredient-title">{{ block.settings.ingredient_title }}</div>
+                </div>
+                <div class="ingredient-desc">
+                  {{ block.settings.ingredient_desc }}
+                </div>
+                <div class="ingredient-dose">{{ block.settings.ingredient_dose }}</div>
+              </div>
+              {% if block.settings.ingredient_image != blank %}
+                <div class="ingredient-image">
+                  <img src="{{ block.settings.ingredient_image | image_url: width: 500 }}" width="auto" height="auto" alt="Ashwagandha">
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        <!-- If we need navigation buttons -->
+        <div class="ingredients__controls">
+          <div class="swiper-button-prev ingredient-button"></div>
+          <div class="swiper-button-next ingredient-button"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script>
+  var swiper = new Swiper('#swiper-{{ section.id }}', {
+    slidesPerView: 1,
+    centeredSlides: true,
+    centeredSlidesBounds: true,
+    spaceBetween: 10,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 2.3,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 3.3,
+        spaceBetween: 25,
+      },
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Ingredients Section",
+    "class": "shopify-section section-ingredients",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Section Title",
+        "default": "Effectieve, natuurlijke en veilige <em>ingrediënten</em>"
+      },
+      {
+        "type": "text",
+        "id": "section_subtitle",
+        "label": "Section Subtitle",
+        "default": "Hier de ingrediënten per pleister:"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Ingredient Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "ingredient_type",
+            "label": "Ingredient Type",
+            "default": "Stressverlagend"
+          },
+          {
+            "type": "text",
+            "id": "ingredient_title",
+            "label": "Ingredient Title",
+            "default": "Ashwagandha"
+          },
+          {
+            "type": "textarea",
+            "id": "ingredient_desc",
+            "label": "Ingredient Description",
+            "default": "Adaptogeen kruid dat helpt bij verminderen van stress en angst."
+          },
+          {
+            "type": "text",
+            "id": "ingredient_dose",
+            "label": "Ingredient Dose",
+            "default": "300mg"
+          },
+          {
+            "type": "image_picker",
+            "id": "ingredient_image",
+            "label": "Ingredient Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Multi Column Slider",
+        "category": "Custom",
+        "blocks": [
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
