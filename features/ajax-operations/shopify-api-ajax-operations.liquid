@@ -16,6 +16,10 @@
       // Update cart UI dynamically
     })
     .catch(error => console.error('Error:', error));
+    .finally(() => {
+      // Optionally, you can refresh the cart or show a success message
+      fetchCart(); // Refresh cart data
+    });
   }
 
   // 2. Update cart quantity

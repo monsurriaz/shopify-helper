@@ -1,0 +1,84 @@
+
+/* You may also like (Cart Upsell) */
+.custom-cart-upsell:not(:has(.cart-upsell__slide)) {
+  display: none;
+}
+.cart-upsell__slider-header {
+  padding: 16px;
+}
+.cart-upsell__slider-header h2 {
+  font-family: var(--swiss721BTMedium);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+}
+.cart-upsell__slider .cart-upsell__slide {
+  width: 170px;
+}
+.cart-upsell__slide-inner .cart-upsell__slide-media {
+  position: relative;
+}
+.cart-upsell__slide-inner .cart-upsell__slide-media img {
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.cart-upsell__slide-inner .plus-icon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.2s ease-in-out;
+  z-index: 1;
+}
+.cart-upsell__slide-inner .plus-icon:hover {
+  transform: rotate(180deg);
+}
+.cart-upsell__slide-inner .cart-upsell__slide-content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  font-size: 14px;
+  color: var(--textPrimaryColor);
+}
+.cart-upsell__slide-inner .cart-upsell__slide-content h4 {
+  font-family: var(--swiss721BTLight);
+  font-weight: 400;
+  line-height: 100%;
+  padding-bottom: 6px;
+  color: var(--textPrimaryColor);
+}
+.cart-upsell__slide-price {
+  display: flex;
+  column-gap: 8px;
+  line-height: 100%;
+}
+.cart-upsell__slide-price span {
+  display: inline-block;
+  line-height: 11px;
+}
+.cart-upsell__slide-inner .cart-upsell__slide-regular-price {
+  opacity: 0.5;
+  text-decoration-line: line-through;
+  text-decoration-color: currentcolor;
+  text-decoration-thickness: 1px;
+}
+.cart-upsell__slider .swiper-button-prev,
+.cart-upsell__slider .swiper-button-next {
+  right: 16px !important;
+  top: 24px !important;
+  left: auto !important;
+  width: 15px;
+}
+.cart-upsell__slider .swiper-button-prev {
+  right: 45px !important;
+}
+.cart-upsell__slider .swiper-button-next::after,
+.cart-upsell__slider .swiper-button-prev::after {
+  display: none;
+}
+.cart-upsell__slider .swiper-scrollbar__wrapper {
+  width: calc(100% - 32px);
+  height: 3px;
+  margin-inline: auto;
+}

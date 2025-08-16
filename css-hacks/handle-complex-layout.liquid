@@ -1,0 +1,208 @@
+
+
+<style>
+  /* One side gap, another side fluid. gap side align to like box wrapper */
+  /* Here max width of container: 1344px */
+  @media screen and (min-width: 1393px) {
+    /* global style */
+    .large-space-left {
+      padding-left: calc((var(--full-width) - 1344px) / 2);
+    }
+    .large-space-right {
+      padding-right: calc((var(--full-width) - 1344px) / 2);
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1392px) {
+    /* global style */
+    .large-space-left {
+      padding-left: 48px;
+    }
+    .large-space-right {
+      padding-right: 48px;
+    }
+  }
+</style>
+
+<style>
+  #product-recommendation{{ section.id }} .product-img img {
+    aspect-ratio: 1 / 1;
+  }
+</style>
+
+<div class="favourite-formulation-wp product-PPslider" id="product-recommendation{{ section.id }}">
+  <div class="ff-product-slider-wrap section-spacer">
+    <div class="container-max">
+      <h2 class="secondary-heading">{{ section.settings.section_heading }}</h2>
+    </div>
+    <div class="large-space-left">
+      <div class="swiper mySwiper pp-product-slider product-grid-slider">
+        <div class="swiper-wrapper">
+          {% if section.settings.collection != blank and section.settings.collection.products_count > 0 %}
+            {% assign shown = 0 %}
+            {% for rec_product in section.settings.collection.products %}
+              {% if template.name == 'product' and rec_product.handle == product.handle %}
+                {% continue %}
+              {% endif %}
+              {% if shown >= section.settings.product_limit %}
+                {% break %}
+              {% endif %}
+              {% assign shown = shown | plus: 1 %}
+  
+              <div class="swiper-slide">
+                <div class="single-product-wrap">
+                  <a href="{{ rec_product.url }}" class="d-block w-100">
+                    <div class="single-product-card">
+                      <div class="product-img-wrap">
+                        {% if product.metafields.custom.badge_text.value.badge_text.value != blank %}
+                          <div class="product-cetagory">
+                            <span class="product-badge-active{% unless product.metafields.custom.badge_text.value.enable_box.value %} bg-transparent{% endunless %}">new formulation</span>
+                          </div>
+                        {% endif %}
+                        <div class="product-img">
+                          {% if rec_product.featured_image %}
+                            <img src="{{ rec_product.featured_image | image_url: width: 600 }}" alt="{{ rec_product.title | escape }}" width="auto" height="auto">
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="product-content">
+                        <h4 class="font-base">{{ rec_product.title }}</h4>
+                        <p>{{ product.metafields.custom.short_description }}</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+        {% comment %} <div class="swiper-paginatoin-control container inner-spacer pb-0">
+          <div class="swiper-pagination pp-product-pagination"></div>
+        </div> {% endcomment %}
+      </div>
+    </div>
+    <div class="swiper-scrollbar__wrapper container-max inner-spacer pb-0">
+      <div class="swiper-scrollbar pp-product-scrollbar"></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // get section width
+  function setSectionWidth() {
+    const root = document.documentElement;
+    root.style.setProperty("--full-width",`${root.clientWidth}px`);
+  };
+
+  // setSectionWidth();
+  window.addEventListener("resize", setSectionWidth);
+  window.addEventListener('load', setSectionWidth);
+</script>
+
+
+{% schema %}
+  {
+    "name": "New Recommended Products",
+    "tag": "section",
+    "class": "product-recommendation-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section_heading",
+        "label": "Section Heading",
+        "default": "you may also like"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection to pull products from"
+      },
+      {
+        "type": "range",
+        "id": "product_limit",
+        "label": "Number of products to show",
+        "min": 1,
+        "max": 24,
+        "step": 1,
+        "default": 8
+      }
+    ],
+    "presets": [
+      {
+        "name": "New Recommended Products",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}
+
+
+<script>
+  // get section width
+  function setSectionWidth() {
+    const root = document.documentElement;
+    root.style.setProperty("--full-width",`${root.clientWidth}px`);
+  };
+
+  // setSectionWidth();
+  window.addEventListener("resize", setSectionWidth);
+  window.addEventListener('load', setSectionWidth);
+</script>
+
+{% schema %}
+  {
+    "name": "New Featured Collection",
+    "class": "favourite-formulation-section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "favourite_formulations_title",
+        "label": "Section Title",
+        "default": "Favourite Formulations"
+      },
+      {
+        "type": "text",
+        "id": "favourite_formulations_description",
+        "label": "Section Description",
+        "default": "Timeless gift options including celebrated staples of skin, hand and body care, as well as fragrant delights for the home."
+      },
+      {
+        "type": "url",
+        "id": "btn_url",
+        "label": "Button URL"
+      },
+      {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Button Label",
+        "default": "browse favourite formulations"
+      },
+      {
+        "type": "header",
+        "content": "Collection Settings"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Featured Collection"
+      },
+      {
+        "type": "range",
+        "id": "max_products",
+        "label": "t:settings.product_count",
+        "min": 1,
+        "max": 16,
+        "step": 1,
+        "default": 4
+      }
+    ],
+    "presets": [
+      {
+        "name": "New Featured Collection",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

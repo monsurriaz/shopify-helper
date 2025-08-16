@@ -1,0 +1,61 @@
+{% comment %}
+  It is a section that will only use to dynamically show details of a product from any where using section rendering API.
+  - Use the css and js in theme.liquid file for better performance.
+{% endcomment %}
+
+{{ 'quickview-product.css' | asset_url | stylesheet_tag }}
+<script 
+  src="{{ 'quickview-product.js' | asset_url }}"
+  defer="defer"
+></script>
+
+<quickview-product class="quickview-product">
+  <div class="quickview-product-content">
+    <div class="quickview-product__top">
+      <h2 class="secondary-heading pb-3">upgrade your routine</h2>
+      <p>Make sure you use our best products to combine with your current routine.</p>
+    </div>
+    {% assign current_variant = closest.product.selected_or_first_available_variant %}
+    <div class="quickview-product__grid">
+      <div class="quickview-product__media">
+        <img 
+          id="quick-img" 
+          src="{{ closest.product.featured_image | image_url: width: 340 }}" 
+          alt="{{ closest.product.title | escape }}" loading="lazy"
+          width="auto" height="auto"
+        >
+      </div>
+      <div class="quickview-product__details">
+        <h4 id="quick-title">{{ closest.product.title }}</h4>
+        <div class="quickview-product__details-price">
+          <p class="product-price" id="quick-price">{{ current_variant.price | money_without_trailing_zeros }}</p>
+          {% if current_variant.compare_at_price > current_variant.price %}
+            <p class="regular-price" id="quick-compare-price">{{ current_variant.compare_at_price | money_without_trailing_zeros }}</p>
+          {% endif %}
+        </div>
+        <div class="quickview-product__variants">
+          {% render 'quickview-variant-picker', product_resource: closest.product %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="quickview-cta">
+    <div class="quickview-cta__buttons">
+      <button class="quickview-product__button" data-add-to-cart data-variant-id="{{ current_variant.id }}">Add to order - {{ current_variant.price | money_without_trailing_zeros }}</button>
+      <button class="skip-card" data-quickview-close>skip & view cart</button>
+    </div>
+  </div>
+</quickview-product>
+
+{% schema %}
+{
+  "name": "Quick View",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Quick view settings"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

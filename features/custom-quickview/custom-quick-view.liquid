@@ -1,0 +1,54 @@
+{%- comment -%}
+  ----------------------------------------------------------------------------------------------------------------------
+  CUSTOM QUICK VIEW
+  ----------------------------------------------------------------------------------------------------------------------
+
+  This component/snippet is used to create a custom quick view popup for products.
+
+  ##Supported parameters
+  * data-quickview-close: this attribute close the quick view popup
+  * quickview-sidebar__content: this class is used to target the content area where product details will be loaded dynamically.
+
+  ##Requisites
+  * Ensure you have the necessary CSS styles for the quick view popup and product display.
+  * Ensure you have the necessary JavaScript to handle the quick view functionality and product details loading.
+  * quickview-product.liquid section which is used to load the product by handle and render data into 'quickview-sidebar__content'.
+
+  ##Usage
+  * Include this snippet in your theme where you want the quick view functionality to be available. (e.g., product grid, collection page).
+{%- endcomment -%}
+
+{% comment %} 
+  Trigger:
+  - This button is used to open the quick view popup.
+  - Ensure you have a/multiple button(s) with the data-quickview-opener attribute to trigger the quick view popup.
+  - The trigger button should be placed in the product grid or wherever you want to allow users to open the quick view.
+
+  More ideas:
+  - (Product Page): You can use it for showing upsell product or related product after clickig the Main ATC button.
+  - (Cart drawer): You can use it with cart drawer upsell products to show details of the upsell product.
+{% endcomment %}
+<button data-quickview-opener>Open Quickview</button>
+{% comment %} trigger: {% endcomment %}
+
+
+<script src="{{ 'custom-quick-view.js' | asset_url }}" defer="defer"></script>
+{% comment %} Quick view upsell popup {% endcomment %}
+<custom-quick-view class="quickview-sidebar__wrapper">
+  <div class="quickview-sidebar">
+    <div class="quickview-sidebar__header">
+      <div class="quickview-sidebar__top">
+        <h2 class="secondary-heading hidden">cart</h2>
+        <button data-quickview-close>
+          <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 3.0001C3 3.0001 12.3324 12.3328 18.9999 19.0001" stroke="#231C19" />
+            <path d="M3 19L19.0001 3.00003" stroke="#231C19" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="quickview-sidebar__content"></div>
+  </div>
+  <div class="quickview_overlay"></div>
+</custom-quick-view>
+

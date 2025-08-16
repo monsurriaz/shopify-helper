@@ -1,0 +1,63 @@
+/* Align self properties for children of flex/grid containers */
+/* These properties allow the child to align itself within the flex or grid container. */
+.parent {
+  display: flex; /* or display: grid; */
+  height: 200px; /* Example height for the parent container */
+}
+.child {
+  align-self: stretch; /* makes the child stretch to fill the available space */
+  align-self: center; /* centers the child vertically within the container */
+  align-self: flex-start; /* shrinks the child to fit its content */
+  align-self: flex-end; /* grows the child to fill the available space */
+}
+
+/* :has use case */
+.parent:has(.child) {
+  /* Apply styles to the parent if it has a child with the class .child */
+  background-color: lightblue; /* Example style */
+}
+/* :has with pseudo-classes */
+.parent:has(.child:hover) {
+  /* Apply styles to the parent if it has a child with the class .child that is being hovered */
+  background-color: lightgreen; /* Example style */
+}
+
+/* :is use case */
+.parent:is(.child, .another-child) {
+  /* Apply styles to the parent if it has a child with the class .child or .another-child */
+  background-color: lightcoral; /* Example style */
+}
+/* :is with pseudo-classes */
+.parent:is(.child:hover, .another-child:focus) {
+  /* Apply styles to the parent if it has a child with the class .child that is being hovered or .another-child that is focused */
+  background-color: lightyellow; /* Example style */
+}
+
+/* :where use case */
+.parent:where(.child, .another-child) {
+  /* Apply styles to the parent if it has a child with the class .child or .another-child */
+  background-color: lightgray; /* Example style */
+}
+/* :where with pseudo-classes */
+:where(.child:hover, .another-child:focus) {
+  /* Apply styles to the parent if it has a child with the class .child that is being hovered or .another-child that is focused */
+  background-color: lightpink; /* Example style */
+}
+
+/* :not use case */
+.parent:not(.child) {
+  /* Apply styles to the parent if it does not have a child with the class .child */
+  background-color: lightcyan; /* Example style */
+}
+/* :not with pseudo-classes */
+.parent:not(.child:hover) {
+  /* Apply styles to the parent if it does not have a child with the class .child that is being hovered */
+  background-color: lightgoldenrodyellow; /* Example style */
+}
+
+
+/* Apply styles to the parent if it does not have a child with the class .child */
+.parent:not(:has(.child)) {
+  background-color: lightpink; /* Example style */
+}
+

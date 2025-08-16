@@ -1,11 +1,13 @@
-<!-- Add this script to a place where you want to show loading during any operation. -->
-
 <style>
-  .hidden {
+  /* add this class .has__spinner to its parent */
+  .has__spinner:has(.loading-overlay) {
+    position: relative;
+  }
+  .loader-hidden {
     display: none !important;
   }
-  /* add a overlay effect */
-  .loading-overlay:not(.hidden)~* {
+  /* add a overlay effect when spinner active */
+  .loading-overlay:not(.loader-hidden)~* {
     visibility: visible;
     opacity: .4;
   }
@@ -27,10 +29,10 @@
     width: 1.8rem;
     display: inline-block;
   }
-  .spinner {
+  .loading-overlay__spinner .spinner {
     animation: rotator 1.4s linear infinite;
   }
-  .path {
+  .loading-overlay__spinner .path {
     stroke-dasharray: 280;
     stroke-dashoffset: 0;
     transform-origin: center;
@@ -74,12 +76,4 @@
     </svg>
   </div>
 </div>
-
-<!-- Remove this hidden class for showing loading, if needed, add it after 1 or 2 seconds. -->
-<script>
-  document.querySelector(`.loading-overlay`).classList.remove('hidden');
-  setTimeout(() => {
-    document.querySelector(`.loading-overlay`).classList.add('hidden');
-  }, 1000);
-</script>
 

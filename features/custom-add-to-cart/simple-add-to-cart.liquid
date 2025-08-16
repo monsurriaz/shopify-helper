@@ -1,0 +1,129 @@
+{%- doc -%}
+  Renders an "Add to cart" button with dynamic text and state. It shows different text based on whether the product can be added to the cart and provides visual feedback when an item is added.
+{%- enddoc -%}
+
+{%- liquid
+  assign default_add_to_cart_text = 'actions.add_to_cart' | t
+-%}
+
+{% comment %} 
+  - add this script into product main section if no bundle
+{% endcomment %}
+<script 
+  src="{{ 'simple-add-to-cart.js' | asset_url }}"
+></script>
+
+{% comment %} 
+  - add this script into product main section if any bundle
+{% endcomment %}
+<script 
+  src="{{ 'bundle-add-to-cart.js' | asset_url }}"
+></script>
+
+<custom-add-to-cart class="custom-add-to-cart">
+  <button 
+    id="{{ id }}"
+    {% if block.settings.enable_upsell and block.settings.upsell_product != blank %}
+      data-upsell-opener
+      data-product-handle="{{ block.settings.upsell_product.handle }}"
+    {% else %}
+      skip-upsell-drawer=true
+    {% endif %}
+    data-atc-button
+    class="button custom-add-to-cart-button has__spinner"
+    {% unless can_add_to_cart %}
+      disabled
+    {% endunless %}
+  >
+    <div class="loading-overlay loader-hidden">
+      <div class="loading-overlay__spinner">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          class="spinner"
+          viewBox="0 0 66 66"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+        </svg>
+      </div>
+    </div>
+    <span
+      class="add-to-cart-text"
+    >
+      <span class="add-to-cart-text__content">
+        Add to cart
+      </span>
+    </span>
+    <span
+      aria-hidden="true"
+      class="add-to-cart-text--added"
+    >
+      <span class="svg-wrapper add-to-cart-icon--added">
+        {{- 'icon-checkmark.svg' | inline_asset_content -}}
+      </span>
+      <span class="">
+        Added
+      </span>
+    </span>
+  </button>
+</custom-add-to-cart>
+
+{% stylesheet %}
+  .add-to-cart-text {
+    display: flex;
+    gap: var(--gap-2xs);
+    align-items: center;
+    justify-content: center;
+    animation-duration: var(--animation-speed);
+    animation-timing-function: var(--animation-easing);
+    animation-fill-mode: forwards;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .atc-added .add-to-cart-text {
+    animation-name: atc-slide-out;
+  }
+
+  .add-to-cart-text--added {
+    position: absolute;
+    inset: 0;
+    animation-duration: var(--animation-speed);
+    animation-timing-function: var(--animation-easing);
+    animation-fill-mode: forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: width var(--animation-speed) var(--animation-easing),
+      opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .atc-added .add-to-cart-text--added {
+    animation-name: atc-slide-in;
+  }
+
+  @keyframes atc-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.5em);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes atc-slide-out {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(-1em);
+      opacity: 0;
+    }
+  }
+{% endstylesheet %}

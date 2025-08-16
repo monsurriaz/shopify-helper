@@ -1,0 +1,126 @@
+
+/* Quickview product */
+.quickview-product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 55px);
+  max-height: 100%;
+  padding-bottom: 16px;
+}
+.quickview-product__top {
+  padding: 16px;
+  color: var(--textPrimaryColor);
+}
+.quickview-product__top h2 {
+  font-family: var(--swiss721BTMedium);
+  font-weight: 500;
+  color: var(--textPrimaryColor);
+}
+.quickview-product__grid {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  padding-left: 0;
+}
+.quickview-product__grid .quickview-product__media {
+  flex: 0 0 170px;
+  width: 170px;
+}
+.quickview-product__grid .quickview-product__media img {
+  width: 100%;
+}
+.quickview-product__grid .quickview-product__details {
+  color: var(--textPrimaryColor);
+}
+.quickview-product__grid .quickview-product__details h4 {
+  font-size: 16px;
+  padding-bottom: 16px;
+  line-height: 12px;
+}
+.quickview-product__grid .quickview-product__details-price {
+  display: flex;
+  align-items: center;
+}
+.quickview-product__grid .product-price {
+  color: var(--redColor);
+  font-size: 28px;
+  font-weight: 600;
+  padding-right: 8px;
+}
+.quickview-product__grid .regular-price {
+  font-size: 28px;
+  font-weight: 600;
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+.quickview-product__variants {
+  margin-top: 32px;
+}
+.quickview-product__variants .custom-variant-picker {
+  padding: 0px;
+}
+.quickview-product__variants legend {
+  font-family: var(--swiss721BTLight);
+  font-size: 16px;
+  line-height: 12px;
+  margin-bottom: 18px !important;
+  color: var(--textPrimaryColor);
+}
+.quickview-product__variants .variant-option__swatch-value {
+  color: var(--textPrimaryColor);
+}
+.quickview-product__variants legend+.variant-option__button-label--has-swatch {
+  margin-left: 5px;
+}
+.quickview-product .skip-card {
+  background-color: transparent;
+  border: 1px solid var(--textPrimaryColor);
+  color: var(--textPrimaryColor);
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+.quickview-product .skip-card:hover {
+  background-color: var(--textPrimaryColor);
+  color: #fff;
+}
+.quickview-cta {
+  margin-top: auto;
+}
+.quickview-cta__buttons button {
+  padding: 18px 20px;
+  width: calc(100% - 32px);
+  margin-inline: auto;
+  color: #fff;
+  background: #231c19;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  font-family: var(--swiss721BTMedium);
+  margin-bottom: -8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.quickview-cta__buttons button:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.quickview_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 900;
+  backdrop-filter: blur(3px);
+}
+.quickview_overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}

@@ -1,0 +1,142 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+{{ 'cart-upsell.css' | asset_url | stylesheet_tag }}
+
+<script 
+  src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" 
+  defer="defer"
+></script>
+
+{% style %}
+  .new-product__information-media .single-product-slider {
+    position: sticky;
+    top: var(--announcement-bar-height);
+  }
+  .product-single-viewer {
+    height: calc(100vh - var(--announcement-bar-height) - 4px);
+    position: relative;
+  }
+  .product-single-viewer img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    background-blend-mode: multiply;
+  }
+  .swiper-button-next, 
+  .swiper-rtl .swiper-button-prev {
+    right: 8px;
+  }
+  .swiper-button-prev, 
+  .swiper-rtl .swiper-button-next {
+    left: 8px;
+  }
+  .sng-slider-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .sng-slider-btn svg {
+    width: 16px;
+    height: 100%;
+  }
+  .sng-slider-btn::after {
+    display: none;
+  }
+{% endstyle %}
+
+{% assign selected_product = closest.product %}
+
+<div class="swiper mySwiper single-product-slider">
+  <div class="swiper-wrapper">
+    {% for media in selected_product.media %}
+      {% if media.media_type == "image" %}
+        <div class="swiper-slide">
+          <div class="product-single-viewer">
+            <img
+              src="{{ media | image_url: width: 2000 }}"
+              alt="{{ media.alt | escape }}"
+              data-image-id="{{ media.id }}"
+              width="{{ media.width }}"
+              height="{{ media.height }}"
+            >
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% if selected_product.media.size > 1 %}
+  <div class="swiper-button-next sng-slider-btn sng-slider-next">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4.83594" y="1" width="9.4562" height="1.18202" transform="rotate(45 4.83594 1)" fill="#231C19"/>
+    <rect x="4" y="13.5371" width="9.4562" height="1.18202" transform="rotate(-45 4 13.5371)" fill="#231C19"/>
+    </svg>
+  </div>
+  <div class="swiper-button-prev sng-slider-btn sng-slider-prev">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect x="10.6865" y="14.3729" width="9.45619" height="1.18202" transform="rotate(-135 10.6865 14.3729)" fill="#231C19"/>
+      <rect x="11.5225" y="1.83582" width="9.45619" height="1.18202" transform="rotate(135 11.5225 1.83582)" fill="#231C19"/>
+    </g>
+    </svg>
+  </div>
+  <div class="swiper-scrollbar__wrapper">
+    <div class="swiper-scrollbar sng-slider-scrollbar"></div>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  // sidebar product slider js
+  let swiper3 = new Swiper(".single-product-slider", {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    scrollbar: {
+      el: ".sng-slider-scrollbar",
+      draggable: true,
+      snapOnRelease: true, // Optional: enable snapping behavior
+    },
+    navigation: {
+      nextEl: ".sng-slider-next",
+      prevEl: ".sng-slider-prev",
+    },
+  });
+
+  // change product image based on color/image variant selected.
+  document.querySelectorAll('.product-details .variant-option__button-label--has-swatch').forEach(label => {
+    label.addEventListener('click', function () {
+      const imageId = this.getAttribute('data-image-id');
+      const swiper = document.querySelector('.single-product-slider')?.swiper;
+
+      if (!swiper || !imageId) return;
+
+      // Find the slide index that matches the image ID
+      const slides = document.querySelectorAll('.single-product-slider .swiper-slide img');
+      for (let i = 0; i < slides.length; i++) {
+        if (slides[i].getAttribute('data-image-id') === imageId) {
+          swiper.slideTo(i);
+          break;
+        }
+      }
+    });
+  });
+</script>
+
+{% comment %} 
+  Use it as a block or remove the schema and use it as a snippet.
+{% endcomment %}
+{% schema %}
+{
+  "name": "New Media Gallery",
+  "tag": null,
+  "settings": [
+
+  ],
+  "presets": [
+    {
+      "name": "New Media Gallery"
+    }
+  ]
+}
+{% endschema %}

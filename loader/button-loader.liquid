@@ -2,7 +2,7 @@
   .hidden {
     display: none;
   }
-  .loader-btn {
+  .loader__btn {
     background-color: rgb(63, 191, 198);
     border-radius: 6px;
     color: #fff;
@@ -20,11 +20,11 @@
     display: flex;
     justify-content: center;
   }
-  .loader-btn:hover {
+  .loader__btn:hover {
     color: #121212;
     background-color: #fff;
   }
-  .loader-btn.loading {
+  .loader__btn.loading {
     color: transparent;
     position: relative;
   }
@@ -32,7 +32,7 @@
     width: 18px;
     display: inline-block;
   }
-  .loader-btn.loading > .loading-overlay__spinner {
+  .loader__btn.loading > .loading-overlay__spinner {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -42,14 +42,14 @@
     display: flex;
     align-items: center;
   }
-  .loader-btn.loading > .loading-overlay__spinner .path {
+  .loader__btn.loading > .loading-overlay__spinner .path {
     stroke: #181818;
   }
 </style>
 
 <button 
   type="submit"
-  class="loader-btn"
+  class="loader__btn"
 >
   <span>
     Add to cart
@@ -68,7 +68,7 @@
 </button>
 
 <script>
-  const btn = document.querySelector('.loader-btn');
+  const btn = document.querySelector('.loader__btn');
   btn.addEventListener('click', ()=> {
     btn.classList.add('loading');
     btn.querySelector('.loading-overlay__spinner').classList.remove('hidden');

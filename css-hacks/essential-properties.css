@@ -1,9 +1,252 @@
-/* Operations of child of flex/grid container */
-.child {
-  align-self: stretch; /* Make the child of flex/grid container stretch to fill the available space. */
-  align-self: center; /* Make the child of a flex/grid container center itself vertically. */
-  align-self: flex-start; /* Make the child of a flex/grid container shrink to fit its content. */
-  align-self: flex-end; /* Make the child of a flex/grid container grow to fill the available space. */
+/* write all the essential css properties for starting a new design and layout */
+:root {
+  --primary-color: #3498db; /* Primary color for the theme */
+  --secondary-color: #2ecc71; /* Secondary color for the theme */
+  --font-family: 'Arial', sans-serif; /* Default font family */
+  --font-size: 16px; /* Base font size */
+  --line-height: 1.5; /* Base line height */
+  --border-radius: 4px; /* Default border radius for elements */
+  --background-color: #f4f4f4; /* Default background color */
+  --horizontal-gap: 20px; /* Default horizontal gap for flex/grid items */
+  --vertical-gap: 20px; /* Default vertical gap for flex/grid items */
 }
-
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Ensures padding and border are included in element's total width and height */
+}
+/* Apply essential styles to the body */
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  color: #333; /* Default text color */
+  background-color: var(--background-color); /* Default background color */
+}
+/* Essential layout properties */
+.container {
+  max-width: 1200px; /* Maximum width for the container */
+  margin: 0 auto; /* Center the container */
+  padding: 20px; /* Padding around the content */
+}
+/* Flexbox properties for layout */
+.flex {
+  display: flex; /* Enables flexbox layout */
+  flex-wrap: wrap; /* Allows items to wrap onto multiple lines */
+  justify-content: space-between; /* Distributes space between items */
+  align-items: center; /* Aligns items vertically in the center */
+}
+/* Grid properties for layout */
+.grid {
+  display: grid; /* Enables grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid columns */
+  gap: var(--vertical-gap) var(--horizontal-gap); /* Space between grid items */
+}
+/* Essential typography properties */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem; /* Space below headings */
+  font-weight: bold; /* Bold headings */
+}
+p {
+  margin-bottom: 1rem; /* Space below paragraphs */
+  line-height: var(--line-height); /* Consistent line height */
+}
+/* Essential link styles */
+a {
+  color: var(--primary-color); /* Primary color for links */
+  text-decoration: none; /* Remove underline from links */
+}
+a:hover, a:focus {
+  text-decoration: underline; /* Underline links on hover or focus */
+}
+/* Essential button styles */
+button {
+  background-color: var(--primary-color); /* Primary color for buttons */
+  color: #fff; /* White text color */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for buttons */
+  border-radius: var(--border-radius); /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+button:hover, button:focus {
+  background-color: var(--secondary-color); /* Change color on hover or focus */
+}
+/* Essential form styles */
+input, textarea, select {
+  font-family: var(--font-family); /* Consistent font family for form elements */
+  font-size: var(--font-size); /* Consistent font size for form elements */
+  padding: 10px; /* Padding for form elements */
+  border: 1px solid #ccc; /* Default border */
+  border-radius: var(--border-radius); /* Rounded corners */
+  width: 100%; /* Full width for form elements */
+}
+/* Essential utility classes */
+.text-center {
+  text-align: center; /* Center text */
+}
+.text-right {
+  text-align: right; /* Right align text */
+}
+/* Essential visibility classes */
+.hidden {
+  display: none; /* Hide element */
+}
+.visible {
+  display: block; /* Show element */
+}
+/* Essential accessibility styles */
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+}
+/* Essential spacing utilities */
+.mt-1 {
+  margin-top: 1rem; /* Margin top utility */
+}
+.mb-1 {
+  margin-bottom: 1rem; /* Margin bottom utility */
+}
+/* Essential padding utilities */
+.pt-1 {
+  padding-top: 1rem; /* Padding top utility */
+}
+.pb-1 {
+  padding-bottom: 1rem; /* Padding bottom utility */
+}
+/* Essential border utilities */
+.border {
+  border: 1px solid #ccc; /* Default border utility */
+}
+/* Essential hover effects */
+.hover-bg {
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+.hover-bg:hover {
+  background-color: var(--secondary-color); /* Change background color on hover */
+}
+/* Essential focus styles */
+:focus {
+  outline: 2px solid var(--primary-color); /* Outline for focused elements */
+  outline-offset: 2px; /* Space between outline and element */
+}
+/* Essential transition utilities */
+.transition {
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+}
+/* Essential z-index utilities */
+.z-1 {
+  z-index: 1; /* Default z-index utility */
+}
+/* Essential position utilities */
+.position-relative {
+  position: relative; /* Relative positioning utility */
+}
+/* Essential position utilities */
+.position-absolute {
+  position: absolute; /* Absolute positioning utility */
+}
+/* Essential position utilities */
+.position-fixed {
+  position: fixed; /* Fixed positioning utility */
+}
+/* Essential position utilities */
+.position-sticky {
+  position: sticky; /* Sticky positioning utility */
+  top: 0; /* Stick to the top */
+}
+/* Essential overflow utilities */
+.overflow-hidden {
+  overflow: hidden; /* Hide overflow content */
+}
+/* Essential overflow utilities */
+.overflow-auto {
+  overflow: auto; /* Enable scrolling for overflow content */
+}
+/* Essential overflow utilities */
+.overflow-scroll {
+  overflow: scroll; /* Always show scrollbars for overflow content */
+}
+/* Essential display utilities */
+.display-block {
+  display: block; /* Block display utility */
+}
+.display-inline {
+  display: inline; /* Inline display utility */
+}
+.display-inline-block {
+  display: inline-block; /* Inline-block display utility */
+}
+/* Essential display utilities */
+.display-flex {
+  display: flex; /* Flex display utility */
+}
+.display-grid {
+  display: grid; /* Grid display utility */
+}
+/* Essential display utilities */
+.display-none {
+  display: none; /* Hide element completely */
+}
+/* Essential text utilities */
+.text-uppercase {
+  text-transform: uppercase; /* Uppercase text utility */
+}
+.text-lowercase {
+  text-transform: lowercase; /* Lowercase text utility */
+}
+/* Essential text utilities */
+.text-capitalize {
+  text-transform: capitalize; /* Capitalize text utility */
+}
+/* Essential text utilities */
+.text-nowrap {
+  white-space: nowrap; /* Prevent text wrapping */
+}
+/* Essential text utilities */
+.text-break {
+  word-break: break-all; /* Break long words */
+}
+/* Essential text utilities */
+.text-truncate {
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis for truncated text */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+/* Essential list styles */
+ul, ol {
+  list-style: none; /* Remove default list styles */
+  padding-left: 0; /* Remove padding */
+}
+/* Essential list styles */
+li {
+  margin-bottom: 0.5rem; /* Space between list items */
+}
+/* Essential table styles */
+table {
+  width: 100%; /* Full width table */
+  border-collapse: collapse; /* Collapse borders */
+}
+/* Essential table styles */
+th, td {
+  padding: 10px; /* Padding for table cells */
+  border: 1px solid #ccc; /* Default border for table cells */
+  text-align: left; /* Left align text in table cells */
+}
+/* Essential table styles */
+th {
+  background-color: var(--primary-color); /* Background color for table headers */
+  color: #fff; /* White text color for table headers */
+}
+/* Essential table styles */
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping for table rows */
+}
+/* Essential table styles */
+tbody tr:hover {
+  background-color: #f1f1f1; /* Highlight row on hover */
+}
 
