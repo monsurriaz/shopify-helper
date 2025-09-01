@@ -1,0 +1,49 @@
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // ✅ Reusable update trigger
+    function triggerSlidecartUpdate() {
+      setTimeout(() => {
+        if (typeof window.SLIDECART_UPDATE === "function") {
+          window.SLIDECART_UPDATE();
+          console.log("SLIDECART updated");
+        } else {
+          console.warn("SLIDECART_UPDATE is not available yet");
+        }
+      }, 500);
+    }
+
+    // ✅ AMP Slider Cart callback: fires when product is added
+    window.SLIDECART_ADD_TO_CART = function({ id, quantity }) {
+      triggerSlidecartUpdate();
+    };
+
+    // ✅ AMP Slider Cart callback: fires whenever Slide Cart has been opened
+    window.SLIDECART_OPENED = function() {
+      let myInterval = setInterval(triggerSlidecartUpdate, 400);
+
+      // After 2 seconds, stop the interval
+      setTimeout(() => {
+        clearInterval(myInterval);
+        console.log("Interval stopped.");
+      }, 2000);
+    }
+
+    // ✅ AMP Slider Cart callback: fires when cart is updated
+    window.SLIDECART_UPDATED = function(cart) {
+      // this can be change based on theme. here logic is: find the cart item counter, update that count after updated the slidercart.
+      const els = document.querySelectorAll(".m-cart-count");
+      const cls = "m:hidden";
+      if (!els) return;
+
+      Array.from(els).forEach((el) => {
+        if (cart.item_count > 0) {
+          el.classList.remove(cls);
+        } else {
+          el.classList.add(cls);
+        }
+        el.innerText = cart.item_count;
+      });
+    };
+  });
+</script>
+

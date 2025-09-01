@@ -61,3 +61,25 @@
   background-color: lightpink; /* Example style */
 }
 
+
+/***** Make Slider dot to progress bar *****/
+ .slideshow-controls__progress_bar {
+  width: 100%;
+  height: 4px;
+  display: flex;
+  gap: 0px;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 0px;
+}
+.slideshow-controls__progress_bar button {
+  width: 100%;
+  padding: 0px;
+  height: 4px;
+  background-color: var(--progressbarFillColor);
+}
+.slideshow-controls__progress_bar button::after {
+  display: none;
+}
+.slideshow-controls__progress_bar button[aria-selected="true"] ~ button {
+  background-color: transparent;
+}

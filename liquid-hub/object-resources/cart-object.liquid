@@ -1,0 +1,53 @@
+{% comment %} 
+
+###Property of Cart object
+
+- note
+- original_total_price (price without shopify discount)
+- total_price (price after shopify discount or you can say it's the final price that will pay customer)
+- total_discount (shopify total discount amount. total_price + total_discount = original_total_price)
+- item_count (Number of products)
+- items 
+
+##Items it self a array, it's containing all the item (product). Property of items array
+
+- id (variant id)
+- variant_id (variant id)
+
+- price (price/normal price without shopify discount for each quantity)
+- discounted_price (price after shopify discount for each quantity)
+- final_price (price after shopify discount for each quanity)
+
+- final_line_price (price after shopify discount x quantity)
+- line_price (price after shopify discount x quantity)
+
+- original_price (variant price / normal price without shopify discount for each quantity)
+- original_line_price (variant price x quantity)
+
+- total_discount (discount amount x quantity)
+- line_level_discount_allocations
+
+#Line_level_discount_allocations it self is a array, it's containing all the info about discount of a item (product). Property of its below
+
+- amount (amount of total discount)
+
+
+
+{% endcomment %}
+
+{
+  "token": "hWN0uXwgu4NC1HN94OCEgAWE?key=29336f7698e8b30fb9a4d5a8e3f830f5",
+  "note": "",
+  "attributes": {},
+  "original_total_price": 7800,
+  "total_price": 6240,
+  "total_discount": 1560,
+  "total_weight": 0,
+  "item_count": 2,
+  "items": [],
+  "requires_shipping": true,
+  "currency": "USD",
+  "items_subtotal_price": 6240,
+  "cart_level_discount_applications": [],
+  "discount_codes": []
+}
