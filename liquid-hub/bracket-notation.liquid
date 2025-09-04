@@ -1,0 +1,40 @@
+{% comment %} 
+  Metafields with Dot notation
+{% endcomment %}
+{% assign meta_image = product.metafields.custom.tab_image_1 %}
+
+{% comment %} 
+  Metafields with Bracket notation 
+{% endcomment %}
+{% assign key = "tab_image_1" %}
+{% assign meta_image_dynamic_key = product.metafields.custom[key].value %} {% # While using bracket notation, need to use .value to access row value %}
+
+{% # Get multiple metafields values if keys are sequential %}
+{% for i in (1..10) %}
+  {% assign key = "tab_image_" | append: i %}
+  {{ product.metafields.custom[key].value | img_url: 'master' }}
+{% endfor %}
+
+
+{% comment %} 
+  Section settings with Dot notation
+{% endcomment %}
+{% assign title = section.settings.title_1 %}
+
+{% comment %} 
+  Section settings with Bracket notation
+{% endcomment %}
+{% assign id = "title_1" %}
+{{ section.settings[id] }}
+
+{% # Get multiple section settings' value if ids are sequential %}
+{% for i in (1..20) %}
+  {% assign id = "title_" | append: i %}
+  {{ section.settings[id] }}
+{% endfor %}
+
+
+{% comment %} 
+  Even it works with block setting same way as section setting 
+{% endcomment %}
+

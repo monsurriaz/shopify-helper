@@ -23,3 +23,8 @@
 {% assign some_product = all_products['some-handle'] %}
 {% assign another_product = all_products.some_handle %}
 
+{% comment %} 
+  Get string to numeric value
+{% endcomment %}
+{% assign string_digit = "1" %} {% # all the schema type except number return string values %}
+{% assign numeric_digit = string_digit | plus: 0  %}
