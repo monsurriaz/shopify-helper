@@ -1,0 +1,27 @@
+{% comment %} 
+  Custom Payment icons snippet
+  https://help.shopify.com/en/manual/online-store/themes/themes-by-shopify/vintage-themes/customizing-vintage-themes/add-credit-card-icons#:~:text=Enable%20payment%20icons%20in%20your%20footer
+{% endcomment %}
+
+<div class="product__block">
+  <style>
+    .product__block {
+      margin-top: -5px;
+    }
+    .custom-payment__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+  </style>
+  {% assign enabled_payment_types = 'apple_pay,google_pay,maestro,master,paypal,visa,american_express,paypal' | remove: ' ' | split: ',' %}
+  <ul class="custom-payment__wrapper">
+    {% for type in enabled_payment_types %}
+      <li class="payment__icon">
+        {{ type | payment_type_svg_tag }}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
