@@ -1,0 +1,231 @@
+{% comment %} 
+  It's a product block of icon-text short info.
+{% endcomment %}
+
+<div class="product__block">
+  <style>
+    .hg-info {
+      color: #111;
+    }
+    .hg-info .hg-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .hg-info .hg-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 5px 0;
+    }
+    /* pulserend rood bolletje */
+    .hg-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: {{ block.settings.low_stock_color }};
+      position:relative;
+      flex: 0 0 8px;
+    }
+    .hg-dot::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: {{ block.settings.low_stock_color | hex_to_rgba: 0.35 }};
+      animation: hg-pulse 1.5s ease-out infinite;
+    }
+    @keyframes hg-pulse {
+      0% {
+        transform: scale(.75);
+        opacity: 1
+      }
+      100% {
+        transform: scale(1.6);
+        opacity: 0
+      }
+    }
+    /* iconen kleiner en uitgelijnd */
+    .hg-ic {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      display: inline-block;
+    }
+    .hg-ic svg {
+      width: 100%;
+      height: 100%;
+      stroke: #111;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+
+  <div class="hg-info">
+    <ul class="hg-list">
+      {% if block.settings.show_stock %}
+        <li class="hg-item">
+          <span class="hg-dot" aria-hidden="true"></span>
+          <span>{{ block.settings.low_stock_text }}</span>
+        </li>
+      {% endif %}
+      {% for i in (1..6) %}
+        {% assign icon_id = "icon_" | append: i %}
+        {% assign image_id = "image_" | append: i %}
+        {% assign text_id = "text_" | append: i %}
+        {% if block.settings[icon_id] != blank or block.settings[text_id] != blank %}
+          <li class="hg-item">
+            <span class="hg-ic" aria-hidden="true">
+              {% if block.settings[image_id] != blank %}
+              <img src="{{ block.settingss[image_id] | image_url: width: 100 }}" width="auto" height="auto"
+                alt="{{ block.settings[image_id].alt }}">
+              {% elsif block.settings[icon_id] != blank %}
+              {{ block.settings[icon_id] }}
+              {% endif %}
+            </span>
+            {% if block.settings[text_id] != blank %}
+            <span>{{ block.settings[text_id] }}</span>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "",
+  "blocks": [
+    {
+      "type": "icon_text",
+      "name": "Icon Text",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_stock",
+          "label": "Show Low stock alert",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "low_stock_text",
+          "label": "Low Stock text",
+          "default": "Almost sold out, only a few left in stock"
+        },
+        {
+          "type": "color",
+          "id": "low_stock_color",
+          "label": "Low stock Icon color",
+          "default": "#E60026"
+        },
+        {
+          "type": "header",
+          "content": "Icon Texts"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Icon/Image 1"
+        },
+        {
+          "type": "liquid",
+          "id": "icon_1",
+          "label": "SVG",
+          "info": "Optional"
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "Text 1",
+          "default": "Free Shipping with USPS"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Icon/Image 2"
+        },
+        {
+          "type": "liquid",
+          "id": "icon_2",
+          "label": "SVG",
+          "info": "Optional"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Text 2",
+          "default": "30-Day Money-Back Guarantee"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Icon/Image 3"
+        },
+        {
+          "type": "liquid",
+          "id": "icon_3",
+          "label": "SVG",
+          "info": "Optional"
+        },
+        {
+          "type": "text",
+          "id": "text_3",
+          "label": "Text 3",
+          "default": "Over 20,000+ happy customers"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Icon/Image 4"
+        },
+        {
+          "type": "liquid",
+          "id": "icon_4",
+          "label": "SVG",
+          "info": "Optional"
+        },
+        {
+          "type": "text",
+          "id": "text_4",
+          "label": "Text 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_5",
+          "label": "Icon/Image 5"
+        },
+        {
+          "type": "liquid",
+          "id": "icon_5",
+          "label": "SVG",
+          "info": "Optional"
+        },
+        {
+          "type": "text",
+          "id": "text_5",
+          "label": "Text 5"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_6",
+          "label": "Icon/Image 6"
+        },
+        {
+          "type": "liquid",
+          "id": "icon_6",
+          "label": "SVG",
+          "info": "Optional"
+        },
+        {
+          "type": "text",
+          "id": "text_6",
+          "label": "Text 6"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
