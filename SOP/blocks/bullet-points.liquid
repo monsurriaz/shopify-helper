@@ -1,0 +1,89 @@
+<div class="m-product-icon-text" {{ block.shopify_attributes }}>
+  <style>
+    .hg-info {
+      color: #111;
+    }
+    .hg-info .hg-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .hg-info .hg-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 5px 0;
+    }
+
+    /* pulserend rood bolletje */
+    .hg-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: {{ block.settings.low_stock_color }};
+      position: relative;
+      flex: 0 0 8px;
+    }
+    .hg-dot::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: {{ block.settings.low_stock_color | hex_to_rgba: 0.35 }};
+      animation: hg-pulse 1.5s ease-out infinite;
+    }
+    @keyframes hg-pulse {
+      0% {transform:scale(.75);opacity:1}
+      100% {transform:scale(1.6);opacity:0}
+    }
+
+    /* iconen kleiner en uitgelijnd */
+    .hg-ic {
+      width: 16px;
+      height: 16px;
+      flex:0 0 16px;
+      display: inline-block;
+    }
+    .hg-ic svg {
+      width: 100%;
+      height: 100%;
+      stroke: #111;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+  <div class="hg-info">
+    <ul class="hg-list">
+      {% if block.settings.show_stock %}
+        <li class="hg-item">
+          <span class="hg-dot" aria-hidden="true"></span>
+          <span>{{ block.settings.low_stock_text }}</span>
+        </li>
+      {% endif %}
+      {% for i in (1..6) %}
+        {% assign icon_id = "icon_" | append: i %}
+        {% assign image_id = "image_" | append: i %}
+        {% assign text_id = "text_" | append: i %}
+        {% if block.settings[icon_id] != blank or block.settings[text_id] != blank  %}
+          <li class="hg-item">
+            <span class="hg-ic" aria-hidden="true">
+              {% if block.settings[image_id] != blank %}
+                <img 
+                  src="{{ block.settings[image_id] | image_url: width: 100 }}" 
+                  width="auto" height="auto" alt="{{ block.settings[image_id].alt }}"
+                >
+              {% elsif block.settings[icon_id] != blank %}
+                {{ block.settings[icon_id] }}
+              {% endif %}
+            </span>
+            {% if block.settings[text_id] != blank %}
+              <span>{{ block.settings[text_id] }}</span>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>

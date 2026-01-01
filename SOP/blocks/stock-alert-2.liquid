@@ -1,0 +1,50 @@
+<div class="m-product-icon-text" {{ block.shopify_attributes }}>
+  <style>
+    .hg-info {
+      color: #111;
+    }
+    .hg-info .hg-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .hg-info .hg-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 5px 0;
+    }
+
+    /* pulserend rood bolletje */
+    .hg-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: {{ block.settings.low_stock_color }};
+      position: relative;
+      flex: 0 0 8px;
+    }
+    .hg-dot::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: {{ block.settings.low_stock_color | hex_to_rgba: 0.35 }};
+      animation: hg-pulse 1.5s ease-out infinite;
+    }
+    @keyframes hg-pulse {
+      0% {transform:scale(.75);opacity:1}
+      100% {transform:scale(1.6);opacity:0}
+    }
+  </style>
+  <div class="hg-info">
+    <ul class="hg-list">
+      {% if block.settings.show_stock %}
+        <li class="hg-item">
+          <span class="hg-dot" aria-hidden="true"></span>
+          <span>{{ block.settings.low_stock_text }}</span>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

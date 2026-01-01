@@ -1,0 +1,150 @@
+{% comment %} 
+  - Shopify Accepts Only a Structured JSON Object
+  - Shopify expects a JSON OBJECT with a required key named "items" in case of adding multiple items to the cart.
+
+  - Each item in the "items" array can have the following keys:
+    - id (required): The variant ID of the product to add.
+    - quantity (required): The quantity of the product to add.
+    - properties (optional): An object containing custom properties for the item.
+    - parent_id (optional): The ID of the parent product if adding a bundled item.
+
+  - Example structure:
+    {
+      "items": [
+        {
+          "id": 1234567890,
+          "quantity": 2,
+          "properties": {
+            "Custom Engraving": "Happy Birthday"
+          }
+        },
+        {
+          "id": 9876543210,
+          "quantity": 1
+        },
+        {
+          "id": 2345676523,
+          "quantity": 1,
+          "parent_id": 987643210 // for parent-child bundle
+        }
+      ]
+    }
+{% endcomment %}
+
+<script>
+
+  // 1. Adding a Product to the Cart
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: productId, quantity: quantity })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Added to cart:', data);
+    // Update cart UI dynamically
+  })
+  .catch(error => console.error('Error:', error));
+  .finally(() => {
+    // Optionally, you can refresh the cart or show a success message
+    fetchCart(); // Refresh cart data
+  });
+
+
+  // 2. Adding multiple items to the cart, MANUAL STRUCTURE
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      items: [
+        { id: 1234567890, quantity: 2 },
+        { id: 9876543210, quantity: 1 }
+      ] 
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Added to cart:', data);
+    // Update cart UI dynamically
+  })
+  .catch(error => console.error('Error:', error));
+  .finally(() => {
+    // Optionally, you can refresh the cart or show a success message
+    fetchCart(); // Refresh cart data
+  });
+
+
+  // 3. Adding multiple items to the cart, DYNAMIC STRUCTURE
+  const items = [
+    { id: 1234567890, quantity: 2 },
+    { id: 9876543210, quantity: 1 },
+    // Add more items as needed
+  ];
+
+  // We can use push method to add more items dynamically
+  items.push({ id: 1122334455, quantity: 3 });
+  items.push({ 
+    id: 5566778899, 
+    quantity: 1, 
+    properties: { 'Custom Engraving': 'Happy Birthday' } 
+  });
+  items.push({ 
+    id: 6677889900, 
+    quantity: 2, 
+    properties: { 'Gift Wrap': 'Yes', 'Message': 'Enjoy your gift!' },
+    parent_id: 1234509876 // for bundled products
+  });
+
+  function addMultipleToCart(items) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: items }) // the first items is a key here, second items is our array. in short hand we can write { items }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Added multiple items to cart:', data);
+      // Update cart UI dynamically
+    })
+    .catch(error => console.error('Error:', error))
+    .finally(() => {
+      // Optionally, you can refresh the cart or show a success message
+      fetchCart(); // Refresh cart data
+    });
+  }
+
+  // 3. Add properties to cart items for single item
+  function addToCartWithProperties(productId, quantity = 1, properties = {}) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        id: productId, 
+        quantity: quantity, 
+        properties: { "Note": "This is a special item" }
+      })
+    })
+  }
+
+  // 4. Add properties to cart items for multiple items
+  const itemsWithProperties = [
+    { 
+      id: 1234567890, 
+      quantity: 2, 
+      properties: { "Gift Wrap": "Yes", "Message": "Happy Birthday!" } 
+    },
+    { 
+      id: 9876543210, 
+      quantity: 1, 
+      properties: { "Custom Engraving": "Best Wishes" } 
+    }
+  ];
+
+  function addMultipleToCartWithProperties(itemsWithProperties) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: items })
+    })
+  }
+</script>

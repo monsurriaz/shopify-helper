@@ -1,5 +1,23 @@
-/* All type of tricky selector */
-[id^="MenuMobileListSection-"] {
+/***************************************************************
+  CSS Attribute Selectors
+***************************************************************/
+/*
+  Examples:
+  <div id="shopify-section-template--16313703530579__pagefly-home"></div>
+  <div id="shopify-section-template--16313703530580__gempages-home"></div>
+  <div id="shopify-section-template--16313703530581__replo-home"></div>
+*/
+
+/* starts with "shopify-section-template-" */
+[id^="shopify-section-template-"] {
+  
+}
+/* ends with "__pagefly-home" */
+[id$="__pagefly-home"] {
+  
+}
+/* contains "16313703530579" anywhere */
+[id*="16313703530579"] {
   
 }
 

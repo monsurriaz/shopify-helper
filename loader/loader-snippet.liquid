@@ -1,6 +1,6 @@
 <style>
   /* add this class .has__spinner to its parent */
-  .has__spinner:has(.loading-overlay) {
+  [data-spinner]:has(.loading-overlay) {
     position: relative;
   }
   .loader-hidden {
@@ -63,17 +63,41 @@
   }
 </style>
 
-<div class="loading-overlay hidden">
-  <div class="loading-overlay__spinner">
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      class="spinner"
-      viewBox="0 0 66 66"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-    </svg>
+<div class="parent" data-spinner>
+  <div class="loading-overlay hidden">
+    <div class="loading-overlay__spinner">
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="spinner"
+        viewBox="0 0 66 66"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+      </svg>
+    </div>
   </div>
+  <!-- Your content goes here -->
 </div>
 
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const parent = document.querySelector('[data-spinner]');
+    const overlay = parent.querySelector('.loading-overlay');
+
+    // Function to show spinner
+    function showSpinner() {
+      overlay.classList.remove('hidden');
+    }
+
+    // Function to hide spinner
+    function hideSpinner() {
+      overlay.classList.add('hidden');
+    }
+
+    // Example usage: Show spinner for 3 seconds on page load
+    showSpinner();
+    setTimeout(hideSpinner, 3000);
+  });
+</script>

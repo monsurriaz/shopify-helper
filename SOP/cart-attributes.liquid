@@ -1,0 +1,130 @@
+
+
+{% if settings.show_christmas_option %}
+  <style>
+    .gift-question {
+      padding: 12px 0;
+      margin-top: 12px;
+    }
+
+    .gift-question__label {
+      font-weight: 700 !important;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .gift-question__text {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #000000;
+    }
+
+    .gift-question label {
+      display: inline-block;
+      cursor: pointer;
+    }
+  </style>
+
+  <div class="gift-question border-bottom border--dashed">
+    <p class="gift-question__label">Is this a Christmas gift?</p>
+    <p class="gift-question__text">
+      Your order will come in our new signature MĦABBA packaging, with each item packed individually. Orders will be
+      delivered after 20th November and include 45 days for exchanges.
+    </p>
+    <label>
+      <input type="radio" form="cart" name="attributes[Christmas Gift]" value="Yes" {% if cart.attributes['Christmas
+        Gift']=="Yes" %}checked{% endif %}>
+      Yes
+    </label>
+    <label>
+      <input type="radio" name="attributes[Christmas Gift]" form="cart" value="No" {% if cart.attributes['Christmas
+        Gift']=="No" %}checked{% endif %}>
+      No
+    </label>
+  </div>
+{% endif %}
+
+{%- if settings.cart_show_notes -%}
+  <div class="pt-15 border-bottom border--dashed">
+
+    <div class="field mb-10">
+      <label>
+        <input type="checkbox" id="cartGiftNoteToggle" {% if cart.note !=blank %}checked{% endif %}>
+        {{ settings.carttext }}
+      </label>
+    </div>
+
+    <div id="cartGiftNoteWrapper" style="{% if cart.note == blank %}display:none;{% endif %}">
+      <p class="field mb-15">
+        <!-- <label for="CartSpecialInstructions" class="mb-0">{{ 'cart.general.notes_title' | t }}</label> -->
+        <span class="d-block mt-8 mb-0">{{ 'cart.general.notes_paragraph' | t }}</span>
+      </p>
+      <textarea name="note" id="CartSpecialInstructions" rows="4">{{ cart.note }}</textarea>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggle = document.getElementById('cartGiftNoteToggle');
+      const noteWrapper = document.getElementById('cartGiftNoteWrapper');
+      const noteField = document.getElementById('CartSpecialInstructions');
+
+      toggle.addEventListener('change', function () {
+        if (this.checked) {
+          noteWrapper.style.display = 'block';
+        } else {
+          noteWrapper.style.display = 'none';
+          noteField.value = '';
+        }
+      });
+    });
+  </script>
+{%- endif -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const waitForCheckoutButton = setInterval(function () {
+      const checkoutBtn = document.querySelectorAll('input[name="checkout"]');
+
+      if (checkoutBtn.length != 0) {
+        clearInterval(waitForCheckoutButton); // stop checking once found
+
+        checkoutBtn.forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const note = btn.closest('form').querySelector('textarea[name="note"]').value; // cart note
+            const giftValue = btn.closest('form').querySelector('input[name="attributes[Christmas Gift]"]:checked')?.value; // yes/no attribute
+            const payload = {};
+            // Only add note if not empty
+            if (note && note.trim() !== "") {
+              payload.note = note;
+            }
+
+            // Always add the gift attribute
+            payload.attributes = {
+              "Christmas Gift": giftValue
+            };
+
+            fetch('/cart/update.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            })
+              .then(response => {
+                if (!response.ok) throw new Error('Note update failed');
+                return response.json();
+              })
+              .then(() => {
+                window.location.href = '/checkout';
+              })
+              .catch(error => {
+
+              });
+          });
+        })
+
+      }
+    }, 200); // check every 200ms
+  });
+</script>

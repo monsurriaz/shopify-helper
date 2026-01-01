@@ -1,0 +1,186 @@
+{%- comment -%}
+  Renders the stick add to cart feature
+
+  Accepts:
+  - product {object} - The main product object
+  - enable_sticky {boolean} - Whether to show the sticky add to cart
+  - hide_desktop {boolean} - Whether to hide on desktop
+  - show_selected_variants {boolean} - Whether to show selected variants
+
+  Usage:
+  {% render 'sticky-atc', product: product %}
+{%- endcomment -%}
+
+<style>
+  .sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #e1e1e1;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sticky-atc__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .sticky-atc__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sticky-atc__title {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+  }
+
+  .sticky-atc__variant {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .sticky-atc__price {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .sticky-atc__price--compare {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+  }
+
+  .sticky-atc__actions {
+    margin-left: 20px;
+  }
+
+  .sticky-atc__button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .sticky-atc--hide-desktop {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .sticky-atc--hide-desktop {
+      display: flex;
+    }
+  }
+</style>
+
+{%- if enable_sticky and product.available -%}
+  <div
+    class="sticky-atc{% if hide_desktop %} sticky-atc--hide-desktop{% endif %}"
+    data-sticky-atc
+  >
+    <div class="sticky-atc__content">
+      <div class="sticky-atc__info">
+        <h2 class="sticky-atc__title">{{ product.title }}</h2>
+
+        {%- if show_selected_variants -%}
+          <div
+            class="sticky-atc__variant"
+            data-sticky-atc-variant
+          >
+            {%- assign selected_variant = product.selected_or_first_available_variant -%}
+            {%- if selected_variant -%}
+              {{ selected_variant.title }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div
+          class="sticky-atc__price"
+          data-sticky-atc-price
+        >
+          {%- assign selected_variant = product.selected_or_first_available_variant -%}
+          {%- if selected_variant -%}
+            {%- if selected_variant.compare_at_price > selected_variant.price -%}
+              <span class="sticky-atc__price--compare">
+                {{ selected_variant.compare_at_price | money }}
+              </span>
+            {%- endif -%}
+            <span class="sticky-atc__price--current">
+              {{ selected_variant.price | money }}
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="sticky-atc__actions">
+        <form
+          method="post"
+          action="/cart/add"
+          data-sticky-atc-form
+        >
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+            data-sticky-atc-variant-id
+          />
+          <button
+            type="submit"
+            class="btn btn--primary sticky-atc__button"
+            data-sticky-atc-button
+          >
+            {{ 'products.product.add_to_cart' | t }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const stickyAtc = document.querySelector('[data-sticky-atc]');
+    if (!stickyAtc) return;
+
+    const variantSelects = document.querySelectorAll('form[action="/cart/add"] select[name="id"]');
+    const stickyVariantIdInput = stickyAtc.querySelector('[data-sticky-atc-variant-id]');
+    const stickyVariantTitle = stickyAtc.querySelector('[data-sticky-atc-variant]');
+    const stickyPrice = stickyAtc.querySelector('[data-sticky-atc-price]');
+
+    variantSelects.forEach(select => {
+      select.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const variantId = selectedOption.value;
+        const variantTitle = selectedOption.text;
+        const variantPrice = selectedOption.getAttribute('data-variant-price');
+        const variantCompareAtPrice = selectedOption.getAttribute('data-variant-compare-at-price');
+
+        // Update hidden input
+        stickyVariantIdInput.value = variantId;
+
+        // Update variant title
+        if (stickyVariantTitle) {
+          stickyVariantTitle.textContent = variantTitle;
+        }
+
+        // Update price
+        if (stickyPrice) {
+          let priceHtml = '';
+          if (variantCompareAtPrice && parseFloat(variantCompareAtPrice) > parseFloat(variantPrice)) {
+            priceHtml += `<span class="sticky-atc__price--compare">${Shopify.formatMoney(variantCompareAtPrice)}</span>`;
+          }
+          priceHtml += `<span class="sticky-atc__price--current">${Shopify.formatMoney(variantPrice)}</span>`;
+          stickyPrice.innerHTML = priceHtml;
+        }
+      });
+    });
+  });
+</script>

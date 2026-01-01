@@ -9,7 +9,7 @@
 - item_count (Number of products)
 - items 
 
-##Items it self a array, it's containing all the item (product). Property of items array
+##Items it self a array, it's containing all the item (product). Property of items array. Below are the property of `item`
 
 - id (variant id)
 - variant_id (variant id)
@@ -31,23 +31,88 @@
 
 - amount (amount of total discount)
 
-
-
 {% endcomment %}
 
-{
-  "token": "hWN0uXwgu4NC1HN94OCEgAWE?key=29336f7698e8b30fb9a4d5a8e3f830f5",
-  "note": "",
-  "attributes": {},
-  "original_total_price": 7800,
-  "total_price": 6240,
-  "total_discount": 1560,
-  "total_weight": 0,
-  "item_count": 2,
-  "items": [],
-  "requires_shipping": true,
-  "currency": "USD",
-  "items_subtotal_price": 6240,
-  "cart_level_discount_applications": [],
-  "discount_codes": []
-}
+
+{% for item in cart.items %}
+  {{ item.price }} {% # Normal 1 unit (qty) price %}
+  {{ item.original_price }} {% # Normal 1 unit (qty) price [Mostly use it for primary price] %}
+  {{ item.variant.compare_at_price }} {% # Compare at price of 1 unit (qty) %}
+
+  {{ item.discounted_price }} {% # Unit price after any discount %}
+  {{ item.final_price }} {% # Unit price after any discount [Mostly use it for final price] %}
+
+  {{ item.line_price }} {% # Final price x quantity %}
+  {{ item.final_line_price }} {% # Final price x quantity %}
+
+  {{ item.original_line_price }} {% # Original Price x quantity %}
+  {{ item.variant.compare_at_price | times: item.quantity }} {% # Compare at price x quantity %}
+  
+  {{ item.line_level_total_discount }} {% # Discount amount x quantity %}
+
+  {% for discount in item.line_level_discount_allocations %}
+    {{ discount.discount_application.title }} {% # Title of Discount %}
+    {{ discount.discount_application.total_allocated_amount }} {% # Total Discount amount of each type of discount %}
+
+    {{ discount.amount }} {% # Total Discount amount of all type of discount %}
+  {% endfor %}
+
+  {% # Item options %}
+  {%- unless item.product.has_only_default_variant -%}
+    <div class="cart__item--variants">
+      {%- for option in item.options_with_values -%}
+        <div><span>{{ option.name }}:</span> {{ option.value }}</div>
+      {%- endfor -%}
+    </div>
+  {%- endunless -%}
+
+  {% # Product properties %}
+  {%- assign property_size = item.properties | size -%}
+  {% if property_size > 0 %}
+    {% for p in item.properties %}
+      {%- assign first_character_in_key = p.first | truncate: 1, '' -%}
+      {% unless p.last == blank or first_character_in_key == '_' %}
+        <div>
+          {{ p.first }}:
+          {% if p.last contains '/uploads/' %}
+            <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+          {% else %}
+            {{ p.last }}
+          {% endif %}
+        </div>
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+
+{% endfor %}
+
+
+{% # Cart level discount %}
+{% if cart.cart_level_discount_applications != blank %}
+  {% for cart_discount in cart.cart_level_discount_applications %}
+    {{ cart_discount.title }} (-{{ cart_discount.total_allocated_amount | money }})
+  {% endfor %}
+{% endif %}
+
+{% # Cart total %}
+{{ cart.total_price | money }}
+
+{% # Total Save %}
+{% assign total_cart_compare_price = 0 %}
+{% assign regular_price = 0 %}
+
+{% for item in cart.items%}
+  {% assign compare_price = item.variant.compare_at_price | times: item.quantity %} 
+  {% assign total_cart_compare_price = total_cart_compare_price | plus: compare_price %}
+
+  {% if item.variant.compare_at_price == nil %}
+    {% assign regular_price = regular_price | plus: item.original_line_price  %}
+  {% endif %}
+{% endfor %}
+
+{% assign total_price_with_compare = total_cart_compare_price | plus: regular_price %}
+
+{% if total_price_with_compare != cart.total_price %}
+  {{ total_price_with_compare | minus: cart.total_price | money }}
+{% endif %}
+

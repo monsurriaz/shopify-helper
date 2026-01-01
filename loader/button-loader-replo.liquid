@@ -1,0 +1,87 @@
+<style>
+  .hidden {
+    display: none;
+  }
+  .loader__btn {
+    background-color: #000000;
+    border-radius: 6px;
+    color: #fff;
+    margin-top: 30px;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 20px;
+    font-weight: 600;
+    border: 3px solid #000000;
+    transition: .3s linear;
+    text-align: center;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
+  .loader__btn:hover {
+    color: #121212;
+    background-color: #fff;
+  }
+  .loader__btn.loading {
+    color: transparent;
+    position: relative;
+  }
+  .loading-overlay__spinner {
+    width: 18px;
+    display: inline-block;
+  }
+  .loader__btn.loading > .loading-overlay__spinner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .loader-animate-spinner {
+    animation: loader-spin 1s linear infinite;
+  }
+  @keyframes loader-spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<button 
+  type="submit"
+  class="loader__btn"
+>
+  <span>
+    Add to cart
+  </span>
+  <div class="loading-overlay__spinner hidden">
+    <svg 
+      class="loader-animate-spinner" 
+      xmlns="http://www.w3.org/2000/svg" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      style="width:20px;height:20px"
+    >
+      <circle cx="12" cy="12" r="10" stroke="#e2e8f0" stroke-width="4"></circle>
+      <path fill="#64748b" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+  </div>
+</button>
+
+<script>
+  const btn = document.querySelector('.loader__btn');
+  btn.addEventListener('click', ()=> {
+    btn.classList.add('loading');
+    btn.querySelector('.loading-overlay__spinner').classList.remove('hidden');
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      btn.querySelector('.loading-overlay__spinner').classList.add('hidden');
+    }, 2000);
+  })
+</script>

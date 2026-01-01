@@ -1,0 +1,34 @@
+{% # Cart Parent Child Relationship %}
+
+<script>
+  pushChildItems(itemsToAdd, vId, parentId) {
+    const item = {id: vId, quantity: 1, parent_id: parentId};
+    itemsToAdd.push(item);
+  }
+
+  document.addEventListener('DOMContentLoader', ()=> {
+    // Bundle product handling
+    const isBundle = this.atcButton.dataset.bundleProduct;
+  
+    if (isBundle) {
+      const bundleItems = document.querySelectorAll('[data-bundle-item]');
+  
+      // If no bundle items exist, just skip — don't return!
+      if (bundleItems.length) {
+        bundleItems.forEach(bundleProduct => {
+  
+          const checkedOption = bundleProduct.querySelector(
+            '.new-variant-picker__form input[type="radio"]:checked'
+          );
+  
+          const variantId =
+            checkedOption?.dataset.variantId ||
+            bundleProduct.dataset.bundleVariantId;
+  
+          this.pushChildItems(itemsToAdd, variantId, parent_id);
+  
+        });
+      }
+    }
+  })
+</script>

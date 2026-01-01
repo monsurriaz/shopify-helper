@@ -28,3 +28,50 @@
 {% endcomment %}
 {% assign string_digit = "1" %} {% # all the schema type except number return string values %}
 {% assign numeric_digit = string_digit | plus: 0  %}
+
+{% comment %} 
+  Get outter loop's index
+{% endcomment %}
+{% for i in (1..5) %}
+  {% for j in (1..5) %}
+    {% if forloop.parentloop.index == 2 %}
+      echo "outter loop's index is 2"
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% comment %} 
+  Add currency iso code
+{% endcomment %}
+{{ cart.currency.iso_code }}
+
+{% comment %} 
+  Add collection url into product url 
+{% endcomment %}
+
+{{ product.url | within: collection }}
+
+{% comment %} 
+  Add first collection url into product url 
+{% endcomment %}
+{% if product.collections.size > 0 %}
+  {% assign first_collection = product.collections.first %}
+  <a href="{{ first_collection.url }}/products/{{ product.handle }}">{{ product.title }}</a>
+{% else %}
+  <a href="{{ product.url }}">{{ product.title }}</a>
+{% endif %}
+
+{% comment %} 
+  Location / market based content login 
+{% endcomment %}
+{% if localization.market.handle == "duitsland" %}
+  {% # Some content only for duitslan market %}
+{% else %}
+  {% # Contents for other markets %}
+{% endif %}
+
+{% comment %} 
+  Check if a block is exist or not 
+{% endcomment %}
+{% assign popups = section.blocks | where: 'type', 'popup' %}
+

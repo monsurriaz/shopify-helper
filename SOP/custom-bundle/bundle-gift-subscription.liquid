@@ -1,0 +1,1243 @@
+<style>
+  .custom-bundle__quantity.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    line-height: 19.2px;
+  }
+
+  .checkout__size {
+    cursor: pointer;
+  }
+
+  .checkout__size-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 14px 6px 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .checkout__size input[type="radio"] {
+    display: none;
+  }
+
+  [data-blue-label],
+  [data-yellow-label] {
+    position: relative;
+  }
+
+  [data-blue-label]::before,
+  [data-yellow-label]::before {
+    content: attr(data-blue-label);
+    position: absolute;
+    top: -1rem;
+    left: 0.8rem;
+    right: 0.8rem;
+    text-align: center;
+    background: linear-gradient(90deg, #0D3063 0%, #1A61C9 100%);
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    border-radius: 0.3rem;
+    padding: 0 0.6rem;
+    line-height: 2rem;
+    white-space: nowrap;
+    display: block;
+  }
+
+  [data-yellow-label]::before {
+    background: #FFE427 !important;
+    color: #0D3063;
+    content: attr(data-yellow-label);
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .checkout__size-title {
+    font-size: 16px;
+    color: rgb(13 48 99);
+  }
+
+  .checkout__size-price {
+    font-weight: 600;
+    font-size: 15px;
+    color: #000000;
+  }
+
+  .checkout__size-save {
+    display: inline-flex;
+    font-weight: 600;
+    font-size: 15px;
+    min-height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    color: rgb(51 51 51);
+    background-color: rgb(196 255 181);
+    padding: 0 16px;
+  }
+
+  .checkout__size:hover .checkout__size-inner,
+  .checkout__size input:checked+.checkout__size-inner {
+    border-color: #0D3063;
+    box-shadow: inset 0 0 0 1px #0D3063;
+    background-color: #E2F0FF99;
+  }
+
+  .product__flavors {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .checkout__flavor {
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  .checkout__flavor-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  .checkout__flavor-image {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    border-radius: 6px 0 0 6px;
+    margin-right: 15px;
+  }
+
+  .checkout__flavor-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+  }
+
+  .checkout__flavor-content {
+    width: 100%;
+  }
+
+  .checkout__flavor-title {
+    font-size: 15px;
+  }
+
+  .checkout__flavor-content .text-sm {
+    font-size: 16px;
+    line-height: 24px;
+    color: rgb(51 51 51);
+  }
+
+  .checkout__flavor-qty {
+    flex-shrink: 0;
+    width: 93px;
+  }
+
+  .checkout__flavor-qty .checkout__flavor-qty-btn {
+    width: 77px;
+  }
+
+  .checkout__flavor-qty input[type="number"]::-webkit-outer-spin-button,
+  .checkout__flavor-qty input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .checkout__flavor-qty input[type="number"] {
+    -moz-appearance: textfield;
+    /* For general compatibility, though -moz-appearance handles Firefox */
+    appearance: textfield; 
+  }
+
+  button.btn--add {
+    line-height: 3rem;
+    white-space: nowrap;
+    border-radius: .8rem;
+    background-color: #0d3063;
+    border: 2px solid #0d3063;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 0 1.2rem;
+    display: block;
+    transition: all 0.3s ease;
+    text-align: center;
+    touch-action: manipulation;
+  }
+  button.btn--add:hover {
+    background-color: #037c2b;
+    border-color: #21a600;
+  }
+
+  .qty-picker {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: rgb(17 17 17);
+    margin-bottom: 5px;
+  }
+
+  .qty-picker__btn {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .qty-picker__btn svg {
+    display: block;
+  }
+
+
+  input.qty-picker__input {
+    width: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111111;
+    text-align: center;
+  }
+
+  .checkout__gifts.mt-4.text-center {}
+
+  .checkout__gifts {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .checkout__gifts-header {
+    margin-bottom: 7.5px;
+  }
+
+  .checkout__gifts-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 16px;
+    color: rgb(13 48 99);
+    padding: 0 6px;
+    background-color: rgb(226 240 255);
+    border: 1px solid rgb(117 189 255);
+    border-radius: 6px;
+    min-height: 24px;
+    margin: 0;
+  }
+
+  .checkout__gifts-products {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .checkout__gifts-product-inner {
+    border: 1px dashed #0d3063;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #e4fee5;
+  }
+
+  .checkout__gifts-product-price {
+    font-size: 12px;
+    line-height: 14px;
+    color: #ffffff;
+    text-transform: uppercase;
+    padding: 3px 4px;
+    background-color: rgb(13 48 99);
+    font-weight: 400;
+  }
+
+  .line-through {
+    text-decoration-line: line-through;
+  }
+
+  .checkout__gifts-product-image {
+    padding: 2px;
+    height: 72px;
+    position: relative;
+  }
+
+  .checkout__gifts-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .checkout__gifts-product-locked {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #fff;
+    padding: 0.5rem 0.4rem;
+    background-color: rgba(0, 0, 0, 0.75);
+    line-height: 1;
+    z-index: 10;
+  }
+
+  .checkout__gifts-product[data-unlocked="false"] .checkout__gifts-product-locked {
+    display: flex !important;
+  }
+
+  .checkout__gifts-product-locked svg {
+    height: 20px;
+    display: block;
+  }
+
+  .checkout__gifts-product-locked-text {
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.1px;
+  }
+
+  .checkout__gifts-product-name {
+    font-weight: 600;
+    font-size: 12px;
+    color: rgb(13 48 99);
+    text-align: center;
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+
+  .auto-refill {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px dashed #212427;
+    border-radius: 10px;
+    background-color: #f1fdf0;
+    margin-bottom: 20px;
+  }
+
+  .auto-refill input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #135d4b;
+    border-radius: 4px;
+    margin-right: 15px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .auto-refill input[type="checkbox"]:checked {
+    background-color: #135d4b;
+    position: relative;
+  }
+
+  .auto-refill input[type="checkbox"]:checked::after {
+    content: '✓';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .auto-refill label {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    padding-left: 15px;
+  }
+
+  .auto-refill .note {
+    color: #888;
+    font-size: 14px;
+  }
+
+  #add-to-cart {
+    width: 100%;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    background-color: rgb(33 166 0);
+    border: 2px solid;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  #add-to-cart:disabled {
+    background-color: #6E6E6E;
+    border-color: rgb(37, 37, 37);
+    cursor: not-allowed;
+  }
+  .atc-price {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    padding-inline: 12px;
+    min-height: 24px;
+    background-color: rgb(13 48 99);
+    color: #ffffff;
+    border-radius: 100px;
+  }
+  .atc-price .line-through {
+    color: rgb(216 216 216);
+  }
+
+  [data-spinner]:has(.loading-overlay) {
+    position: relative;
+  }
+  .loader-hidden {
+    display: none !important;
+  }
+  /* add a overlay effect when spinner active */
+  .loading-overlay:not(.loader-hidden)~* {
+    visibility: visible;
+    opacity: .4;
+  }
+  .loading-overlay {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 1;
+  }
+  .loading-overlay__spinner {
+    width: 18px;
+    display: inline-block;
+  }
+  .loading-overlay__spinner .spinner {
+    animation: rotator 1.4s linear infinite;
+  }
+  .loading-overlay__spinner .path {
+    stroke-dasharray: 280;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    stroke: rgb(18, 18, 18);
+    animation: dash 1.4s ease-in-out infinite;
+  }
+  @keyframes rotator {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 280;
+    }
+
+    50% {
+      stroke-dashoffset: 75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 280;
+      transform: rotate(450deg);
+    }
+  }
+
+  #pf-atc-btn,
+  #main_id {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .custom-bundle__quantity.grid {
+
+    }
+    .checkout__size-price {
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+    .checkout__size-save {
+      font-size: 14px;
+      min-height: 20px;
+      padding: 0 12px;
+    }
+    .checkout__gifts-title {
+      font-size: 14px;
+    }
+    .checkout__gifts-product-price {
+      font-size: 9.5px;
+    }
+    .checkout__gifts-product-name {
+      font-size: 11px;
+      margin-top: 2.5px;
+      letter-spacing: 0.3px;
+    }
+    #add-to-cart {
+      font-size: 15px;
+      gap: 7px;
+    }
+  }
+</style>
+
+<div class="custom-bundle__wrapper">
+  {% assign first_variant = product.selected_or_first_available_variant %}
+  <div class="custom-bundle__quantity grid" data-price="{{ first_variant.price | money }}" data-subscription-price="{{ first_variant.compare_at_price | money }}">
+    <label class="checkout__size block" data-bundle-label>
+      {% assign product_price = product.selected_or_first_available_variant.price %}
+      <input type="radio" name="pouches" value="3" data-bundle-option data-bundle-compare-price="{{ product_price | times: 3 | money_without_trailing_zeros }}" data-bundle-price="{{ product_price | times: 3 | times: 0.8 | money_without_trailing_zeros }}" data-discount-multiplier="0.8">
+
+      <div class="checkout__size-inner" data-blue-label="Best Value">
+        <div class="checkout__size-title font-bold">3 Bags</div>
+        <div class="checkout__size-price font-medium">{{ product_price | times: 0.8 | money_without_trailing_zeros }}/each</div>
+        <div class="checkout__size-save">
+          <div class="leading-1">Save 20%</div>
+        </div>
+      </div>
+    </label>
+
+    <label class="checkout__size block" data-bundle-label>
+      <input type="radio" name="pouches" checked="checked" value="2" data-bundle-option data-bundle-compare-price="{{ product_price | times: 2 | money_without_trailing_zeros }}" data-bundle-price="{{ product_price | times: 2 | times: 0.92 | money_without_trailing_zeros }}" data-discount-multiplier="0.92">
+
+      <div class="checkout__size-inner" data-yellow-label="Most Popular">
+        <div class="checkout__size-title font-bold">2 Bags</div>
+        <div class="checkout__size-price font-medium">{{ product_price | times: 0.92 | money_without_trailing_zeros }}/each</div>
+        <div class="checkout__size-save">
+          <div class="leading-1">Save 8%</div>
+        </div>
+      </div>
+    </label>
+
+    <label class="checkout__size block" data-bundle-label>
+      <input type="radio" name="pouches" value="1" data-bundle-option data-bundle-compare-price="{{ product_price | times: 1.2 | money_without_trailing_zeros }}" data-bundle-price="{{ product_price | money_without_trailing_zeros }}" data-discount-multiplier="1">
+
+      <div class="checkout__size-inner">
+        <div class="checkout__size-title font-bold">1 Bag</div>
+        <div class="checkout__size-price font-medium">{{ product_price | money_without_trailing_zeros }}/each</div>
+        <div class="checkout__size-save">
+          <div class="leading-1">Save 0%</div>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <div class="product__flavors">
+    {% for variant in product.variants %}
+      <div class="checkout__flavor flex items-center" data-flavor>
+        <div class="checkout__flavor-wrapper" data-variant-id="{{ variant.id }}" data-flavor-id>
+          <div class="checkout__flavor-image overflow-hidden flex-shrink-0">
+            <img class="w-full h-full object-cover"
+                src="{{ variant.featured_image | img_url: width: 120 }}"
+                alt="Variety Pack"
+              >
+          </div>
+
+          <div class="checkout__flavor-content">
+            <div class="checkout__flavor-title font-bold">
+              <span>{{ variant.title }}</span>
+            </div>
+
+            {% if variant.metafields.custom.addon_desc != blank %}
+            <div class="text-sm">
+              {{ variant.metafields.custom.addon_desc }}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="checkout__flavor-qty flex-shrink-0">
+
+            <div class="checkout__flavor-qty-btn">
+              <button type="button" class="btn btn--add w-full" data-variant-atc-btn data-variant-add>Add+</button>
+            </div>
+
+            <div class="qty-picker flex items-center gap-2 mb-2" x-show="quantity > 0" style="display: none;">
+              <button type="button" class="qty-picker__btn" data-qty-decrease data-variant-decrease>
+                  <svg width="14" height="3" viewBox="0 0 10 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M0.534084 2.14009H8.87706C9.1046 2.14009 9.25629 1.9884 9.25629 1.76086V1.00241C9.25629 0.774875 9.1046 0.623184 8.87706 0.623184H0.534084C0.306549 0.623184 0.154859 0.774875 0.154859 1.00241V1.76086C0.154859 1.9884 0.306549 2.14009 0.534084 2.14009Z"
+                      fill="currentColor"></path>
+                  </svg>
+                </button>
+              <input type="number" class="qty-picker__input text-center" value="0" data-variant-qty>
+              <button type="button" class="qty-picker__btn" data-qty-increase data-variant-increase>
+                  <svg width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M0.594739 5.00245V5.7609C0.594739 5.98844 0.746429 6.14013 0.973965 6.14013H4.387V9.55317C4.387 9.7807 4.53869 9.93239 4.76623 9.93239H5.52468C5.75221 9.93239 5.90391 9.7807 5.90391 9.55317V6.14013H9.31694C9.54448 6.14013 9.69617 5.98844 9.69617 5.7609V5.00245C9.69617 4.77492 9.54448 4.62322 9.31694 4.62322H5.90391V1.21019C5.90391 0.982654 5.75221 0.830963 5.52468 0.830963H4.76623C4.53869 0.830963 4.387 0.982654 4.387 1.21019V4.62322H0.973965C0.746429 4.62322 0.594739 4.77492 0.594739 5.00245Z"
+                      fill="currentColor"></path>
+                  </svg>
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="checkout__gifts mt-4 text-center" data-gift-section>
+    <div class="checkout__gifts-header mb-3">
+
+      {% assign collection_handle = 'gift-products' %}
+      {% assign gift_product_price = 0 %}
+      {% for gift_product in collections[collection_handle].products %}
+        {% assign gift_product_price = gift_product_price | plus: gift_product.price %}
+      {% endfor %}
+
+      <h2 class="checkout__gifts-title font-bold">
+        <span>
+          {{ gift_product_price | money_without_trailing_zeros }} of Gifts With Your First Order!
+        </span>
+
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_1415_5723)">
+            <path
+              d="M14.2449 15.9894H1.75635C1.4292 15.9894 1.16406 15.7242 1.16406 15.3971V5.84741H14.8373V15.3971C14.8373 15.7242 14.572 15.9894 14.2449 15.9894Z"
+              fill="#FFC73B"></path>
+            <path d="M1.16406 5.84741H14.8373V7.83459H1.16406V5.84741Z" fill="#EFB025"></path>
+            <path
+              d="M16 3.77576V6.23767C16 6.50061 15.7866 6.71362 15.5237 6.71362H0.475952C0.213013 6.71362 0 6.50061 0 6.23767V3.77576C0 3.51282 0.213013 3.2998 0.475952 3.2998H15.5237C15.7866 3.2998 16 3.51282 16 3.77576Z"
+              fill="#FFC73B"></path>
+            <path
+              d="M7.45422 4.43164C7.35034 4.55261 7.24841 4.67529 7.14893 4.79932C6.7782 5.26062 6.43884 5.74402 6.13208 6.24573C6.03772 6.40002 5.94666 6.55591 5.85828 6.71362H2.61328C2.80286 6.28345 3.01074 5.86121 3.23596 5.44849C3.64441 4.69971 4.11047 3.9812 4.63123 3.2998C4.75562 3.13708 4.88293 2.97632 5.01343 2.81799C5.09155 2.72253 5.17102 2.62842 5.25159 2.53467C5.54773 2.78979 5.84363 3.04468 6.13989 3.2998C6.18579 3.33911 6.23169 3.37891 6.27747 3.41833C6.62708 3.71936 6.97668 4.02026 7.32617 4.32166C7.36902 4.35803 7.4115 4.39502 7.45422 4.43164Z"
+              fill="#EFB025"></path>
+            <path
+              d="M12.2987 6.71362H9.05347C8.96545 6.55591 8.87402 6.40002 8.77966 6.24573C8.4729 5.74402 8.13318 5.26062 7.76282 4.79932C7.66296 4.67529 7.56104 4.55261 7.45703 4.43164C7.49988 4.39502 7.54236 4.35828 7.58521 4.32166C7.93506 4.02026 8.28467 3.71899 8.63416 3.41833C8.68005 3.37891 8.72595 3.33911 8.77185 3.2998C9.06799 3.04468 9.36426 2.78979 9.66016 2.53467C9.74072 2.62817 9.82019 2.72253 9.89832 2.81775C10.0291 2.97632 10.1565 3.13708 10.2805 3.2998C10.8013 3.9812 11.2673 4.69971 11.676 5.44849C11.9012 5.86121 12.1091 6.28345 12.2987 6.71362Z"
+              fill="#EFB025"></path>
+            <path
+              d="M7.99878 4.43188C7.89478 4.55273 7.79285 4.67542 7.69336 4.79944C7.32275 5.26074 6.98328 5.74414 6.67651 6.24597C5.70264 7.83789 5.05579 9.61621 4.78296 11.4775C4.37293 10.9337 3.99451 10.3453 3.65405 9.71619C3.05518 10.1068 2.46985 10.5536 1.90625 11.0563C2.19568 9.08191 2.83337 7.1842 3.78052 5.44861C4.28638 4.52112 4.88086 3.63989 5.55786 2.81812C5.63599 2.72266 5.71545 2.62866 5.79602 2.53479C6.13806 2.82935 6.47986 3.1239 6.82202 3.41846C7.17151 3.71948 7.52112 4.02039 7.87073 4.32178C7.91345 4.35815 7.95593 4.39514 7.99878 4.43188Z"
+              fill="#FF4440"></path>
+            <path
+              d="M14.0928 11.0563C13.5292 10.5536 12.9438 10.1068 12.345 9.71619C12.0045 10.3453 11.6261 10.9337 11.2161 11.4775C10.9432 9.61621 10.2965 7.83789 9.32251 6.24597C9.01575 5.74414 8.67603 5.26074 8.30566 4.79944C8.20581 4.67542 8.10388 4.55273 8 4.43188C8.04272 4.39514 8.08521 4.3584 8.12805 4.32178C8.47791 4.02039 8.82751 3.71912 9.17712 3.41846C9.51917 3.12354 9.86133 2.82935 10.203 2.53479C10.2836 2.6283 10.363 2.72266 10.4412 2.81787C11.1183 3.63965 11.7128 4.52087 12.2189 5.44861C13.1658 7.1842 13.8033 9.08191 14.0928 11.0563Z"
+              fill="#FF4440"></path>
+            <path d="M6.72656 4.43188H9.27429V6.71362H6.72656V4.43188Z" fill="#FF4440"></path>
+            <path
+              d="M12.2189 5.44861L9.32251 6.24597C9.01575 5.74414 8.67603 5.26074 8.30566 4.79944L8.12805 4.32178L8 3.9773L9.17712 3.41846L10.4412 2.81787C11.1183 3.63965 11.7128 4.52087 12.2189 5.44861Z"
+              fill="#EA2F2F"></path>
+            <path
+              d="M7.99976 3.9773L7.8717 4.32178L7.69434 4.79944C7.32373 5.26074 6.98425 5.74414 6.67749 6.24597L3.78149 5.44861C4.28735 4.52112 4.88184 3.63989 5.55884 2.81812L6.823 3.41846L7.99976 3.9773Z"
+              fill="#EA2F2F"></path>
+            <path
+              d="M12.6223 0.110754L7.99988 2.30594L8.88782 4.69401L13.8217 3.33597C14.4669 3.15836 14.8214 2.46586 14.5881 1.83854L14.1809 0.743567C13.9478 0.116247 13.2269 -0.176355 12.6223 0.110754Z"
+              fill="#FF4440"></path>
+            <path
+              d="M3.3775 0.110754L7.99993 2.30594L7.11199 4.69401L2.17828 3.33597C1.53301 3.15836 1.17852 2.46586 1.4118 1.83854L1.8189 0.743567C2.05218 0.116247 2.77288 -0.176355 3.3775 0.110754Z"
+              fill="#FF4440"></path>
+            <path
+              d="M9.1027 3.26561C9.01871 3.26561 8.93631 3.2241 8.88785 3.14805C8.81205 3.02952 8.84659 2.87205 8.96512 2.79625C9.00016 2.77391 9.83268 2.24412 10.7885 1.85753C12.1664 1.30015 13.0866 1.33006 13.5231 1.94639C13.6045 2.06126 13.5773 2.22032 13.4624 2.30162C13.3476 2.38292 13.1886 2.35582 13.1073 2.24095C12.5155 1.4055 10.055 2.70457 9.23966 3.22557C9.19718 3.25267 9.14969 3.26561 9.1027 3.26561Z"
+              fill="#EA2F2F"></path>
+            <path
+              d="M6.8697 3.26561C6.8227 3.26561 6.77521 3.25267 6.73273 3.22557C5.91743 2.70457 3.45685 1.4055 2.86506 2.24095C2.78364 2.35582 2.6247 2.38292 2.50983 2.30162C2.39509 2.2202 2.36786 2.06126 2.44929 1.94639C2.88581 1.33006 3.80585 1.30015 5.1839 1.85753C6.13972 2.244 6.97223 2.77391 7.00727 2.79625C7.1258 2.87205 7.16035 3.02952 7.08466 3.14805C7.03596 3.2241 6.95368 3.26561 6.8697 3.26561Z"
+              fill="#EA2F2F"></path>
+            <path
+              d="M8.72278 1.48511H7.27307C6.87634 1.48511 6.55469 1.80676 6.55469 2.20361V4.30969C6.55469 4.70654 6.87634 5.0282 7.27307 5.0282H8.72278C9.11951 5.0282 9.44116 4.70654 9.44116 4.30969V2.20361C9.44116 1.80676 9.11951 1.48511 8.72278 1.48511Z"
+              fill="#EA2F2F"></path>
+            <path d="M6.72656 6.71362H9.27429V15.9894H6.72656V6.71362Z" fill="#FF4440"></path>
+            <path d="M6.72656 6.71362H9.27429V7.83459H6.72656V6.71362Z" fill="#EA2F2F"></path>
+          </g>
+          <defs>
+            <clipPath id="clip0_1415_5723">
+              <rect width="16" height="16" fill="white"></rect>
+            </clipPath>
+          </defs>
+        </svg>
+      </h2>
+    </div>
+
+    <div class="checkout__gifts-products grid grid-cols-4 gap-4">
+      {% for gift_product in collections[collection_handle].products %}
+        {% assign flag = true %}
+        {% if forloop.index > 2 %}
+          {% assign flag = false %}
+        {% endif %}
+        
+        <div class="checkout__gifts-product" data-gift-item 
+          data-unlocked="{{ flag }}"
+          data-gift-variant-id="{{ gift_product.variants.first.id }}">
+          <div class="checkout__gifts-product-inner overflow-hidden">
+            <div class="checkout__gifts-product-price uppercase">
+              free
+              <span class="line-through">{{ gift_product.variants.first.price | money_without_trailing_zeros }}</span>
+            </div>
+
+            <div class="checkout__gifts-product-image relative">
+              <img class="w-full h-full object-contain" width="100" height="100"
+                  src="{{ gift_product.featured_image | img_url: width: 300 }}"
+                  alt="Free Shipping">
+
+              <div class="checkout__gifts-product-locked" style="display: none;">
+                <svg width="25" height="33" viewBox="0 0 25 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M3.11098 32.3333C2.2707 32.3333 1.55162 32.0372 0.953753 31.4451C0.354864 30.8519 0.0554199 30.1391 0.0554199 29.3069V14.1746C0.0554199 13.3423 0.354864 12.6296 0.953753 12.0364C1.55162 11.4442 2.2707 11.1481 3.11098 11.1481H4.63875V8.12168C4.63875 6.02838 5.3838 4.24378 6.87389 2.76788C8.36297 1.29299 10.1642 0.555542 12.2776 0.555542C14.3911 0.555542 16.1928 1.29299 17.6829 2.76788C19.172 4.24378 19.9165 6.02838 19.9165 8.12168V11.1481H21.4443C22.2846 11.1481 23.0042 11.4442 23.6031 12.0364C24.2009 12.6296 24.4999 13.3423 24.4999 14.1746V29.3069C24.4999 30.1391 24.2009 30.8519 23.6031 31.4451C23.0042 32.0372 22.2846 32.3333 21.4443 32.3333H3.11098ZM7.69431 11.1481H16.861V8.12168C16.861 6.86066 16.4154 5.78879 15.5242 4.90607C14.633 4.02336 13.5508 3.582 12.2776 3.582C11.0045 3.582 9.92232 4.02336 9.03111 4.90607C8.13991 5.78879 7.69431 6.86066 7.69431 8.12168V11.1481ZM12.2776 24.7672C13.1179 24.7672 13.8375 24.4711 14.4364 23.8789C15.0343 23.2857 15.3332 22.573 15.3332 21.7407C15.3332 20.9085 15.0343 20.1957 14.4364 19.6025C13.8375 19.0104 13.1179 18.7143 12.2776 18.7143C11.4374 18.7143 10.7183 19.0104 10.1204 19.6025C9.52153 20.1957 9.22209 20.9085 9.22209 21.7407C9.22209 22.573 9.52153 23.2857 10.1204 23.8789C10.7183 24.4711 11.4374 24.7672 12.2776 24.7672Z"
+                    fill="currentColor"></path>
+                </svg>
+
+                <div class="checkout__gifts-product-locked-text">
+                  <span>Unlocked at 3+ Bags</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="checkout__gifts-product-name whitespace-nowrap text-center font-medium">
+            <span>{{ gift_product.title }}</span>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <div class="auto-refill">
+    <input type="checkbox" id="auto_refill" name="auto-refill" checked data-selling-plan-id="{{ product.selected_or_first_available_selling_plan_allocation.selling_plan.id }}">
+    <label for="auto_refill">
+      Save More with Automatic Refills!
+      <span class="note">Zero commitment, Cancel Anytime</span>
+    </label>
+  </div>
+
+  <button
+    type="button"
+    id="add-to-cart"
+    class="flex items-center justify-center checkout__cta-btn"
+    data-main-atc-btn disabled
+    data-spinner
+    >
+    <div class="loading-overlay loader-hidden">
+      <div class="loading-overlay__spinner">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          class="spinner"
+          viewBox="0 0 66 66"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <span class="atc-qty-remaining">Select <span>1</span> More Bag<span style="display: none;">s</span></span>
+    
+    <span class="atc-text" x-text="isProcessing ? 'Adding to cart...' : 'Checkout Now'" style="display: none;">Checkout Now</span>
+
+    <span class="atc-price">
+      <span data-compare-price-atc class="line-through">$106.80</span>
+      <span data-price-atc>$34.95</span>
+    </span>
+
+    <span class="ml-[.6rem]">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12.672 7.70302L0.5 7.70302V9.70302H12.672L7.308 15.067L8.722 16.481L16.5 8.70302L8.722 0.925018L7.308 2.33902L12.672 7.70302Z"
+          fill="white"></path>
+      </svg>
+    </span>
+  </button>
+
+</div>
+
+<!-- Hidden inputs for selling_plan and quantity -->
+<input type="hidden" name="selling_plan" id="selling_plan_input" value="{{ product.selected_or_first_available_selling_plan_allocation.selling_plan.id }}">
+<input type="hidden" name="quantity" id="quantity_input" value="1">
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const bundleRadios = document.querySelectorAll("[data-bundle-option]");
+    const flavorWrappers = document.querySelectorAll("[data-flavor-id]");
+    const giftSection = document.querySelector("[data-gift-section]");
+    const subscriptionInput = document.querySelector("#auto_refill");
+    const mainATC = document.querySelector("[data-main-atc-btn]");
+    const remainingQtyText = mainATC.querySelector(".atc-qty-remaining");
+    const atcText = mainATC.querySelector(".atc-text");
+    const priceAtc = mainATC.querySelector("[data-price-atc]");
+    const comparePriceAtc = mainATC.querySelector("[data-compare-price-atc]");
+
+    const mainIdInput = document.querySelector("#main_id input[name='id']");
+    const sellingPlanInput = document.querySelector("#selling_plan_input");
+    const quantityInput = document.querySelector("#quantity_input");
+    const pfATCBtn = document.getElementById("pf-atc-btn");
+
+    let bundleQuantity = getSelectedBundleQty();
+    let totalSelectedQty = 0;
+
+    initialize();
+
+    /* ---------------------------------------------------------
+      INITIAL SETUP
+    --------------------------------------------------------- */
+    function initialize() {
+      attachBundleListeners();
+      attachVariantListeners();
+      manipulatePrice();
+
+      /* NEW: Added subscription listener */
+      attachSubscriptionListener();
+
+      /* NEW: Added ATC event listener */
+      attachATCListener();
+
+      updateUI();
+    }
+
+    /* ---------------------------------------------------------
+      BUNDLE LISTENERS
+    --------------------------------------------------------- */
+    function getSelectedBundleQty() {
+      const checked = document.querySelector("[data-bundle-option]:checked");
+      return Number(checked?.value || 2);
+    }
+
+    function attachBundleListeners() {
+      bundleRadios.forEach(radio => {
+        radio.addEventListener("change", () => {
+
+          // Limit max variants to 3
+          // bundleQuantity = Number(radio.value);
+          // if (totalSelectedQty > bundleQuantity) {
+          //   bundleQuantity = totalSelectedQty;
+          //   bundleRadios.forEach(r => (r.checked = Number(r.value) === totalSelectedQty));
+          // }
+
+          const newBundleQty = Number(radio.value);
+
+          // When user manually selects a bundle → reset variants
+          resetAllVariants();
+
+          bundleQuantity = newBundleQty;
+          updateTotals();
+          updateUI();
+        });
+      });
+    }
+
+    /* ---------------------------------------------------------
+      VARIANT QTY HANDLING
+    --------------------------------------------------------- */
+    function attachVariantListeners() {
+      flavorWrappers.forEach(wrapper => {
+        const addBtn = wrapper.querySelector("[data-variant-add]");
+        const qtyInput = wrapper.querySelector("[data-variant-qty]");
+        const incBtn = wrapper.querySelector("[data-variant-increase]");
+        const decBtn = wrapper.querySelector("[data-variant-decrease]");
+
+        addBtn.addEventListener("click", () => {
+          qtyInput.value = 1;
+          updateTotals();
+          updateUI();
+        });
+
+        incBtn.addEventListener("click", () => {
+          qtyInput.value = Number(qtyInput.value) + 1;
+          updateTotals();
+          updateUI();
+        });
+
+        decBtn.addEventListener("click", () => {
+          qtyInput.value = Math.max(0, Number(qtyInput.value) - 1);
+          updateTotals();
+          updateUI();
+        });
+      });
+    }
+    
+    /* ---------------------------------------------------------
+      UPDATE TOTALS, switch upper bundle if selected qty exceeds
+    --------------------------------------------------------- */
+    function updateTotals() {
+      totalSelectedQty = [...document.querySelectorAll("[data-variant-qty]")]
+        .reduce((sum, input) => sum + Number(input.value), 0);
+
+      // if (totalSelectedQty > 3) resetAll();
+
+      if (totalSelectedQty > bundleQuantity && totalSelectedQty <= 3) {
+        bundleQuantity = totalSelectedQty;
+        bundleRadios.forEach(r => (r.checked = Number(r.value) === bundleQuantity));
+      }
+    }
+
+    /* ---------------------------------------------------------
+      UPDATE UI
+    --------------------------------------------------------- */
+    function updateUI() {
+
+      // Flavor qty UI
+      flavorWrappers.forEach(wrapper => {
+        const qtyInput = wrapper.querySelector("[data-variant-qty]");
+        const addBtn = wrapper.querySelector("[data-variant-add]");
+        const qtyPicker = wrapper.querySelector(".qty-picker");
+
+        if (Number(qtyInput.value) > 0) {
+          addBtn.style.display = "none";
+          qtyPicker.style.display = "flex";
+        } else {
+          addBtn.style.display = "block";
+          qtyPicker.style.display = "none";
+        }
+      });
+
+      // ATC enable
+      if (totalSelectedQty >= bundleQuantity) {
+        atcText.style.display = "block";
+        remainingQtyText.style.display = "none";
+        mainATC?.removeAttribute("disabled");
+        
+      } else {
+        mainATC?.setAttribute("disabled", "disabled");
+        atcText.style.display = "none";
+        remainingQtyText.style.display = "inline-block";
+        remainingQtyText.innerHTML = `Select <span>${bundleQuantity - totalSelectedQty}</span> More Bag<span style="display: ${bundleQuantity - totalSelectedQty > 1 ? 'inline' : 'none'};">s</span>`;
+      }
+
+      // Price update
+      const comPrice = document.querySelector("[data-bundle-option]:checked").dataset.bundleComparePrice;
+      const price = document.querySelector("[data-bundle-option]:checked").dataset.bundlePrice;
+      comparePriceAtc.textContent = comPrice;
+      priceAtc.textContent = price;
+
+      updateGifts();
+    }
+
+    /* ---------------------------------------------------------
+      PRICE FORMATTING FUNCTION
+    --------------------------------------------------------- */
+    function formatPrice(input, formatString) {
+      // Step 1: Normalize the input number
+      let num = typeof input === 'string' ? parseFloat(input.replace(',', '.')) : input;
+      if (isNaN(num)) return '';
+
+      // Step 2: Use passed formatString or fallback to DOM
+      if (!formatString) {
+        let el = document.querySelector('[data-price]');
+        if (el) formatString = el.dataset.price;
+        else return num.toFixed(2);
+      }
+
+      // Step 3: Extract currency symbol and style
+      const match = formatString.match(/([^0-9.,]*)([\d.,]+)([^0-9.,]*)/);
+      if (!match) return num.toFixed(2);
+
+      const prefix = match[1]; // e.g. "$", "Tk ", "€"
+      const originalNumber = match[2]; // e.g. "1,234.56" or "1.234,56"
+      const suffix = match[3]; // e.g. "", " BDT", etc.
+
+      // Step 4: Detect separator style
+      const useCommaAsDecimal = originalNumber.includes(',') && originalNumber.indexOf(',') > originalNumber.indexOf('.');
+      const decimalSeparator = useCommaAsDecimal ? ',' : '.';
+      const thousandSeparator = useCommaAsDecimal ? '.' : ',';
+
+      // Step 5: Format number with 2 decimals and thousands separator
+      const parts = num.toFixed(2).split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator); // Add thousands sep
+      const final = parts.join(decimalSeparator); // Add decimal sep
+
+      // Step 6: Return combined
+      return `${prefix}${final}${suffix}`;
+    }
+
+
+    /* ---------------------------------------------------------
+      PRICE MANIPULATION FUNCTION
+    --------------------------------------------------------- */
+    function manipulatePrice() {
+      const el = document.querySelector("[data-price]");
+      const subEl = document.querySelector("[data-subscription-price]");
+      const subscription = document.querySelector("#auto_refill");
+      const labelEl = document.querySelectorAll("[data-bundle-label]");
+
+      if (!el || !subscription) return;
+
+      // Raw price string (formatted)
+      const basePriceString = el.dataset.price;
+      const subPriceString = subEl ? subEl.dataset.subscriptionPrice : null;
+
+      // Convert to float
+      let baseValue = parseCurrency(basePriceString);
+      if (isNaN(baseValue)) return;
+      let subValue = parseCurrency(subPriceString);
+      if (isNaN(subValue)) return;
+
+      labelEl.forEach(label => {
+        const qty = parseInt(label.querySelector("input").value, 10);
+        if (subscription.checked) {
+          const bundleSubBaseValue = subValue;
+          const bundleSubValue = bundleSubBaseValue * qty;
+          const bundleSubComValue = bundleSubBaseValue * qty * 1.2;
+
+          const formatted = formatPrice(bundleSubBaseValue, subPriceString);
+          const formattedBundle = formatPrice(bundleSubValue, subPriceString);
+          const formattedCom = formatPrice(bundleSubComValue, basePriceString);
+
+          label.querySelector(".checkout__size-price").innerHTML = `${formatted} / each`;
+          const input = label.querySelector("input");
+          input.dataset.bundleComparePrice = formattedCom;
+          input.dataset.bundlePrice = formattedBundle;
+          if(input.checked) {
+            comparePriceAtc.textContent = formattedCom;
+            priceAtc.textContent = formattedBundle;
+          }
+        } else {
+          const multiplier = parseFloat(label.querySelector("input").dataset.discountMultiplier);
+          const bundleBaseValue = baseValue * multiplier;
+          const bundleValue = bundleBaseValue * qty;
+          const bundleSubComValue = baseValue * qty;
+
+          const formatted = formatPrice(bundleBaseValue, subPriceString);
+          const formattedBundle = formatPrice(bundleValue, subPriceString);
+          const formattedCom = formatPrice(bundleSubComValue, basePriceString);
+
+          label.querySelector(".checkout__size-price").innerHTML = `${formatted} / each`;
+          const input = label.querySelector("input");
+          input.dataset.bundleComparePrice = formattedCom;
+          input.dataset.bundlePrice = formattedBundle;
+
+          if(input.checked) {
+            comparePriceAtc.textContent = formattedCom;
+            priceAtc.textContent = formattedBundle;
+          }
+        }
+      });
+    }
+
+    function parseCurrency(str) {
+      if (!str) return 0;
+
+      // Step 1: Remove currency symbols and spaces
+      str = str.replace(/[^\d.,]/g, "");
+
+      // Step 2: Determine last separator as decimal
+      let lastDot = str.lastIndexOf(".");
+      let lastComma = str.lastIndexOf(",");
+
+      let decimalSeparator = "";
+      if (lastDot > lastComma) decimalSeparator = ".";
+      else if (lastComma > lastDot) decimalSeparator = ",";
+      
+      // Step 3: Remove all other separators
+      if (decimalSeparator === ".") str = str.replace(/,/g, "");
+      else if (decimalSeparator === ",") str = str.replace(/\./g, "").replace(",", ".");
+
+      // Step 4: Convert to float
+      let num = parseFloat(str);
+      return isNaN(num) ? 0 : num;
+    }
+
+
+    /* ---------------------------------------------------------
+      SUBSCRIPTION LOGIC (NEW)
+      ONLY controls show/hide
+    --------------------------------------------------------- */
+    function attachSubscriptionListener() {
+      if (!subscriptionInput) return;
+
+      subscriptionInput.addEventListener("change", () => {
+        updateGifts();
+        manipulatePrice();
+      });
+    }
+
+    /* ---------------------------------------------------------
+        GIFT LOGIC (UPDATED)
+        Unlock depends on bundle only
+        Auto-select unlocked gifts if subscribed
+    --------------------------------------------------------- */
+    function updateGifts() {
+      if (!giftSection) return;
+
+      /* Subscription toggles ONLY visibility */
+      giftSection.style.display = subscriptionInput.checked ? "block" : "none";
+
+      const giftItems = giftSection.querySelectorAll("[data-gift-item]");
+
+      /* Unlock logic based solely on bundle qty */
+      const unlockCount =
+        bundleQuantity === 1 ? 2 :
+        bundleQuantity === 2 ? 3 :
+        giftItems.length;
+
+      giftItems.forEach((item, index) => {
+        const unlocked = index < unlockCount;
+
+        /* Auto-select only unlocked gifts when subscribed */
+        item.dataset.unlocked = unlocked ? "true" : "false";
+
+        // if (subscriptionInput.checked && unlocked) {
+        //   item.dataset.selected = "true";
+        // } else {
+        //   item.dataset.selected = "false";
+        // }
+      });
+
+      if (subscriptionInput.checked) {
+        sellingPlanInput.value = subscriptionInput.dataset.sellingPlanId;
+      } else {
+        sellingPlanInput.removeAttribute('value');
+      }
+    }
+
+    /* ---------------------------------------------------------
+        MAIN ATC LOGIC (NEW)
+    --------------------------------------------------------- */
+    function attachATCListener() {
+      if (!mainATC) return;
+
+      mainATC.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const loaderOverlay = mainATC.querySelector(".loading-overlay");
+        loaderOverlay.classList.remove("loader-hidden");
+
+        const formData = new FormData();
+        let i = 0;
+
+        /* -----------------------------------------------------
+          STEP 1:
+          Determine the first selected flavor (variant)
+          and exclude it from the FormData list.
+        ------------------------------------------------------*/
+
+        const selectedFlavors = [...flavorWrappers].filter(wrapper => {
+          const qty = Number(wrapper.querySelector("[data-variant-qty]").value);
+          return qty > 0;
+        });
+
+        
+        // First selected flavor (needed later)
+        const firstSelected = selectedFlavors[0] || null;
+
+        // All other flavors (starting from index 1)
+        const remainingFlavors = selectedFlavors.slice(1);
+
+
+        /* -----------------------------------------------------
+          STEP 2:
+          Add ONLY the remaining flavors to formData
+          (your original logic kept)
+        ------------------------------------------------------*/
+        remainingFlavors.forEach(wrapper => {
+          const qty = Number(wrapper.querySelector("[data-variant-qty]").value);
+
+          if (qty > 0) {
+            formData.append(`items[${i}][id]`, wrapper.dataset.variantId);
+            formData.append(`items[${i}][quantity]`, qty);
+
+            if (subscriptionInput.checked) {
+              formData.append(`items[${i}][selling_plan]`, subscriptionInput.dataset.sellingPlanId);
+            }
+
+            i++;
+          }
+        });
+
+
+        /* -----------------------------------------------------
+          STEP 3:
+          Add gifts if subscription is checked
+        ------------------------------------------------------*/
+        if (subscriptionInput.checked) {
+          const unlockedGifts = giftSection.querySelectorAll("[data-gift-item][data-unlocked='true']");
+
+          unlockedGifts.forEach(gift => {
+            formData.append(`items[${i}][id]`, gift.dataset.giftVariantId);
+            formData.append(`items[${i}][quantity]`, 1);
+            // formData.append(`items[${i}][selling_plan]`, gift.dataset.giftSellingId);
+            i++;
+          });
+        }
+
+        /* AJAX call */
+        fetch("/cart/add.js", {
+          method: "POST",
+          body: formData,
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (firstSelected) {
+            const firstFlavorId = firstSelected.dataset.variantId;
+            const firstFlavorQty = Number(firstSelected.querySelector("[data-variant-qty]").value);
+
+            mainIdInput.value = firstFlavorId;
+            quantityInput.value = firstFlavorQty;
+            pfATCBtn.click();
+          }
+        })
+        .catch(err => console.error(err))
+        .finally(()=> {
+          setTimeout(() => {
+            loaderOverlay.classList.add("loader-hidden");
+          }, 1000);
+        })
+      });
+    }
+
+    /* ---------------------------------------------------------
+        RESET
+    --------------------------------------------------------- */
+    function resetAll() {
+      totalSelectedQty = 0;
+
+      document.querySelectorAll("[data-variant-qty]").forEach(i => (i.value = 0));
+      document.querySelectorAll("[data-variant-add]").forEach(btn => (btn.style.display = "block"));
+      document.querySelectorAll(".qty-picker").forEach(p => (p.style.display = "none"));
+
+      bundleQuantity = 2;
+      bundleRadios.forEach(r => (r.checked = r.value == 2));
+
+      mainATC?.setAttribute("disabled", "disabled");
+    }
+
+    function resetAllVariants() {
+      totalSelectedQty = 0;
+
+      document.querySelectorAll("[data-variant-qty]").forEach(input => {
+        input.value = 0;
+      });
+
+      document.querySelectorAll("[data-variant-add]").forEach(btn => {
+        btn.style.display = "block";
+      });
+
+      document.querySelectorAll(".qty-picker").forEach(picker => {
+        picker.style.display = "none";
+      });
+    }
+
+  });
+</script>

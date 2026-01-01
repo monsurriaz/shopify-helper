@@ -1,0 +1,22 @@
+<div class="m-product-payment-icons" {{ block.shopify_attributes }}>
+  <style>
+    .m-product-payment-icons {
+      margin-top: -5px;
+    }
+    .custom-payment__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+  </style>
+  {% assign enabled_payment_types = 'apple_pay,google_pay,maestro,master,paypal,visa' | remove: ' ' | split: ',' %}
+  <ul class="custom-payment__wrapper">
+    {% for type in enabled_payment_types %}
+      <li class="payment__icon">
+        {{ type | payment_type_svg_tag }}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>

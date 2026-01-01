@@ -1,0 +1,247 @@
+{% comment %}
+  Custom fields resources
+{% endcomment %}
+
+{% for block in section.blocks %}
+  {% case block.type %}
+    {%- when 'custom_field' -%}
+      {% liquid
+        assign label_hidden = false
+        assign field_type = block.settings.field_type
+        assign field_options = block.settings.field_options
+        assign field_name = block.settings.title
+        assign field_placeholder = block.settings.field_placeholder
+        assign field_required = block.settings.field_required
+        assign show_at_checkout = block.settings.show_at_checkout
+
+        if field_name == blank
+          assign label_hidden = true
+          assign field_name = 'Custom field ' | append: forloop.index
+        endif
+      %}
+
+      <div class="m-product-custom-field" data-theme-fields data-product-custom-field="{{ field_type }}">
+        <label class="m-product-option--label{% if label_hidden %} m:hidden{% endif %}" for="{{ block.id }}">
+          {{ field_name -}}
+          {%- if field_required -%}
+            <sup>*</sup>
+          {%- endif %}
+        </label>
+        {% unless show_at_checkout %}
+          {% assign field_name = field_name | prepend: '_' %}
+        {% endunless %}
+        {% case field_type %}
+          {% when 'text' %}
+            <input
+              type="text"
+              id="{{ block.id }}"
+              class="form-field form-field--input"
+              placeholder="{{ field_placeholder }}"
+              name="properties[{{- field_name -}}]"
+              {% if field_required %}
+                required
+              {% endif %}
+              form="{{ product_form_id }}"
+            >
+          {% when 'textarea' %}
+            <textarea
+              id="{{ block.id }}"
+              class="form-field form-field--input"
+              placeholder="{{ field_placeholder }}"
+              name="properties[{{- field_name -}}]"
+              {% if field_required %}
+                required
+              {% endif %}
+              form="{{ product_form_id }}"
+            ></textarea>
+          {% when 'select' %}
+            {% assign options = field_options | newline_to_br | split: '<br />' %}
+            <select
+              id="{{ block.id }}"
+              class="form-field form-field--input"
+              name="properties[{{- field_name -}}]"
+              {% if field_required %}
+                required
+              {% endif %}
+              form="{{ product_form_id }}"
+            >
+              {% if field_placeholder != blank %}
+                <option value="">{{ field_placeholder }}</option>
+              {% endif %}
+              {% for option in options %}
+                <option value="{{ option }}" label="{{ option }}">{{ option }}</option>
+              {% endfor %}
+            </select>
+          {% when 'preorder_field' %}
+            <input
+              type="hidden"
+              id="{{ block.id }}"
+              class="form-field form-field--input preorder-hidden-field"
+              data-preorder-info
+              placeholder="{{ field_placeholder }}"
+              name="properties[{{- field_name -}}]"
+              {% if field_required %}
+                required
+              {% endif %}
+              form="{{ product_form_id }}"
+            >
+          {% when 'type_field' %}
+            <input
+              type="hidden"
+              id="{{ block.id }}"
+              class="form-field form-field--input"
+              data-order-type
+              placeholder="{{ field_placeholder }}"
+              name="properties[{{- field_name -}}]"
+              {% if field_required %}
+                required
+              {% endif %}
+              form="{{ product_form_id }}"
+            >
+        {% endcase %}
+      </div>
+
+    {%- when 'image_field' -%}
+      {% liquid
+        assign label_hidden = false
+        assign field_name = block.settings.title
+        assign field_required = block.settings.field_required
+        assign show_at_checkout = block.settings.show_at_checkout
+        if field_name == blank
+          assign label_hidden = true
+          assign field_name = 'Custom image ' | append: forloop.index
+        endif
+      %}
+
+      <div class="m-product-custom-field" data-theme-fields data-product-custom-field="image_field">
+        <label class="m-product-option--label{% if label_hidden %} m:hidden{% endif %}" for="{{ block.id }}">
+          {{ field_name -}}
+          {%- if field_required -%}
+            <sup>*</sup>
+          {%- endif %}
+        </label>
+        {% unless show_at_checkout %}
+          {% assign field_name = field_name | prepend: '_' %}
+        {% endunless %}
+        <input
+          type="file"
+          accept="image/*"
+          id="{{ block.id }}"
+          name="properties[{{- field_name -}}]"
+          {% if field_required %}
+            required
+          {% endif %}
+          form="{{ product_form_id }}"
+          class="form-field form-field--input"
+        >
+      </div>
+    
+  {% endcase %}
+{% endfor %}
+
+
+
+{% schema %}
+  {
+    "name": "Product Info",
+    "class": "",
+    "settings": [
+    
+    ],
+    "blocks": [
+      {
+        "type": "custom_field",
+        "name": "Custom field",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Need more advanced customization? Use [Teeinblue Product Personalizer](https://teeinblue.com/install/teeinblue?ref=foxecom) app"
+          },
+          {
+            "type": "text",
+            "label": "Field name",
+            "id": "title",
+            "default": "Custom text",
+            "info": "Required, don't leave it blank"
+          },
+          {
+            "type": "select",
+            "label": "Field type",
+            "id": "field_type",
+            "default": "text",
+            "options": [
+              {
+                "label": "Single line text",
+                "value": "text"
+              },
+              {
+                "label": "Multiline text",
+                "value": "textarea"
+              },
+              {
+                "label": "Select",
+                "value": "select"
+              }
+            ]
+          },
+          {
+            "type": "textarea",
+            "label": "Options",
+            "id": "field_options",
+            "info": "Each option in a new line"
+          },
+          {
+            "type": "text",
+            "label": "Placeholder",
+            "id": "field_placeholder"
+          },
+          {
+            "type": "checkbox",
+            "label": "Required",
+            "id": "field_required",
+            "default": false,
+            "info": "If you use “Required” with a checkbox, then the checkbox will need to be checked for the customer to add the item to the cart."
+          },
+          {
+            "type": "checkbox",
+            "label": "Show at checkout",
+            "id": "show_at_checkout",
+            "default": true,
+            "info": "Uncheck this if you don't want the captured information to be shown in the order summary on the checkout pages."
+          }
+        ]
+      },
+      {
+        "type": "image_field",
+        "name": "Upload image field",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "This field cannot work with Dynamic checkout buttons, so if using it, the dynamic checkout buttons will be disabled."
+          },
+          {
+            "type": "text",
+            "label": "Field name",
+            "id": "title",
+            "default": "Custom image",
+            "info": "Required, don't leave it blank"
+          },
+          {
+            "type": "checkbox",
+            "label": "Required",
+            "id": "field_required",
+            "default": false,
+            "info": "If you use “Required” with a checkbox, then the checkbox will need to be checked for the customer to add the item to the cart."
+          },
+          {
+            "type": "checkbox",
+            "label": "Show at checkout",
+            "id": "show_at_checkout",
+            "default": true,
+            "info": "Uncheck this if you don't want the captured information to be shown in the order summary on the checkout pages."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

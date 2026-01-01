@@ -1,0 +1,98 @@
+<style>
+  
+</style>
+
+<ul class="m-product-shipping">
+  {% if block.settings.show_delivery_times %}
+    <li class="m-product-shipping--item m:display-flex m:items-center">
+      <span class="m-product-shipping--icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.5 7.50087H20.4938C20.6432 7.4999 20.7894 7.54415 20.9132 7.62781C21.037 7.71147 21.1326 7.83062 21.1875 7.96962L22.5 11.2509" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1.5 13.5009H16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.625 20.2509C18.8676 20.2509 19.875 19.2435 19.875 18.0009C19.875 16.7582 18.8676 15.7509 17.625 15.7509C16.3824 15.7509 15.375 16.7582 15.375 18.0009C15.375 19.2435 16.3824 20.2509 17.625 20.2509Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
+          <path d="M6.375 20.2509C7.61764 20.2509 8.625 19.2435 8.625 18.0009C8.625 16.7582 7.61764 15.7509 6.375 15.7509C5.13236 15.7509 4.125 16.7582 4.125 18.0009C4.125 19.2435 5.13236 20.2509 6.375 20.2509Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
+          <path d="M15.375 18.0009H8.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.125 18.0009H2.25C2.05109 18.0009 1.86032 17.9218 1.71967 17.7812C1.57902 17.6405 1.5 17.4498 1.5 17.2509V6.75085C1.5 6.55194 1.57902 6.36118 1.71967 6.22052C1.86032 6.07987 2.05109 6.00085 2.25 6.00085H16.5V16.0509" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16.5 11.2509H22.5V17.2509C22.5 17.4498 22.421 17.6405 22.2803 17.7812C22.1397 17.9218 21.9489 18.0009 21.75 18.0009H19.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      {% liquid
+        assign range = 2 | times: 24 | times: 60 | times: 60
+        assign deliver_in = block.settings.deliver_days | times: 24 | times: 60 | times: 60
+        assign date_format = block.settings.date_format | default: '%b %d'
+        assign now = 'now' | date: '%s'
+
+        assign from = now | plus: deliver_in | minus: range | date: date_format
+        assign to = now | plus: deliver_in | plus: range | date: date_format
+      %}
+      <div class="m-product-shipping--content m:display-flex">
+        <p>
+          <strong>{{ block.settings.deliver_text | strip_html }}</strong
+          ><span class="m-product-shipping--content__value">{{ from }} - {{ to }}</span>
+        </p>
+      </div>
+    </li>
+  {% endif %}
+  {% if block.settings.show_shipping_text and block.settings.shipping_text != blank %}
+    <li class="m-product-shipping--item m-product-shipping--text m:display-flex m:items-center">
+      <span class="m-product-shipping--icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 16.6231V7.37934C20.9993 7.24582 20.9634 7.11484 20.8959 6.99963C20.8284 6.88441 20.7317 6.78903 20.6156 6.72309L12.3656 2.08247C12.2545 2.01829 12.1284 1.9845 12 1.9845C11.8716 1.9845 11.7455 2.01829 11.6344 2.08247L3.38437 6.72309C3.26827 6.78903 3.1716 6.88441 3.10411 6.99963C3.03663 7.11484 3.00072 7.24582 3 7.37934V16.6231C3.00072 16.7566 3.03663 16.8876 3.10411 17.0028C3.1716 17.118 3.26827 17.2134 3.38437 17.2793L11.6344 21.92C11.7455 21.9841 11.8716 22.0179 12 22.0179C12.1284 22.0179 12.2545 21.9841 12.3656 21.92L20.6156 17.2793C20.7317 17.2134 20.8284 17.118 20.8959 17.0028C20.9634 16.8876 20.9993 16.7566 21 16.6231Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16.5938 14.2977V9.42273L7.5 4.4071" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20.8963 6.99426L12.0838 12.0005L3.10254 6.99426" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12.0844 12.0009L12 22.0134" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div class="m-product-shipping--content m:display-flex rte">
+        {{ block.settings.shipping_text }}
+      </div>
+    </li>
+  {% endif %}
+</ul>
+
+{% schema %}
+{
+  "name": "Shipping",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_delivery_times",
+      "label": "Show delivery estimation",
+      "info": "How delivery times are generated?",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "deliver_text",
+      "label": "Delivery text",
+      "default": "Estimated Delivery:"
+    },
+    {
+      "type": "text",
+      "id": "deliver_days",
+      "label": "Deliver in:",
+      "info": "days (+/- 2 days)",
+      "default": "7"
+    },
+    {
+      "type": "text",
+      "id": "date_format",
+      "label": "Date format",
+      "default": "%b %d",
+      "info": "Example: %m/%d [Learn more about date format here.](http://strftime.net/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_text",
+      "label": "Show Shipping text",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_text",
+      "label": "Shipping text",
+      "default": "<p><strong>Free Shipping & Returns: </strong>On all orders over $75</p>"
+    }  
+  ]
+}
+{% endschema %}

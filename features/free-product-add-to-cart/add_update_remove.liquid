@@ -2,6 +2,8 @@
   - complete snippets of add, remove a product based on cart value.
   - ajax cart drawer update after operations
   - implement mutationObserver for ajax operations
+
+  Note: No need to check if gift product is added or not from variantId. just add a property properties: _free_gift while adding the gift product to cart. you can directly check if gift is exist or not in cart.
 {% endcomment %}
 
 <script>
@@ -65,7 +67,7 @@
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: [{ id: variantId, quantity: 1 }] // Ensure the item is formatted correctly
+          items: [{ id: variantId, quantity: 1, properties: {'_free_gift': 'true'} }] // Ensure the item is formatted correctly
         }),
       });
 

@@ -1,0 +1,50 @@
+<style>
+  .cart__item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+
+{% # Cart level discount %}
+{% if cart.cart_level_discount_applications != blank %}
+  <div class="cart__discounts cart__item-sub cart__item-row">
+    <div>{{ 'cart.general.discounts' | t }}</div>
+    <div class="text-right">
+      {% for cart_discount in cart.cart_level_discount_applications %}
+        <div class="cart__discount">
+          {{ cart_discount.title }} (-{{ cart_discount.total_allocated_amount | money }})
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% # Cart total %}
+<div class="cart__item-sub cart__item-row">
+  <div class="ajaxcart__subtotal cart__item-column">{{ 'cart.general.subtotal' | t }}</div>
+  <div data-subtotal class="cart__total">{{ cart.total_price | money }}</div>
+</div>
+
+{% # Total Save %}
+{% assign total_cart_compare_price = 0 %}
+{% assign regular_price = 0 %}
+
+{% for item in cart.items%}
+  {% assign compare_price = item.variant.compare_at_price | times: item.quantity %} 
+  {% assign total_cart_compare_price = total_cart_compare_price | plus: compare_price %}
+
+  {% if item.variant.compare_at_price == nil %}
+    {% assign regular_price = regular_price | plus: item.original_line_price  %}
+  {% endif %}
+{% endfor %}
+
+{% assign total_price_with_compare = total_cart_compare_price | plus: regular_price %}
+
+{% if total_price_with_compare != cart.total_price %}
+  <div class="cart__item-sub cart__item-row">
+    <div class="cart__item-column">Save</div>
+    <div data-save class="cart__save">{{ total_price_with_compare | minus: cart.total_price | money }}</div>
+  </div>
+{% endif %}
+

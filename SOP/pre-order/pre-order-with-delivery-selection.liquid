@@ -1,0 +1,354 @@
+{%- comment -%}
+  Preorder with delivery selection script
+
+  Accepts:
+  - product {object} - The main product object
+
+  Usage:
+  {% render 'sticky-atc', product: product %}
+{%- endcomment -%}
+
+{% # Step 1: Add two custom fields into product form %}
+<input
+  type="hidden"
+  id="{{ block.id }}"
+  class="form-field form-field--input"
+  data-order-type
+  name="properties[Pre-order Type]"
+  form="{{ product_form_id }}"
+>
+<input
+  type="hidden"
+  id="{{ block.id }}"
+  class="form-field form-field--input"
+  data-preorder-info
+  placeholder="{{ field_placeholder }}"
+  name="properties[{{- field_name -}}]"
+  {% if field_required %}
+    required
+  {% endif %}
+  form="{{ product_form_id }}"
+>
+
+{% # Step 2: Add a popup opener button beside main ATC button %}
+{%- if block.settings.enable_pre_order -%}
+  <button type="button" id="openSchedulePopup" class="schedule-btn m-button m-button--secondary">Jetzt vorbestellen</button>
+{%- endif -%}
+
+{% # Step 3: Add the popup modal structure %}
+<div id="schedulePopup" class="popup-overlay">
+  <div class="popup-container">
+    <div class="popup-header">
+      <h3>Datum & Uhrzeit auswählen</h3>
+    </div>
+
+    <div class="popup-body">
+      <!-- 1. Select Date -->
+      <div class="field-block">
+        <label for="scheduleDate" class="field-label">1. Bitte wählen Sie ein Datum aus</label>
+        {% comment %} <input type="date" id="scheduleDate" placeholder="Datum auswählen" class="styled-input" min="" /> {% endcomment %}
+        <input id="scheduleDate" class="styled-input" placeholder="Datum auswählen">
+      </div>
+
+      <!-- 2. Select Time -->
+      <div class="field-block">
+        <label for="scheduleTime" class="field-label">2. Bitte wählen Sie eine Uhrzeit aus</label>
+        <select id="scheduleTime" class="styled-select">
+          <option value="">Uhrzeit auswählen</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="popup-footer">
+      <button id="cancelPopup" class="btn btn-cancel m-button--secondary">Abbrechen</button>
+      <button id="confirmPopup" class="btn btn-confirm m-button--primary">Weiter</button>
+    </div>
+  </div>
+</div>
+
+{% # Step 4: Add the necessary CSS %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+  /* Overlay */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Modal Container */
+  .popup-container {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    max-width: 90%;
+    padding: 30px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* Header */
+  .popup-header {
+    border-bottom: 1px solid #f1f1f1;
+    text-align: left;
+  }
+  .popup-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* Body */
+  .popup-body {
+    margin: 32px 0;
+  }
+  .field-block:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  .field-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  /* Inputs */
+  .styled-input,
+  .styled-select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fdfdfd;
+    color: #333;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+  }
+  .styled-input:focus,
+  .styled-select:focus {
+    border-color: #fb5b03;
+    box-shadow: 0 0 0 2px rgba(251, 90, 3, 0.3);
+  }
+
+  /* Footer Buttons */
+  .popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .btn {
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.2s ease;
+    outline: none;
+  }
+  .btn-confirm:hover {
+      box-shadow: 0 0 0 .2rem rgb(var(--color-button-hover));
+  }
+
+  /* Fade animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Open button */
+  .schedule-btn {
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 1;
+    cursor: pointer;
+  }
+
+  [data-product-custom-field="preorder_field"], 
+  [data-product-custom-field="type_field"] {
+    display: none;
+  }
+</style>
+
+{% # Step 5: Add the necessary JS %}
+{% comment %} Schedule data json format {% endcomment %}
+<script id="schedule-json" type="application/json">
+  {{ shop.metafields.delivery.schedule }}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const openBtn = document.getElementById('openSchedulePopup');
+    const atcBtn = document.getElementById('ProductSubmitButton-{{ section.id }}');
+    const preorderField = document.querySelector('[data-preorder-info]');
+    const preorderType = document.querySelector('[data-order-type]');
+    const popup = document.getElementById('schedulePopup');
+    const cancelBtn = document.getElementById('cancelPopup');
+    const confirmBtn = document.getElementById('confirmPopup');
+    const dateInput = document.getElementById('scheduleDate');
+    const timeSelect = document.getElementById('scheduleTime');
+
+    // Load JSON metafield
+    const scheduleJSON = JSON.parse(document.getElementById('schedule-json').textContent);
+
+    // Early morning hours
+    const earlyHours = scheduleJSON.early || [];
+
+    // Convert keys to schedule object
+    const schedule = {};
+    Object.keys(scheduleJSON).forEach(key => {
+      if (key !== "early") schedule[key] = scheduleJSON[key];
+    });
+
+    // Helper: convert HH:MM -> minutes
+    function toMinutes(hhmm) {
+      const [h, m] = hhmm.split(':').map(Number);
+      return h * 60 + m;
+    }
+
+    // Helper: minutes -> HH:MM
+    function fromMinutes(mins) {
+      mins = ((mins % 1440) + 1440) % 1440;
+      const h = Math.floor(mins / 60).toString().padStart(2, '0');
+      const m = (mins % 60).toString().padStart(2, '0');
+      return `${h}:${m}`;
+    }
+
+    // Generate 30-min slots
+    function generateSlots(startHHMM, endHHMM) {
+      const slots = [];
+      let startMin = toMinutes(startHHMM);
+      const endMin = toMinutes(endHHMM);
+
+      while (true) {
+        const nextMin = startMin + 30;
+        if (nextMin - 1 > endMin) break;
+
+        const slotStart = fromMinutes(startMin);
+        const displayEnd = fromMinutes(nextMin - 1);
+        slots.push(`${slotStart} - ${displayEnd}`);
+
+        startMin = nextMin;
+      }
+      return slots;
+    }
+
+    // Populate time dropdown
+    function populateTimeOptions(dayIndex) {
+      timeSelect.innerHTML = '<option value="">Uhrzeit auswählen</option>';
+      let slots = [];
+
+      // Normal schedule
+      if (schedule[dayIndex]) {
+        schedule[dayIndex].forEach(r => {
+          slots = slots.concat(generateSlots(r.start, r.end));
+        });
+      }
+
+      // Early hours
+      if (earlyHours.length > 0) {
+        earlyHours.forEach(r => {
+          slots = generateSlots(r.start, r.end).concat(slots);
+        });
+      }
+
+      slots.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        timeSelect.appendChild(opt);
+      });
+    }
+
+    // Hide/open button based on current time
+    function checkIfCurrentlyOpen() {
+      const now = new Date();
+      const dayIndex = now.getDay();
+      const currentMin = now.getHours() * 60 + now.getMinutes();
+
+      let allRanges = [];
+      if (schedule[dayIndex]) allRanges = allRanges.concat(schedule[dayIndex]);
+      if (earlyHours.length > 0) allRanges = allRanges.concat(earlyHours);
+
+      let isOpen = false;
+      allRanges.forEach(r => {
+        const start = toMinutes(r.start);
+        const end = toMinutes(r.end);
+        if (currentMin >= start && currentMin <= end) isOpen = true;
+      });
+
+      if (isOpen) {
+        openBtn.style.display = "none";
+        atcBtn.style.display = "inline-block";
+      } else {
+        openBtn.style.display = "inline-block";
+        atcBtn.style.display = "none";
+      }
+    }
+
+    checkIfCurrentlyOpen();
+
+    // Open/close popup
+    openBtn.addEventListener('click', () => popup.style.display = 'flex');
+    cancelBtn.addEventListener('click', () => popup.style.display = 'none');
+
+    // --- Flatpickr Initialization ---
+    const today = new Date();
+    const maxDate = new Date();
+    maxDate.setDate(today.getDate() + 3); // today + 3 days
+
+    flatpickr(dateInput, {
+      altInput: true,
+      altFormat: "F j, Y",  // Display: Month day, year
+      dateFormat: "Y-m-d",  // Internal value
+      minDate: today,
+      maxDate: maxDate,
+      onChange: function(selectedDates, dateStr, instance) {
+        if (!selectedDates[0]) return;
+        const selectedDate = selectedDates[0];
+
+        const dayIndex = selectedDate.getDay();
+        populateTimeOptions(dayIndex);
+
+        // Format dd.mm.yyyy
+        const formatted =
+          selectedDate.getDate().toString().padStart(2, '0') + '.' +
+          (selectedDate.getMonth() + 1).toString().padStart(2, '0') + '.' +
+          selectedDate.getFullYear();
+
+        dateInput.dataset.formatted = formatted;
+      }
+    });
+
+    // Confirm button logic stays the same
+    confirmBtn?.addEventListener('click', () => {
+      const date = dateInput.dataset.formatted || dateInput.value;
+      const time = timeSelect.value;
+      if (!date || !time) return alert('Please select both date and time!');
+
+      preorderType.value = "Vorbestellung";
+      preorderField.value = `Vorbestellung für den ${date} von ${time}`;
+      atcBtn.style.display = 'inline-block';
+      openBtn.style.display = 'none';
+      popup.style.display = 'none';
+
+      setTimeout(() => { atcBtn.click(); }, 500);
+
+      setTimeout(() => {
+        atcBtn.style.display = 'none';
+        openBtn.style.display = 'inline-block';
+      }, 2000);
+    });
+  });
+</script>

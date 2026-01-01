@@ -1,0 +1,190 @@
+{%- comment -%}
+  Renders the stick add to cart feature
+
+  Accepts:
+  - product {object} - The main product object
+  - enable_sticky {boolean} - Whether to show the sticky add to cart
+
+  Usage:
+  {% render 'sticky-atc', product: product %}
+{%- endcomment -%}
+
+{% if section.settings.enable_sticky %}
+  {% assign sticky_product = closest.product %}
+  <style>
+    .product__sticky-atc {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #231C19;
+      box-shadow: 2px -2px 4px 0px rgba(0, 0, 0, .1);
+      z-index: -1;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+    .product__sticky-atc.visible {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+    }
+    .product__sticky-atc-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px;
+    }
+    .product__sticky-atc-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .product__sticky-atc-image {
+      width: 65px;
+      height: 65px;
+      display: block;
+      object-fit: cover;
+    }
+    .product__sticky-atc-details {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .product__sticky-atc-heading {
+      margin: 0;
+      color: #FFFFFF;
+    }
+    .product__sticky-atc-prices {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--swiss721BTMedium);
+    }
+    .product__sticky-atc-prices span {
+      font-family: var(--swiss721BTMedium);
+      color: #ffffff;
+    }
+    .product__sticky-atc-prices .regular-price {
+      text-decoration: line-through;
+      color: #ffffff;
+    }
+    .product__sticky-atc-prices .product-price {
+      color: #BD3C50;
+    }
+    .product__sticky-atc-info .product-badge-active {
+      display: inline-flex;
+      font-size: 10px;
+      padding: 4px;
+      line-height: 8px;
+      color: #ffffff;
+    }
+    .quick-add__submit {
+      font-family: var(--swiss721BTMedium);
+      font-size: 12px;
+      color: #ffffff;
+      background-color: #231C19;
+      text-transform: uppercase;
+      border: 1px solid;
+      padding: 10px 24px;
+    }
+    .quick-add__submit .loading-overlay__spinner {
+      width: 1.1rem;
+    }
+    .quick-add__submit .loading-overlay__spinner .path {
+      stroke: #ffffff;
+    }
+  </style>
+  <div class="product__sticky-atc" data-sticky-atc-wrapper>
+    <div class="product__sticky-atc-wrapper">
+      <div class="product__sticky-atc-info">
+        <img 
+          src="{{ sticky_product.featured_image | image_url: width: 120 }}" 
+          width="auto" height="auto" alt="{{ sticky_product.title }}"
+          class="product__sticky-atc-image"
+        >
+        <div class="product__sticky-atc-details">
+          <h3 class="product__sticky-atc-heading font-small">
+            {{ sticky_product.title }}
+          </h3>
+          <div class="product__sticky-atc-prices font-small">
+            <span class="regular-price price">{{ sticky_product.price | times: 2 | money_without_trailing_zeros }} {{ cart.currency.iso_code }}</span>
+            {% if sticky_product.compare_at_price > sticky_product.price %}
+            {% endif %}
+            <span class="product-price">{{ sticky_product.price | money_without_trailing_zeros }} {{ cart.currency.iso_code }}</span>
+          </div>
+          {% comment %} Selected variant {% endcomment %}
+          <span class="product-badge-active bg-red-dark">1+1 FREE</span>
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        class="quick-add__submit has__spinner"
+        {% unless sticky_product.available %}
+          disabled
+        {% endunless %}
+        data-sticky-atc
+      >
+        <div class="loading-overlay loader-hidden">
+          <div class="loading-overlay__spinner">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              class="spinner"
+              viewBox="0 0 66 66"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+            </svg>
+          </div>
+        </div>
+        <span class="atc-button-text font-base">
+          Add to Cart
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        const stickyAtcBar = document.querySelector('[data-sticky-atc-wrapper]');
+        const stickyAtcBtn = document.querySelector('[data-sticky-atc]');
+        const mainAtcButton = document.querySelector('[data-atc-button]');
+
+        function toggleStickyAtc() {
+          const bottomPos = mainAtcButton.getBoundingClientRect().top - 0;
+          if (bottomPos < 0) {
+            stickyAtcBar.classList.add('visible');
+          } else {
+            stickyAtcBar.classList.remove('visible');
+          }
+        }
+
+        function scrollToTop() {
+          stickyAtcBar.addEventListener('click', function() {
+            if(event.target !== stickyAtcBtn) {
+              mainAtcButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+        }
+
+        window.addEventListener('scroll', toggleStickyAtc);
+        toggleStickyAtc();
+        scrollToTop();
+
+        stickyAtcBtn.addEventListener('click', function() {
+          stickyAtcBtn.querySelector('.loading-overlay').classList.remove('loader-hidden');
+          mainAtcButton.click();
+          setTimeout(() => {
+            stickyAtcBtn.querySelector('.loading-overlay').classList.add('loader-hidden');
+          }, 1500);
+        });
+
+      }, 1000);
+    });
+  </script>
+{% endif %}
+
