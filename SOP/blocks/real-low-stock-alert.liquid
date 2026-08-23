@@ -1,0 +1,178 @@
+{% comment %} 
+  Ready low stock block. use it as block in product page.
+{% endcomment %}
+
+{%- assign s = block.settings -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+
+{%- assign auto_enabled = s.auto_qty -%}
+{%- assign auto_source = s.auto_source -%}
+{%- assign init_qty = nil -%}
+
+{%- if auto_enabled -%}
+  {%- if auto_source == 'specific' and s.ref_product != blank -%}
+    {%- assign ref = all_products[s.ref_product] -%}
+    {%- if ref -%}
+      {%- assign init_qty = ref.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+    {%- else -%}
+      {%- assign init_qty = 0 -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign init_qty = current_variant.inventory_quantity | default: 0 -%}
+  {%- endif -%}
+{%- endif -%}
+
+
+{%- assign line = s.text_template -%}
+{%- if auto_enabled -%}
+  {%- assign line = line | replace: '{qty}', init_qty | append: ' ' -%}
+{%- endif -%}
+
+
+{%- capture qty_map -%}{
+  {%- for v in product.variants -%}
+    "{{ v.id }}": {{ v.inventory_quantity | default: 0 }}{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+}{%- endcapture -%}
+
+<div id="SPN-{{ block.id }}" class="spn" {{ block.shopify_attributes }}
+  style="
+    /* colors & pulse */
+    --spn-color: {{ s.dot_color | default: '#F3B233' }};
+    --spn-text: {{ s.text_color | default: '#1a1a1a' }};
+    --spn-size: {{ s.dot_size | default: 10 }}px;
+    --spn-gap: {{ s.gap | default: 10 }}px;
+    --spn-speed: {{ s.pulse_ms | default: 1400 }}ms;
+    --spn-scale: {{ s.pulse_scale | default: 2.4 }};
+    --spn-opacity: {{ s.pulse_opacity | default: 0.45 }};
+
+    /* typography */
+    --spn-fs-d: {{ s.font_size_d | default: 14 }}px;
+    --spn-fs-m: {{ s.font_size_m | default: 14 }}px;
+    --spn-fw: {{ s.font_weight | default: '500' }};
+
+    /* layout */
+    --spn-mt-d: {{ s.mt_d | default: 0 }}px;
+    --spn-mb-d: {{ s.mb_d | default: 8 }}px;
+    --spn-mt-m: {{ s.mt_m | default: 0 }}px;
+    --spn-mb-m: {{ s.mb_m | default: 8 }}px;
+    --spn-align: {{ s.align | default: 'flex-start' }};
+  ">
+  <div class="spn__wrap" role="status" aria-live="polite">
+    <span class="spn__dot" aria-hidden="true"><i></i></span>
+    <span 
+      class="spn__text"
+      data-template="{{ s.text_template | escape }}"
+      data-auto="{{ auto_enabled }}"
+      data-source="{{ auto_source }}"
+      data-fixedqty="{% if auto_enabled and auto_source == 'specific' %}{{ init_qty | default: 0 }} {% endif %}{{ line | prepend: ' ' }}">
+    </span>
+  </div>
+
+  <script type="application/json" id="SPNMap-{{ block.id }}">
+    {
+      "auto": {{ auto_enabled | json }},
+      "source": {{ auto_source | json }},
+      "qtyMap": {{ qty_map | strip }},
+      "currentVariantId": {{ current_variant.id | default: 0 }}
+    }
+  </script>
+</div>
+
+<style>
+
+  #SPN-{{ block.id }}{ margin-top: var(--spn-mt-d); margin-bottom: var(--spn-mb-d); }
+  @media (max-width:768px){
+    #SPN-{{ block.id }}{ margin-top: var(--spn-mt-m); margin-bottom: var(--spn-mb-m); }
+  }
+  #SPN-{{ block.id }} .spn__wrap{
+    display: inline-flex;
+    align-items: center;
+    justify-content: var(--spn-align);
+    gap: var(--spn-gap);
+    color: var(--spn-text);
+    font-size: var(--spn-fs-d);
+    font-weight: var(--spn-fw);
+    line-height: 1.3;
+  }
+  @media (max-width:768px){
+    #SPN-{{ block.id }} .spn__wrap{ font-size: var(--spn-fs-m); }
+  }
+
+
+  #SPN-{{ block.id }} .spn__dot{
+    position: relative;
+    width: var(--spn-size); height: var(--spn-size); min-width: var(--spn-size);
+    border-radius: 999px; background: var(--spn-color); display: inline-block;
+  }
+  #SPN-{{ block.id }} .spn__dot i{
+    position: absolute; inset: 0; border-radius: 999px;
+    box-shadow: 0 0 0 0 var(--spn-color);
+    animation: spnPulse-{{ block.id }} var(--spn-speed) ease-out infinite;
+    opacity: var(--spn-opacity);
+  }
+  @keyframes spnPulse-{{ block.id }}{
+    0%   { transform: scale(1); box-shadow: 0 0 0 0 var(--spn-color); opacity: var(--spn-opacity); }
+    70%  { transform: scale(var(--spn-scale)); box-shadow: 0 0 0 calc(var(--spn-size) * .6) transparent; opacity: 0; }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 transparent; opacity: 0; }
+  }
+</style>
+
+<script>
+  (function(){
+    const root  = document.getElementById('SPN-{{ block.id }}');
+    if(!root) return;
+
+    const text  = root.querySelector('.spn__text');
+    const cfgEl = document.getElementById('SPNMap-{{ block.id }}');
+    const cfg = cfgEl ? JSON.parse(cfgEl.textContent) : {auto:false, source:'manual', qtyMap:{}};
+
+    function render(qty){
+      const tpl = text.dataset.template || '';
+      const auto = text.dataset.auto === 'true';
+      if (!auto){
+      
+        text.textContent = tpl;
+        return;
+      }
+  
+      text.textContent = tpl.replace('{{qty}}', qty ?? 0);
+    }
+
+    function updateFromCurrentVariant(variantId){
+      const q = (cfg.qtyMap && typeof cfg.qtyMap[variantId] !== 'undefined') ? cfg.qtyMap[variantId] : 0;
+      render(q);
+    }
+
+
+    if (cfg.auto){
+      if (cfg.source === 'specific'){
+        const fixed = parseInt(text.dataset.fixedqty || '0', 10);
+        render(isNaN(fixed) ? 0 : fixed);
+      } else {
+        updateFromCurrentVariant(parseInt(cfg.currentVariantId || 0, 10));
+      }
+    } else {
+      render(); 
+    }
+
+
+    if (cfg.auto && cfg.source === 'current'){
+
+      document.addEventListener('variant:change', function(e){
+        const v = e.detail && (e.detail.variant || e.detail);
+        if (!v || !v.id) return;
+        updateFromCurrentVariant(v.id);
+      });
+
+      const select = document.querySelector('form[action*="/cart/add"] select[name="id"]');
+      if (select){
+        select.addEventListener('change', function(){
+          const vid = parseInt(this.value, 10);
+          if (!isNaN(vid)) updateFromCurrentVariant(vid);
+        });
+      }
+    }
+  })();
+</script>
